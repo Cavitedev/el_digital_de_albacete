@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
         primaryColorLight: Colors.white,
         splashColor: Colors.teal[700],
         backgroundColor: Colors.green[100],
-        accentColor: Color.fromARGB(0xff, 0x6e, 0xba, 0x30)
+        accentColor: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
+        errorColor: Colors.red[100],
       ),
       home: Cover(),
     );

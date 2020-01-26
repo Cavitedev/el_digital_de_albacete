@@ -13,14 +13,20 @@ class SpiderPage {
   static const String _paginationClass = "pagination";
   static const String _currentPageClass = "current";
   static const String _pageClass = "page";
-
+  static const String failedLoadingNews = 'failedLoadingNews';
+  static final List<NewsData> noMoreNewsFound = [NewsData(title: failedLoadingNews)]; 
+  
+  
   SpiderPage({this.url});
 
   Future<List<NewsData>> scrapCurrentPage() async {
     return await _scrapPage(url);
   }
   Future<List<NewsData>> scrapNextPage() async {
-    if(url== null) return null;
+    if(_nextURL==null) return null;
+    if(_nextURL== failedLoadingNews) {
+      return noMoreNewsFound;
+    }
     return await _scrapPage(_nextURL);
   }
   
@@ -67,7 +73,7 @@ class SpiderPage {
     int _currentPage =
         int.parse(_pagesDiv.getElementsByClassName(_currentPageClass)[0].text);
     String _nextPage = (_currentPage+1).toString();
-    String _nextUrl = 'https://www.eldigitaldealbacete.com/noticias-albacete/';
+    String _nextUrl = failedLoadingNews;
     for(dom.Element element in _pagesDiv.getElementsByClassName(_pageClass)) {
       if(element.attributes['title']==_nextPage) {
         _nextUrl = element.attributes['href']; 

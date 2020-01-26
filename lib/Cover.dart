@@ -13,7 +13,8 @@ class _CoverState extends State<Cover> {
 
   
   
-  String _url = 'https://www.eldigitaldealbacete.com/economia-2/';
+  //String _url = 'https://www.eldigitaldealbacete.com/economia-2/';
+  String _url = 'https://www.eldigitaldealbacete.com/economia-2/page/102/';
 
   
   @override

@@ -26,6 +26,7 @@ class NewsCard extends StatelessWidget {
               width: 190,
               child: CachedNetworkImage(
                 placeholder: (context,url) => FadingCircle(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
                 imageUrl: newData.imageSrc,
               ),
             ),
