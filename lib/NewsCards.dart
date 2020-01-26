@@ -45,10 +45,8 @@ class _NewsCardsState extends State<NewsCards> {
     if(_moreNewsAvailable && _loadedNews) {
       _loadedNews = false;
       List<NewsData> _moreNews= await spiderPage.scrapNextPage();
-      print("more news = ${_moreNews[0].title} ");
       if(_moreNews==null) return;
       if(_moreNews[0].title == SpiderPage.failedLoadingNews) {
-        print("no more news found");
         setState(() {
           _loadedNews=true;
           _moreNewsAvailable = false;
@@ -71,7 +69,6 @@ class _NewsCardsState extends State<NewsCards> {
           onNotification: (ScrollUpdateNotification  scrollInfo) {
             if(_loadedNews && scrollInfo.metrics.pixels>scrollInfo.metrics.maxScrollExtent*0.8) {
               loadMore();
-              print("loading more");
               return true;
             }
             return false;
