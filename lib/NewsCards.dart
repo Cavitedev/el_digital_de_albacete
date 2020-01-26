@@ -6,7 +6,7 @@ import 'package:el_digital_de_albacete/NewsCard.dart';
 
 class NewsCards extends StatefulWidget {
   SpiderPage spiderPage;
-
+  
   NewsCards({this.spiderPage});
   
   @override
@@ -18,12 +18,15 @@ class _NewsCardsState extends State<NewsCards> {
   List<NewsData> news;
   SpiderPage spiderPage;
   _NewsCardsState({this.spiderPage});
-  bool loadingNews = true;
+  bool loadedNews = false;
   
+  int pages = 0;
+  static const int itemCount = 25;
   void _getNews() async{
     news = await spiderPage.scrapPage();
     setState(() {
-      loadingNews = false;
+      pages++;
+      loadedNews = true;
     });
   }
   @override
@@ -35,14 +38,25 @@ class _NewsCardsState extends State<NewsCards> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: loadingNews?<Widget> [
-        FadingCircle(),
-        ]:news.map((newData)=> new NewsCard(newData: newData)).toList()
-            
-      ),
+    int count = itemCount*pages + (loadedNews?0:1);
+
+      return ListView.builder(
+          itemCount: count,
+          itemBuilder: (context, index) {
+            if(!loadedNews && index == count-1 )
+              return FadingCircle();
+            return NewsCard(newData: news[index]);
+          },);
+    
+    
+//    return SingleChildScrollView(
+//      child: Column(
+//        children: loadingNews?<Widget> [
+//        FadingCircle(),
+//        ]:news.map((newData)=> new NewsCard(newData: newData)).toList()
+//            
+//      ),
       
-    );
+//    );
   }
 }
