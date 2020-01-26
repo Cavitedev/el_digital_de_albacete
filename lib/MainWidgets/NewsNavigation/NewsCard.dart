@@ -1,4 +1,5 @@
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/oneNewsViewer.dart';
 import 'package:el_digital_de_albacete/Models/NewsData.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,7 +16,8 @@ class NewsCard extends StatelessWidget {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return InkWell(
       onTap: () {
-        print("tapping new with link= ${newData.link}");
+        print("tap");
+        Navigator.push(context, MaterialPageRoute(builder: (context) => OneNewsViewer()));
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
