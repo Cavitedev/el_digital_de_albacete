@@ -39,17 +39,20 @@ class _NewsCardsState extends State<NewsCards> {
     _getNews();
   }
 
-  void loadMore() {
+  void loadMore() async {
     if(_loadedNews) {
       _loadedNews = false;
-      print("loading more news");
+      _news.addAll(await spiderPage.scrapNextPage());
+      setState(() {
+        _loadedNews=true;
+        _pages++;
+      });
     }
   }
   
   @override
   Widget build(BuildContext context) {
     int count = _itemCount*_pages + (_loadedNews?0:1);
-  print("build");
       return NotificationListener<ScrollUpdateNotification >(
         
           onNotification: (ScrollUpdateNotification  scrollInfo) {
