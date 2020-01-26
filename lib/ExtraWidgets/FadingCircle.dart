@@ -6,7 +6,7 @@ class FadingCircle extends StatelessWidget {
   Widget build(BuildContext context) {
     return           SpinKitFadingCircle(
       size: 100,
-      color: Theme.of(context).splashColor,
+      color: Theme.of(context).focusColor,
       //color: Colors.teal[700],
     );
   }

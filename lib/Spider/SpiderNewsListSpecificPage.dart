@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:el_digital_de_albacete/Models/NewsData.dart';
+import 'package:el_digital_de_albacete/Spider/Spider.dart';
 import 'package:html/dom.dart' as dom;
-import 'package:html/parser.dart' as parser;
-import 'package:http/http.dart' as http;
 
-class SpiderPage {
+
+class SpiderNewsListSpecificPage extends Spider {
+  
   String url;
   String _nextURL;
 
@@ -17,7 +16,7 @@ class SpiderPage {
   static final List<NewsData> noMoreNewsFound = [NewsData(title: failedLoadingNews)]; 
   
   
-  SpiderPage({this.url});
+  SpiderNewsListSpecificPage({this.url});
 
   Future<List<NewsData>> scrapCurrentPage() async {
     return await _scrapPage(url);
@@ -31,24 +30,13 @@ class SpiderPage {
   }
   
   Future<List<NewsData>> _scrapPage(String _url) async {
-    dom.Document _document = await _accessURL(_url);
+    dom.Document _document = await accessURL(_url);
     _nextURL = _getNextUrl(_document);
     return _getNews(_document);
   }
   
 
-  Future<dom.Document> _accessURL(String _url) async {
-    try {
-      http.Response response = await http.get(_url);
-      String body = utf8.decode(response.bodyBytes);
-      dom.Document document = parser.parse(body);
-      url = _url;
-      return document;
-    } catch (e) {
-      print(e);
-      return null;
-    }
-  }
+
 
   List<NewsData> _getNews(dom.Document _document) {
     List<dom.Element> articles =

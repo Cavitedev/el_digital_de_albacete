@@ -1,4 +1,4 @@
-import 'package:el_digital_de_albacete/Cover.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsList.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -12,13 +12,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
 
         primaryColorLight: Colors.white,
-        splashColor: Colors.teal[700],
+        splashColor: Colors.green[300],
+        focusColor: Colors.teal[700],
         backgroundColor: Colors.green[100],
         accentColor: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         errorColor: Colors.red[100],
         
       ),
-      home: Cover(),
+      home: NewsList(),
     );
   }
 }

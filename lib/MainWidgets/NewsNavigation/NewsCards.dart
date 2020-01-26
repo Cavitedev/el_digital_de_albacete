@@ -1,12 +1,12 @@
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/NoMoreNewsFoundErrorPlaceholder.dart';
 import 'package:el_digital_de_albacete/Models/NewsData.dart';
-import 'package:el_digital_de_albacete/Spider/SpiderPage.dart';
+import 'package:el_digital_de_albacete/Spider/SpiderNewsListSpecificPage.dart';
 import 'package:flutter/material.dart';
-import 'package:el_digital_de_albacete/NewsCard.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsCard.dart';
 
 class NewsCards extends StatefulWidget {
-  SpiderPage spiderPage;
+  final SpiderNewsListSpecificPage spiderPage;
   
   NewsCards({this.spiderPage});
   
@@ -17,7 +17,7 @@ class NewsCards extends StatefulWidget {
 class _NewsCardsState extends State<NewsCards> {
 
   List<NewsData> _news;
-  SpiderPage spiderPage;
+  SpiderNewsListSpecificPage spiderPage;
   _NewsCardsState({this.spiderPage});
   bool _loadedNews = false;
   bool _moreNewsAvailable = true;
@@ -46,7 +46,7 @@ class _NewsCardsState extends State<NewsCards> {
       _loadedNews = false;
       List<NewsData> _moreNews= await spiderPage.scrapNextPage();
       if(_moreNews==null) return;
-      if(_moreNews[0].title == SpiderPage.failedLoadingNews) {
+      if(_moreNews[0].title == SpiderNewsListSpecificPage.failedLoadingNews) {
         setState(() {
           _loadedNews=true;
           _moreNewsAvailable = false;
