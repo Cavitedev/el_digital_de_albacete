@@ -15,18 +15,21 @@ class NewsCards extends StatefulWidget {
 
 class _NewsCardsState extends State<NewsCards> {
 
-  List<NewsData> news;
+  List<NewsData> _news;
   SpiderPage spiderPage;
   _NewsCardsState({this.spiderPage});
-  bool loadedNews = false;
+  bool _loadedNews = false;
   
-  int pages = 0;
-  static const int itemCount = 25;
+  int _pages = 0;
+  static const int _itemCount = 25;
+  
+  
+  
   void _getNews() async{
-    news = await spiderPage.scrapPage();
+    _news = await spiderPage.scrapPage();
     setState(() {
-      pages++;
-      loadedNews = true;
+      _pages++;
+      _loadedNews = true;
     });
   }
   @override
@@ -36,17 +39,35 @@ class _NewsCardsState extends State<NewsCards> {
     _getNews();
   }
 
+  void loadMore() {
+    if(_loadedNews) {
+      _loadedNews = false;
+      print("loading more news");
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
-    int count = itemCount*pages + (loadedNews?0:1);
-
-      return ListView.builder(
+    int count = _itemCount*_pages + (_loadedNews?0:1);
+  print("build");
+      return NotificationListener<ScrollUpdateNotification >(
+        
+          onNotification: (ScrollUpdateNotification  scrollInfo) {
+            if(_loadedNews && scrollInfo.metrics.pixels>scrollInfo.metrics.maxScrollExtent*0.8) {
+              loadMore();
+              return true;
+            }
+            return false;
+          },
+          
+          child: ListView.builder(
           itemCount: count,
           itemBuilder: (context, index) {
-            if(!loadedNews && index == count-1 )
+            if(!_loadedNews && index == count-1 )
               return FadingCircle();
-            return NewsCard(newData: news[index]);
-          },);
+            return NewsCard(newData: _news[index]);
+          },),
+      );
     
     
 //    return SingleChildScrollView(
