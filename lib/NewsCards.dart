@@ -26,7 +26,7 @@ class _NewsCardsState extends State<NewsCards> {
   
   
   void _getNews() async{
-    _news = await spiderPage.scrapPage();
+    _news = await spiderPage.scrapCurrentPage();
     setState(() {
       _pages++;
       _loadedNews = true;

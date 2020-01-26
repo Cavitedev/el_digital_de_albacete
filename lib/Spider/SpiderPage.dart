@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:el_digital_de_albacete/Models/NewsData.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
@@ -13,20 +12,31 @@ class SpiderPage {
   static const String _newsClassListing = "post-listing";
   static const String _paginationClass = "pagination";
   static const String _currentPageClass = "current";
+  static const String _pageClass = "page";
 
   SpiderPage({this.url});
 
-  Future<List<NewsData>> scrapPage() async {
-    dom.Document _document = await _accessURL(url);
+  Future<List<NewsData>> scrapCurrentPage() async {
+    return await _scrapPage(url);
+  }
+  Future<List<NewsData>> scrapNextPage() async {
+    if(url== null) return null;
+    return await _scrapPage(_nextURL);
+  }
+  
+  Future<List<NewsData>> _scrapPage(String _url) async {
+    dom.Document _document = await _accessURL(_url);
     _nextURL = _getNextUrl(_document);
     return _getNews(_document);
   }
+  
 
   Future<dom.Document> _accessURL(String _url) async {
     try {
-      http.Response response = await http.get(url);
+      http.Response response = await http.get(_url);
       String body = utf8.decode(response.bodyBytes);
       dom.Document document = parser.parse(body);
+      url = _url;
       return document;
     } catch (e) {
       print(e);
@@ -52,11 +62,17 @@ class SpiderPage {
   }
 
   String _getNextUrl(dom.Document _document) {
-    dom.Element pages =
+    dom.Element _pagesDiv =
         _document.body.getElementsByClassName(_paginationClass)[0];
     int _currentPage =
-        int.parse(pages.getElementsByClassName(_currentPageClass)[0].text);
-    String _nextUrl;
-    return 'url';
+        int.parse(_pagesDiv.getElementsByClassName(_currentPageClass)[0].text);
+    String _nextPage = (_currentPage+1).toString();
+    String _nextUrl = 'https://www.eldigitaldealbacete.com/noticias-albacete/';
+    for(dom.Element element in _pagesDiv.getElementsByClassName(_pageClass)) {
+      if(element.attributes['title']==_nextPage) {
+        _nextUrl = element.attributes['href']; 
+      }
+    }
+    return _nextUrl;
   }
 }
