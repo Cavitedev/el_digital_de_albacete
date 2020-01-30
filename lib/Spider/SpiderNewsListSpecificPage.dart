@@ -1,4 +1,4 @@
-import 'package:el_digital_de_albacete/Models/NewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/Spider.dart';
 import 'package:html/dom.dart' as dom;
 
@@ -13,15 +13,15 @@ class SpiderNewsListSpecificPage extends Spider {
   static const String _currentPageClass = "current";
   static const String _pageClass = "page";
   static const String failedLoadingNews = 'failedLoadingNews';
-  static final List<NewsData> noMoreNewsFound = [NewsData(title: failedLoadingNews)]; 
+  static final List<SimpleNewsData> noMoreNewsFound = [SimpleNewsData(title: failedLoadingNews)]; 
   
   
   SpiderNewsListSpecificPage({this.url});
 
-  Future<List<NewsData>> scrapCurrentPage() async {
+  Future<List<SimpleNewsData>> scrapCurrentPage() async {
     return await _scrapPage(url);
   }
-  Future<List<NewsData>> scrapNextPage() async {
+  Future<List<SimpleNewsData>> scrapNextPage() async {
     if(_nextURL==null) return null;
     if(_nextURL== failedLoadingNews) {
       return noMoreNewsFound;
@@ -29,7 +29,7 @@ class SpiderNewsListSpecificPage extends Spider {
     return await _scrapPage(_nextURL);
   }
   
-  Future<List<NewsData>> _scrapPage(String _url) async {
+  Future<List<SimpleNewsData>> _scrapPage(String _url) async {
     dom.Document _document = await accessURL(_url);
     _nextURL = _getNextUrl(_document);
     return _getNews(_document);
@@ -38,13 +38,13 @@ class SpiderNewsListSpecificPage extends Spider {
 
 
 
-  List<NewsData> _getNews(dom.Document _document) {
+  List<SimpleNewsData> _getNews(dom.Document _document) {
     List<dom.Element> articles =
         _document.body.getElementsByClassName(_newsClassListing)[0].children;
-    List<NewsData> news = List<NewsData>();
+    List<SimpleNewsData> news = List<SimpleNewsData>();
     for (dom.Element article in articles) {
       dom.Element anchor = article.children[0].children[0];
-      news.add(NewsData(
+      news.add(SimpleNewsData(
         link: anchor.attributes['href'],
         title: article.children[1].children[0].text,
         imageSrc: anchor.children[0].attributes['src'],

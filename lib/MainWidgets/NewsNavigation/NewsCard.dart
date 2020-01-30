@@ -1,23 +1,22 @@
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
-import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/oneNewsViewer.dart';
-import 'package:el_digital_de_albacete/Models/NewsData.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/SingleNewsViewer.dart';
+import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
 class NewsCard extends StatelessWidget {
 
-  final NewsData newData;
+  final SimpleNewsData simpleNewsData;
 
-  NewsCard({this.newData});
+  NewsCard({this.simpleNewsData});
 
   @override
   Widget build(BuildContext context) {
     double textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return InkWell(
       onTap: () {
-        print("tap");
-        Navigator.push(context, MaterialPageRoute(builder: (context) => OneNewsViewer()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SingleNewsViewer(simpleNewsData)));
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
@@ -33,7 +32,7 @@ class NewsCard extends StatelessWidget {
                 child: CachedNetworkImage(
                   placeholder: (context,url) => FadingCircle(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
-                  imageUrl: newData.imageSrc,
+                  imageUrl: simpleNewsData.imageSrc,
                 ),
               ),
               
@@ -43,8 +42,8 @@ class NewsCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 0.0),
                   child: _ArticleDescription(
-                    title: newData.title,
-                    publishDate: newData.publishDate,
+                    title: simpleNewsData.title,
+                    publishDate: simpleNewsData.publishDate,
                   ),
                 ),
               )

@@ -10,19 +10,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'El digital de albacete',
       theme: ThemeData(
-
         primaryColorLight: Colors.white,
         splashColor: Colors.green[300],
         focusColor: Colors.teal[700],
         backgroundColor: Colors.green[100],
         accentColor: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         errorColor: Colors.red[100],
-        
       ),
       home: NewsList(),
     );
   }
 }
-
-
-
