@@ -1,5 +1,6 @@
+import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
+
 class ExtraNewsData{
-  List<String> imageSrcs;
-  List<String> paragraphs;
-  ExtraNewsData({this.imageSrcs,this.paragraphs});
+  List<MeaningfulString> meaningfulStrings;
+  ExtraNewsData({this.meaningfulStrings});
 }
