@@ -1,7 +1,6 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Spider/Spider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart' as dom;
 
 class SpiderSingleNews extends Spider {
@@ -10,7 +9,6 @@ class SpiderSingleNews extends Spider {
   SpiderSingleNews({this.url});
 
   static const String _contentClass = "entry";
-  static const String _newsImportantDataStyle = "text-align: justify;";
 
   Future<ExtraNewsData> scrapSingleNewsPage() async {
     dom.Document _document = await accessURL(url);
@@ -29,7 +27,7 @@ class SpiderSingleNews extends Spider {
           }
         }
         String _text = _data.text;
-        if (_text.isNotEmpty) {
+        if (_text.isNotEmpty && _text!="/Redacción/") {
           newsInformation.add(
               MeaningfulString(string: _text, textTag: TextTag.p));
         }
