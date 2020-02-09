@@ -1,4 +1,5 @@
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
+import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/SingleNewsViewer.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:flutter/material.dart';
@@ -92,18 +93,7 @@ class _ArticleDescription extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child:Row(
-            children: <Widget>[
-              Icon(Icons.access_time,size: 12,),
-              Text(
-                ' $publishDate',
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.black54,
-                ),
-              ),
-            ],
-          ),
+          child:UploadTime(publishDate: publishDate,size: 10,)
 
         ),
       ],
