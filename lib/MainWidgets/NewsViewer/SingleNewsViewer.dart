@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:el_digital_de_albacete/ExtraWidgets/DataTableBuilder.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/DataOfTable.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
@@ -128,7 +129,6 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                               );
                               break;
                             default:
-                              print("default");
                               return null;
                               break;
                           }
@@ -136,38 +136,8 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                             is DataOfTable) {
                           DataOfTable dataOfTable =
                               _extraNewsData.newsContent[i];
-                          return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: DataTable(
-                                  columns: dataOfTable.headerRow
-                                      .map(
-                                        (row) => DataColumn(
-                                          label: Text(
-                                            row,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  rows: dataOfTable.table
-                                      .map((row) => DataRow(
-                                          cells: row
-                                              .map(
-                                                (cell) => DataCell(
-                                                  Text(
-                                                    cell,
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                              .toList()))
-                                      .toList()));
+                              return DataTableBuilder(dataOfTable: dataOfTable);
                         } else {
-                          print(_extraNewsData.newsContent[i]);
                           return null;
                         }
                       },

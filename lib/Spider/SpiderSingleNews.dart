@@ -1,5 +1,5 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/DataOfTable.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/Spider/Spider.dart';
@@ -51,8 +51,7 @@ class SpiderSingleNews extends Spider {
           }
           table.add(row);
         }
-        print("add table");
-        newsInformation.add(DataOfTable(table: table, headerRow: headers));
+        newsInformation.add(DataOfTable(table, headers));
       }
       //
     }
