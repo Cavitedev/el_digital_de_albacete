@@ -82,11 +82,8 @@ class _ArticleDescription extends StatelessWidget {
                 '$title',
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.title,
+
               ),
             ],
           ),

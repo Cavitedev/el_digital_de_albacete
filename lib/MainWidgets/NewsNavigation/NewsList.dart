@@ -21,7 +21,7 @@ class _NewsListState extends State<NewsList> {
     SpiderNewsListSpecificPage spiderPage = new SpiderNewsListSpecificPage(url:this._url);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Economía'),
+        title: Text('Economía', style: Theme.of(context).textTheme.display1,),
         leading: Image.asset('assets/logo.png'),
         backgroundColor: Theme.of(context).accentColor,
       ),

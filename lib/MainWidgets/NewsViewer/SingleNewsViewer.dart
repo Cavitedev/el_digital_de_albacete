@@ -55,9 +55,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               floating: true,
               title: Text(
                 "Economía",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.display1
               ),
               backgroundColor: Theme.of(context).accentColor,
             ),
@@ -73,7 +71,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                 child: SizedBox(
                   child: Text(
                     _simpleNewsData.title,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline,
                   ),
                 ),
               ),
@@ -86,68 +84,77 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               ),
             ])),
             _loadedNews
-                ? SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, i) {
-                        if (_extraNewsData.newsContent[i] is MeaningfulString) {
-                          MeaningfulString _data =
-                              _extraNewsData.newsContent[i];
-
-                          switch (_data.textTag) {
-                            case TextTag.p:
-                              return Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-                                child: Text(
-                                  _data.string,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              );
-                              break;
-                            case TextTag.img:
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: CachedNetworkImage(
-                                  placeholder: (context, url) => FadingCircle(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                  imageUrl: _data.string,
-                                ),
-                              );
-                              break;
-                            case TextTag.h2:
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  _data.string,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              );
-                              break;
-                            default:
-                              return null;
-                              break;
-                          }
-                        } else if (_extraNewsData.newsContent[i]
-                            is DataOfTable) {
-                          DataOfTable dataOfTable =
-                              _extraNewsData.newsContent[i];
-                              return DataTableBuilder(dataOfTable: dataOfTable);
-                        } else {
-                          return null;
-                        }
-                      },
-                      childCount: _extraNewsData.newsContent.length,
-                    ),
-                  )
+                ? SingleNewsDataBodyWidget(extraNewsData: _extraNewsData)
                 : SliverToBoxAdapter(child: SizedBox(child: FadingCircle())),
           ],
         ),
       ),
     );
+  }
+}
+
+class SingleNewsDataBodyWidget extends StatelessWidget {
+  const SingleNewsDataBodyWidget({
+    Key key,
+    @required ExtraNewsData extraNewsData,
+  }) : _extraNewsData = extraNewsData, super(key: key);
+
+  final ExtraNewsData _extraNewsData;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, i) {
+            if (_extraNewsData.newsContent[i] is MeaningfulString) {
+              MeaningfulString _data =
+                  _extraNewsData.newsContent[i];
+
+              switch (_data.textTag) {
+                case TextTag.p:
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                    child: Text(
+                      _data.string,
+                      style: Theme.of(context).textTheme.body1
+                    ),
+                  );
+                  break;
+                case TextTag.img:
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 10),
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => FadingCircle(),
+                      errorWidget: (context, url, error) =>
+                          Icon(Icons.error),
+                      imageUrl: _data.string,
+                    ),
+                  );
+                  break;
+                case TextTag.h2:
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      _data.string,
+                      style: Theme.of(context).textTheme.subhead)
+                  );
+                  break;
+                default:
+                  return null;
+                  break;
+              }
+            } else if (_extraNewsData.newsContent[i]
+                is DataOfTable) {
+              DataOfTable dataOfTable =
+                  _extraNewsData.newsContent[i];
+                  return DataTableBuilder(dataOfTable: dataOfTable);
+            } else {
+              return null;
+            }
+          },
+          childCount: _extraNewsData.newsContent.length,
+        ),
+      );
   }
 }

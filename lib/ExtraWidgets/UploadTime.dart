@@ -13,10 +13,7 @@ class UploadTime extends StatelessWidget {
         Icon(Icons.access_time,size: size*1.2,),
         Text(
           ' $publishDate',
-          style: TextStyle(
-            fontSize: size,
-            color: Colors.black54,
-          ),
+          style: Theme.of(context).textTheme.caption.copyWith(fontSize: size),
         ),
       ],
     );
