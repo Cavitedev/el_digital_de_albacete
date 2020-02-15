@@ -42,10 +42,10 @@ class SpiderSingleNews extends Spider {
         for(dom.Element td in _data.children[0].children[0].children){
           headers.add(td.text);
         }
-      List<List<String>> table = List<List<String>>();
+      List<List<dynamic>> table = List<List<dynamic>>();
         for(int i = 1; i<_data.children[0].children.length; i++){
           dom.Element tr = _data.children[0].children[i];
-          List<String> row = List<String>();
+          List<dynamic> row = List<dynamic>();
           for(dom.Element td in tr.children){
             row.add(td.text);
           }

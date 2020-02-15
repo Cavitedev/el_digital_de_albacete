@@ -46,6 +46,6 @@ class NumberTools{
       }
       thousandsCount++;
     }
-    return number;
+    return double.parse(number.toStringAsFixed(2));
   }
 }
