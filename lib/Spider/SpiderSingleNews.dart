@@ -35,7 +35,8 @@ class SpiderSingleNews extends Spider {
           }
         }
         String _text = _data.text;
-        if (_text.isNotEmpty && _text!=_unworthText) {
+
+        if (_text.trim().isNotEmpty && _text!=_unworthText) {
           newsInformation.add(
               MeaningfulString(string: _text, textTag: TextTag.p));
         }

@@ -76,7 +76,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8),
                 child: UploadTime(
                   publishDate: _simpleNewsData.publishDate,
                   size: 16,
