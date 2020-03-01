@@ -3,6 +3,7 @@ import 'package:el_digital_de_albacete/ExtraWidgets/DataTableBuilder.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
@@ -106,20 +107,49 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, i) {
-            if (_extraNewsData.newsContent[i] is MeaningfulString) {
+
+            if(_extraNewsData.newsContent[i] is ParagraphStyledData){
+              ParagraphStyledData _data= _extraNewsData.newsContent[i];
+
+              return Padding(
+               padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                child: RichText(
+                  text: TextSpan(
+                    style: Theme.of(context).textTheme.body1,
+                    children: _data.styledData.map((textStyled) {
+                      return TextSpan(text: textStyled.text, style: textStyled.extraStyle);
+                    }).toList()
+                  ),
+                ),
+              );
+
+
+//            return SliverList(
+//                delegate: SliverChildBuilderDelegate((context2,i2)
+//              {
+//                return Padding(
+//                  padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+//                  child: Text(
+//                      "hola",
+//                      style: Theme
+//                          .of(context)
+//                          .textTheme
+//                          .body1
+//                  ),
+//                );
+//              },
+//            childCount: _data.styledData.length,
+//            ));
+            }
+
+
+
+            else if (_extraNewsData.newsContent[i] is MeaningfulString) {
               MeaningfulString _data =
                   _extraNewsData.newsContent[i];
 
               switch (_data.textTag) {
-                case TextTag.p:
-                  return Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-                    child: Text(
-                      _data.string,
-                      style: Theme.of(context).textTheme.body1
-                    ),
-                  );
-                  break;
+
                 case TextTag.img:
                   return Padding(
                     padding:

@@ -7,4 +7,4 @@ class MeaningfulString implements NewsData{
   MeaningfulString({this.string,this.textTag});
 }
 
-enum TextTag{p,img,h2}
+enum TextTag{img,h2}

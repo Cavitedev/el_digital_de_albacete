@@ -1,4 +1,5 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
@@ -36,13 +37,13 @@ class SpiderSingleNews extends Spider {
                 .add(MeaningfulString(string: _imageUrl, textTag: TextTag.img));
           }
         }
-          String _text = _data.text;
+          String _text = _data.innerHtml;
 
-          //print(_data.children.length>0?_data.children[0]?.text:"");
-          if (_text.trim().isNotEmpty && _text != _unworthText) {
 
-            newsInformation
-                .add(MeaningfulString(string: _text, textTag: TextTag.p));
+          if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
+            newsInformation.add(ParagraphStyledData(_text));
+//            newsInformation
+//                .add(MeaningfulString(string: _text, textTag: TextTag.p));
 
           } else if (_data.localName == "h2") {
             newsInformation
