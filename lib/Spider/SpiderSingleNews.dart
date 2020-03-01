@@ -35,7 +35,7 @@ class SpiderSingleNews extends Spider {
             newsInformation
                 .add(MeaningfulString(string: _imageUrl, textTag: TextTag.img));
           }
-        } else {
+        }
           String _text = _data.text;
 
           //print(_data.children.length>0?_data.children[0]?.text:"");
@@ -66,7 +66,7 @@ class SpiderSingleNews extends Spider {
           }
         }
         //
-      }
+
     }
     return ExtraNewsData(newsContent: newsInformation);
   }
