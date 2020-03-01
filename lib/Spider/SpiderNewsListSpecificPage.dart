@@ -47,7 +47,7 @@ class SpiderNewsListSpecificPage extends Spider {
       news.add(SimpleNewsData(
         link: anchor.attributes['href'],
         title: article.children[1].children[0].text,
-        imageSrc: anchor.children[0].attributes['src'],
+        imageSrc: anchor.children[0].attributes['data-src'],
         publishDate: article.children[2].children[0].text,
       ));
       //  debugPrint(news.last.title);

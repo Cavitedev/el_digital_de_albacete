@@ -10,13 +10,18 @@ class SpiderSingleNews extends Spider {
 
   SpiderSingleNews({this.url});
 
-  static const String _contentClass = "entry";
+  static const List<String> _contentClasses = <String>["NormalTextoNoticia","entry"];
   static const String _unworthText = "/Redacción/";
 
   Future<ExtraNewsData> scrapSingleNewsPage() async {
     dom.Document _document = await accessURL(url);
-    List<dom.Element> _entryDatas =
-        _document.getElementsByClassName(_contentClass)[0].children;
+    List<dom.Element> _entryDatas;
+    for(String _contentClass in _contentClasses){
+      _entryDatas =
+          _document.getElementsByClassName(_contentClass);
+      if(_entryDatas.isNotEmpty) break;
+    }
+    _entryDatas = _entryDatas[0].children;
     List<NewsData> newsInformation = List<NewsData>();
 
     for (dom.Element _data in _entryDatas) {
