@@ -80,7 +80,7 @@ class _ArticleDescription extends StatelessWidget {
             children: <Widget>[
               Text(
                 '$title',
-                maxLines: 5,
+                maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.title,
 
@@ -90,7 +90,7 @@ class _ArticleDescription extends StatelessWidget {
         ),
         Expanded(
           flex: 1,
-          child:UploadTime(publishDate: publishDate,size: 10,)
+          child:UploadTime(publishDate: publishDate,size: 11,)
 
         ),
       ],
