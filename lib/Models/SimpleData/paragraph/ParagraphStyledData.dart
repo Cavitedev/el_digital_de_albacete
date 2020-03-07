@@ -102,8 +102,8 @@ class ParagraphStyledData implements NewsData{
 
   String _removeHTMLTags(String html){
     List<String> output = List<String>();
-    print("before");
-    print(html);
+//    print("before");
+//    print(html);
       for(String htmlTag in _htmlTagsToRemove){
         int index = html.indexOf(htmlTag,0);
         if(index > 0){
@@ -112,9 +112,8 @@ class ParagraphStyledData implements NewsData{
         }
       }
       html = output.isNotEmpty?output.join():html;
-    print("after");
-
-    print(html);
+//    print("after");
+//    print(html);
     return html;
   }
 
