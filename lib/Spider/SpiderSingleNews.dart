@@ -28,7 +28,6 @@ class SpiderSingleNews extends Spider {
     List<NewsData> newsInformation = List<NewsData>();
 
     for (dom.Element _data in _entryDatas) {
-      print(_data.localName);
       if (_data.localName == "p") {
         String _imageUrl;
         for (dom.Element child in _data.children) {
