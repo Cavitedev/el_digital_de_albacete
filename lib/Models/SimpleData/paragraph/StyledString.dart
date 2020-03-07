@@ -6,4 +6,18 @@ class StyledString{
 
   StyledString({this.text, this.extraStyle});
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is StyledString &&
+              runtimeType == other.runtimeType &&
+              text == other.text &&
+              extraStyle == other.extraStyle;
+
+  @override
+  int get hashCode =>
+      text.hashCode ^
+      extraStyle.hashCode;
+
+
 }

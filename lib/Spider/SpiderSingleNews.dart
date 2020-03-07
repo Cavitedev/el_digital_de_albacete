@@ -29,23 +29,36 @@ class SpiderSingleNews extends Spider {
 
     for (dom.Element _data in _entryDatas) {
       if (_data.localName == "p") {
-        if (_data.children.isNotEmpty &&
-            _data.children[0].attributes.isNotEmpty) {
-          String _imageUrl = _data.children[0].attributes['src'];
-          if (_imageUrl != null) {
-            newsInformation
-                .add(MeaningfulString(string: _imageUrl, textTag: TextTag.img));
+        String _imageUrl;
+        for(dom.Element child in _data.children){
+          if (child.attributes.isNotEmpty) {
+            _imageUrl = child.attributes['src'];
+            _addImage(_imageUrl, newsInformation);
+          }
+          if(child.localName=="a"){
+            for(dom.Element linkChild in child.children){
+              if (linkChild.attributes.isNotEmpty) {
+                _imageUrl = linkChild.attributes['data-src'];
+                _addImage(_imageUrl, newsInformation);
+              }
+            }
           }
         }
+
+
+
+
           String _text = _data.innerHtml;
 
 
           if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
+//            print("paragraph"+ _text);
             newsInformation.add(ParagraphStyledData(_text));
 //            newsInformation
 //                .add(MeaningfulString(string: _text, textTag: TextTag.p));
 
           } else if (_data.localName == "h2") {
+            print("h2" + _data.text);
             newsInformation
                 .add(MeaningfulString(string: _data.text, textTag: TextTag.h2));
           }
@@ -64,11 +77,19 @@ class SpiderSingleNews extends Spider {
               table.add(row);
             }
             newsInformation.add(DataOfTable(table, headers));
+
           }
         }
         //
-
     }
+
     return ExtraNewsData(newsContent: newsInformation);
+  }
+
+  void _addImage(String _imageUrl, List<NewsData> newsInformation) {
+    if (_imageUrl != null) {
+      newsInformation
+          .add(MeaningfulString(string: _imageUrl, textTag: TextTag.img));
+    }
   }
 }
