@@ -15,6 +15,11 @@ class StyledString{
               extraStyle == other.extraStyle;
 
   @override
+  String toString() {
+    return 'StyledString{text: $text, extraStyle: $extraStyle}';
+  }
+
+  @override
   int get hashCode =>
       text.hashCode ^
       extraStyle.hashCode;

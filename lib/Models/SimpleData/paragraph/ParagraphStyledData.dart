@@ -10,11 +10,13 @@ class ParagraphStyledData implements NewsData{
     'strong' : TextStyle(fontWeight: FontWeight.bold),
     'i' : TextStyle(fontStyle: FontStyle.italic),
   };
-  static const List<String> _htmlTags = <String>['&nbsp;'];
+  static const List<String> _htmlEntities = <String>['&nbsp;'];
+  static const List<String> _htmlTagsToRemove = <String>['span'];
   static const int _endSymbolSpacePlusNextStart = 2;
   static const int closeTagSymbolSpace = 1;
   ParagraphStyledData(String html){
-    styledData = _checkTags(_tagAndText(text: html, tag: " "), null);
+    html = _removeHTMLTags(html);
+    styledData = _checkTags(_tagAndText(text: html, tag: ""), null);
   }
 
   List<StyledString> _checkTags(_tagAndText dataText, TextStyle styleBefore){
@@ -43,6 +45,8 @@ class ParagraphStyledData implements NewsData{
 
   List<_tagAndText> _splitHtml(String html){
 
+
+
     List<_tagAndText> output = List<_tagAndText>();
     int i = 0;
     int indexOfTag = html.indexOf("<", i);
@@ -64,6 +68,8 @@ class ParagraphStyledData implements NewsData{
       i = indexOfTag+tag.length+ _endSymbolSpacePlusNextStart;
       indexOfTag = html.indexOf("<", i);
       while(indexOfTag>=0){
+        if(indexOfTag+tag.length+3 > html.length )
+          break;
         String endTag = html.substring(indexOfTag,indexOfTag+tag.length+3);
         if(endTag == '</'+tag+'>'){
           output.add(_tagAndText(tag: tag,
@@ -81,17 +87,35 @@ class ParagraphStyledData implements NewsData{
     if(lastIndex<html.length-1){
       output.add(_tagAndText(text: html.substring(lastIndex,html.length)));
     }
-    return _removeHTMLTags(output);
+    return _removeEntitiesTags(output);
 
   }
 
-  List<_tagAndText> _removeHTMLTags(List<_tagAndText> listTagTests){
+  List<_tagAndText> _removeEntitiesTags(List<_tagAndText> listTagTests){
     for(_tagAndText tagText in listTagTests){
-      for(String htmlTag in _htmlTags){
+      for(String htmlTag in _htmlEntities){
         tagText.text = tagText.text.replaceAll(htmlTag, "");
       }
     }
     return listTagTests;
+  }
+
+  String _removeHTMLTags(String html){
+    List<String> output = List<String>();
+    print("before");
+    print(html);
+      for(String htmlTag in _htmlTagsToRemove){
+        int index = html.indexOf(htmlTag,0);
+        if(index > 0){
+          String regExp = "<$htmlTag.*</$htmlTag>";
+          output.addAll(html.split(RegExp(regExp)));
+        }
+      }
+      html = output.isNotEmpty?output.join():html;
+    print("after");
+
+    print(html);
+    return html;
   }
 
 }

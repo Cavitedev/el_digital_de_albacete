@@ -33,6 +33,7 @@ void main(){
       expect((outputData.newsContent[3] as ParagraphStyledData).styledData[0],StyledString(text: "Del mismo modo, "));
       expect((outputData.newsContent[3] as ParagraphStyledData).styledData[1],StyledString(text:"desciende ",extraStyle: ParagraphStyledData.attributesStyles['b']));
       expect((outputData.newsContent[3] as ParagraphStyledData).styledData[2],StyledString(text: "el número de parados registrado en febrero en la provincia con respecto al mismo mes del año anterior en 238 desempleados, ya que esta cifra en 2019 se situaba en 34.716 personas en paro."));
+      expect((outputData.newsContent.length),4);
     });
 
 

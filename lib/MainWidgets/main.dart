@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
           caption: TextStyle(fontSize: 10, color: Colors.black54, fontFamily: "NotoSans"),
           title: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
           display1: TextStyle(fontSize: 30, color: Colors.white, fontFamily: "NotoSans"),
-          subhead: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, fontFamily: "NotoSans")
+          subhead: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
+          subtitle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
 
         ),
       ),

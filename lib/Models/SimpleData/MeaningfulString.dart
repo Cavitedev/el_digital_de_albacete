@@ -7,6 +7,11 @@ class MeaningfulString implements NewsData{
 
 
   @override
+  String toString() {
+    return 'MeaningfulString{string: $string, textTag: $textTag}';
+  }
+
+  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
           other is MeaningfulString &&
@@ -22,4 +27,4 @@ class MeaningfulString implements NewsData{
 
 }
 
-enum TextTag{img,h2}
+enum TextTag{img,h2,h3}

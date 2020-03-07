@@ -170,6 +170,14 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                       style: Theme.of(context).textTheme.subhead)
                   );
                   break;
+                case TextTag.h3:
+                  return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          _data.string,
+                          style: Theme.of(context).textTheme.subtitle)
+                  );
+                  break;
                 default:
                   return null;
                   break;

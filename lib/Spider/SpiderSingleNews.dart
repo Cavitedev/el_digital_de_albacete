@@ -13,21 +13,28 @@ class SpiderSingleNews extends Spider {
 
   static const List<String> _contentClasses = <String>[
     "NormalTextoNoticia",
-    "entry"
+    "entry",
+    "column",
+
   ];
   static const String _unworthText = "/Redacción/";
 
   Future<ExtraNewsData> scrapSingleNewsPage() async {
     dom.Document _document = await accessURL(url);
-    List<dom.Element> _entryDatas;
+    List<dom.Element> _entryDatas = new List<dom.Element>();
     for (String _contentClass in _contentClasses) {
-      _entryDatas = _document.getElementsByClassName(_contentClass);
-      if (_entryDatas.isNotEmpty) break;
+      List<dom.Element> _someEntryDatas = _document.getElementsByClassName(_contentClass);
+      if(_someEntryDatas.isNotEmpty){
+      _entryDatas.addAll(_someEntryDatas[0]?.children);
+//      _entryDatas.forEach((e){
+//        print(e.text);
+//      });
+      }
     }
-    _entryDatas = _entryDatas[0].children;
     List<NewsData> newsInformation = List<NewsData>();
 
     for (dom.Element _data in _entryDatas) {
+
       if (_data.localName == "p") {
         String _imageUrl;
         for (dom.Element child in _data.children) {
@@ -45,7 +52,6 @@ class SpiderSingleNews extends Spider {
           }
         }
 
-
         if (_data.text
             .trim()
             .isNotEmpty && _data.text != _unworthText) {
@@ -57,10 +63,13 @@ class SpiderSingleNews extends Spider {
         }
       }
           else if (_data.localName == "h2") {
-            print("h2" + _data.text);
             newsInformation
                 .add(MeaningfulString(string: _data.text, textTag: TextTag.h2));
           }
+      else if (_data.localName == "h3") {
+        newsInformation
+            .add(MeaningfulString(string: _data.text, textTag: TextTag.h3));
+      }
           else if (_data.localName == "table") {
             List<String> headers = List<String>();
             for (dom.Element td in _data.children[0].children[0].children) {

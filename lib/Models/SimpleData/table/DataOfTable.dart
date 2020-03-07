@@ -48,4 +48,9 @@ class DataOfTable implements NewsData {
     }
     return values;
   }
+
+  @override
+  String toString() {
+    return 'DataOfTable{headerRow: $headerRow, table: $table}';
+  }
 }
