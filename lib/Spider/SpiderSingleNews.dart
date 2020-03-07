@@ -28,15 +28,16 @@ class SpiderSingleNews extends Spider {
     List<NewsData> newsInformation = List<NewsData>();
 
     for (dom.Element _data in _entryDatas) {
+      print(_data.localName);
       if (_data.localName == "p") {
         String _imageUrl;
-        for(dom.Element child in _data.children){
+        for (dom.Element child in _data.children) {
           if (child.attributes.isNotEmpty) {
             _imageUrl = child.attributes['src'];
             _addImage(_imageUrl, newsInformation);
           }
-          if(child.localName=="a"){
-            for(dom.Element linkChild in child.children){
+          if (child.localName == "a") {
+            for (dom.Element linkChild in child.children) {
               if (linkChild.attributes.isNotEmpty) {
                 _imageUrl = linkChild.attributes['data-src'];
                 _addImage(_imageUrl, newsInformation);
@@ -46,18 +47,17 @@ class SpiderSingleNews extends Spider {
         }
 
 
-
-
-          String _text = _data.innerHtml;
-
-
-          if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
+        if (_data.text
+            .trim()
+            .isNotEmpty && _data.text != _unworthText) {
 //            print("paragraph"+ _text);
-            newsInformation.add(ParagraphStyledData(_text));
+          newsInformation.add(ParagraphStyledData(_data.innerHtml));
 //            newsInformation
 //                .add(MeaningfulString(string: _text, textTag: TextTag.p));
 
-          } else if (_data.localName == "h2") {
+        }
+      }
+          else if (_data.localName == "h2") {
             print("h2" + _data.text);
             newsInformation
                 .add(MeaningfulString(string: _data.text, textTag: TextTag.h2));
@@ -79,7 +79,7 @@ class SpiderSingleNews extends Spider {
             newsInformation.add(DataOfTable(table, headers));
 
           }
-        }
+
         //
     }
 
