@@ -9,26 +9,87 @@ class NewsList extends StatefulWidget {
   _NewsListState createState() => _NewsListState();
 }
 
-class _NewsListState extends State<NewsList> {
+class _NewsListState extends State<NewsList>
+    with SingleTickerProviderStateMixin {
 
-  
-  
-  String _url = 'https://www.eldigitaldealbacete.com/economia-2/';
 
-  
+  final Map<String, String> _tabs = {
+    "Albacete": "https://www.eldigitaldealbacete.com/noticias-albacete/",
+    "Castilla-La Mancha":
+    "https://www.eldigitaldealbacete.com/castilla-la-mancha/",
+    "Economía": "https://www.eldigitaldealbacete.com/economia-2/",
+    "Deportes": "https://www.eldigitaldealbacete.com/noticias-deporte-albacete/",
+    "Sanidad": "https://www.eldigitaldealbacete.com/noticias-sanidad-albacete/",
+  };
+  TabController _tabController;
+
+
+
+  @override
+  void initState() {
+    _tabController = new TabController(length: _tabs.length, vsync: this);
+    super.initState();
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    SpiderNewsListSpecificPage spiderPage = new SpiderNewsListSpecificPage(url:this._url);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Economía', style: Theme.of(context).textTheme.display1,),
-        leading: Image.asset('assets/logo.png'),
-        backgroundColor: Theme.of(context).accentColor,
-      ),
-      backgroundColor: Theme.of(context).backgroundColor,
-      body: NewsCards(spiderPage: spiderPage),
+        appBar: AppBar(
+          bottom: TabBar(
+              isScrollable: true,
+              unselectedLabelColor: Colors.white,
+              controller: _tabController,
+              // testing
+              indicatorColor: Colors.white,
+              labelColor: Colors.white,
+              labelStyle: Theme
+                  .of(context)
+                  .textTheme
+                  .button
+                  .merge(TextStyle(fontWeight: FontWeight.bold)),
+              unselectedLabelStyle: Theme
+                  .of(context)
+                  .textTheme
+                  .button,
+              tabs: _tabs.keys.map((key) {
+                return Tab(
+                  text: key,
+                );
+              }).toList()),
+          title: Text(
+            'Economía',
+            style: Theme
+                .of(context)
+                .textTheme
+                .display1,
+          ),
+          leading: Image.asset('assets/logo.png'),
+          backgroundColor: Theme
+              .of(context)
+              .accentColor,
+        ),
+        backgroundColor: Theme
+            .of(context)
+            .backgroundColor,
+        body: TabBarView(
+          controller: _tabController,
+          children: _tabs.values.map((String url) {
+            return NewsCards(spiderPage: SpiderNewsListSpecificPage(url: url));
+          }).toList(),
+        )
+
     );
   }
 }
 
-
+Tab tabText(String text, BuildContext context) {
+  return Tab(
+    child: Text(text, style: Theme
+        .of(context)
+        .textTheme
+        .button),
+  );
+}

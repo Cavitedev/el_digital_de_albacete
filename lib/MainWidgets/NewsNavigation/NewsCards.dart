@@ -27,7 +27,7 @@ class _NewsCardsState extends State<NewsCards> {
   
   
   
-  void _getNews() async{
+  Future<void> _getNews() async{
     _news = await spiderPage.scrapCurrentPage();
     setState(() {
       _pages++;
@@ -36,6 +36,8 @@ class _NewsCardsState extends State<NewsCards> {
   }
   @override
   void initState() {
+    _pages = 0;
+    _loadedNews = false;
     // TODO: implement initState
     super.initState();
     _getNews();
@@ -64,26 +66,39 @@ class _NewsCardsState extends State<NewsCards> {
   @override
   Widget build(BuildContext context) {
     int count = _itemCount*_pages + (_loadedNews?0:1) + (_moreNewsAvailable?0:1);
-      return NotificationListener<ScrollUpdateNotification >(
-        
-          onNotification: (ScrollUpdateNotification  scrollInfo) {
-            if(_loadedNews && scrollInfo.metrics.pixels>scrollInfo.metrics.maxScrollExtent*0.8) {
-              loadMore();
-              return true;
-            }
-            return false;
-          },
-          
-          child: ListView.builder(
-          itemCount: count,
-          itemBuilder: (context, index) {
-       //     print("index= $index count = $index moreNewsAvailable = $_moreNewsAvailable");
-            if(!_loadedNews && index == count-1 )
-              return FadingCircle();
-            if(!_moreNewsAvailable && index >= count-1) 
-              return NoMoreNewsFoundErrorPlaceholder();
-            return NewsCard(simpleNewsData: _news[index]);
-          },),
+      return RefreshIndicator(
+        onRefresh: () async {
+          _pages=0;
+          _loadedNews = false;
+          _moreNewsAvailable = true;
+          _news.clear();
+          await _getNews();
+          setState(() {
+
+          });
+          return null;
+        },
+        child: NotificationListener<ScrollUpdateNotification >(
+
+            onNotification: (ScrollUpdateNotification  scrollInfo) {
+              if(_loadedNews && scrollInfo.metrics.pixels>scrollInfo.metrics.maxScrollExtent*0.8) {
+                loadMore();
+                return true;
+              }
+              return false;
+            },
+
+            child: ListView.builder(
+            itemCount: count,
+            itemBuilder: (context, index) {
+         //     print("index= $index count = $index moreNewsAvailable = $_moreNewsAvailable");
+              if(!_loadedNews && index == count-1 )
+                return FadingCircle();
+              if(!_moreNewsAvailable && index >= count-1)
+                return NoMoreNewsFoundErrorPlaceholder();
+              return NewsCard(simpleNewsData: _news[index]);
+            },),
+        ),
       );
     
     

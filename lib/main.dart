@@ -18,14 +18,14 @@ class MyApp extends StatelessWidget {
         accentColor: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         errorColor: Colors.red[100],
         textTheme: TextTheme(
-          headline: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
-          body1: TextStyle(fontSize: 20, fontFamily: "NotoSans"),
-          caption: TextStyle(fontSize: 10, color: Colors.black54, fontFamily: "NotoSans"),
-          title: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
-          display1: TextStyle(fontSize: 30, color: Colors.white, fontFamily: "NotoSans"),
-          subhead: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
-          subtitle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "NotoSans"),
-
+          headline: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, ),
+          body1: TextStyle(fontSize: 20,),
+          caption: TextStyle(fontSize: 10, color: Colors.black54, ),
+          title: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, ),
+          display1: TextStyle(fontSize: 30, color: Colors.white, ),
+          subhead: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, ),
+          subtitle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, ),
+          button: TextStyle(fontSize: 20, color: Colors.white, )
         ),
       ),
       home: NewsList(),
