@@ -16,6 +16,7 @@ class ParagraphStyledData implements NewsData{
   static const int closeTagSymbolSpace = 1;
   ParagraphStyledData(String html){
     html = _removeHTMLTags(html);
+    html = _removeEntitiesTags(html);
     styledData = _checkTags(_tagAndText(text: html, tag: ""), null);
   }
 
@@ -87,17 +88,17 @@ class ParagraphStyledData implements NewsData{
     if(lastIndex<html.length-1){
       output.add(_tagAndText(text: html.substring(lastIndex,html.length)));
     }
-    return _removeEntitiesTags(output);
+    return output;
 
   }
 
-  List<_tagAndText> _removeEntitiesTags(List<_tagAndText> listTagTests){
-    for(_tagAndText tagText in listTagTests){
+  String _removeEntitiesTags(String html){
+
       for(String htmlTag in _htmlEntities){
-        tagText.text = tagText.text.replaceAll(htmlTag, "");
+        html = html.replaceAll(htmlTag, "");
       }
-    }
-    return listTagTests;
+
+    return html;
   }
 
   String _removeHTMLTags(String html){
@@ -106,7 +107,7 @@ class ParagraphStyledData implements NewsData{
 //    print(html);
       for(String htmlTag in _htmlTagsToRemove){
         int index = html.indexOf(htmlTag,0);
-        if(index > 0){
+        if(index >= 0){
           String regExp = "<$htmlTag.*</$htmlTag>";
           output.addAll(html.split(RegExp(regExp)));
         }

@@ -56,6 +56,9 @@ class SpiderSingleNews extends Spider {
             .trim()
             .isNotEmpty && _data.text != _unworthText) {
 //            print("paragraph"+ _text);
+        if(_data.getElementsByClassName("s1").length == 1){
+          _data = _data.children[0];
+        }
           newsInformation.add(ParagraphStyledData(_data.innerHtml));
 //            newsInformation
 //                .add(MeaningfulString(string: _text, textTag: TextTag.p));

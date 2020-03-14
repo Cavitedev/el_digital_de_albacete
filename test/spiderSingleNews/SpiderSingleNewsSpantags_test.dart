@@ -11,13 +11,10 @@ void main(){
   SpiderSingleNews spiderSingleNews = SpiderSingleNews
     (url: "https://www.eldigitaldealbacete.com/2020/02/14/el-ministerio-de-industria-adjudica-mas-de-un-millon-de-euros-a-un-proyecto-industrial-de-caudete/");
   ExtraNewsData outputData;
-  setUp(() async{
-    outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
-  });
 
-    test('text page b attributes', (){
+    test('text page to delete inside spans text', () async {
 
-
+      outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
 
       expect((outputData.newsContent[0] as ParagraphStyledData).styledData[0],StyledString(extraStyle:ParagraphStyledData.attributesStyles['strong'] ,text: "La Comisión de Evaluación del Programa de Apoyo a la Inversión Industrial (Reindus), dependiente del Ministerio de Industria, Comercio y Turismo, ha adjudicado de manera provisional 15.830.569 euros a 12 proyectos industriales de Castilla-La Mancha correspondientes a la convocatoria de 2019."));
       expect((outputData.newsContent[11] as ParagraphStyledData).styledData[0],StyledString(text: "–GRAFICAS IMPAR S.L. Inversiones en bienes de equipo para la mejora y ampliación de líneas de producción. Toledo. 154.400 €"));
@@ -27,6 +24,7 @@ void main(){
 
 //      expect((outputData.newsContent.length),4);
     });
+
 
 
 
