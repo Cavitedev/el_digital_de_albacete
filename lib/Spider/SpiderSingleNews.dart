@@ -15,7 +15,6 @@ class SpiderSingleNews extends Spider {
     "NormalTextoNoticia",
     "entry",
     "column",
-
   ];
   static const String _unworthText = "/Redacción/";
 
@@ -23,18 +22,20 @@ class SpiderSingleNews extends Spider {
     dom.Document _document = await accessURL(url);
     List<dom.Element> _entryDatas = new List<dom.Element>();
     for (String _contentClass in _contentClasses) {
-      List<dom.Element> _someEntryDatas = _document.getElementsByClassName(_contentClass);
-      if(_someEntryDatas.isNotEmpty){
-      _entryDatas.addAll(_someEntryDatas[0]?.children);
+      List<dom.Element> _someEntryDatas =
+          _document.getElementsByClassName(_contentClass);
+
+      for (dom.Element _entryDara in _someEntryDatas) {
+        _entryDatas.addAll(_entryDara?.children);
+      }
 //      _entryDatas.forEach((e){
 //        print(e.text);
 //      });
-      }
+
     }
     List<NewsData> newsInformation = List<NewsData>();
 
     for (dom.Element _data in _entryDatas) {
-
       if (_data.localName == "p") {
         String _imageUrl;
         for (dom.Element child in _data.children) {
@@ -52,46 +53,40 @@ class SpiderSingleNews extends Spider {
           }
         }
 
-        if (_data.text
-            .trim()
-            .isNotEmpty && _data.text != _unworthText) {
+        if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
 //            print("paragraph"+ _text);
-        if(_data.getElementsByClassName("s1").length == 1){
-          _data = _data.children[0];
-        }
+          if (_data.getElementsByClassName("s1").length == 1) {
+            _data = _data.children[0];
+          }
           newsInformation.add(ParagraphStyledData(_data.innerHtml));
 //            newsInformation
 //                .add(MeaningfulString(string: _text, textTag: TextTag.p));
 
         }
-      }
-          else if (_data.localName == "h2") {
-            newsInformation
-                .add(MeaningfulString(string: _data.text, textTag: TextTag.h2));
-          }
-      else if (_data.localName == "h3") {
+      } else if (_data.localName == "h2") {
+        newsInformation
+            .add(MeaningfulString(string: _data.text, textTag: TextTag.h2));
+      } else if (_data.localName == "h3") {
         newsInformation
             .add(MeaningfulString(string: _data.text, textTag: TextTag.h3));
-      }
-          else if (_data.localName == "table") {
-            List<String> headers = List<String>();
-            for (dom.Element td in _data.children[0].children[0].children) {
-              headers.add(td.text);
-            }
-            List<List<dynamic>> table = List<List<dynamic>>();
-            for (int i = 1; i < _data.children[0].children.length; i++) {
-              dom.Element tr = _data.children[0].children[i];
-              List<dynamic> row = List<dynamic>();
-              for (dom.Element td in tr.children) {
-                row.add(td.text);
-              }
-              table.add(row);
-            }
-            newsInformation.add(DataOfTable(table, headers));
-
+      } else if (_data.localName == "table") {
+        List<String> headers = List<String>();
+        for (dom.Element td in _data.children[0].children[0].children) {
+          headers.add(td.text);
+        }
+        List<List<dynamic>> table = List<List<dynamic>>();
+        for (int i = 1; i < _data.children[0].children.length; i++) {
+          dom.Element tr = _data.children[0].children[i];
+          List<dynamic> row = List<dynamic>();
+          for (dom.Element td in tr.children) {
+            row.add(td.text);
           }
+          table.add(row);
+        }
+        newsInformation.add(DataOfTable(table, headers));
+      }
 
-        //
+      //
     }
 
     return ExtraNewsData(newsContent: newsInformation);

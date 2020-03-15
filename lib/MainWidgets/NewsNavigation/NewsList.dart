@@ -60,7 +60,7 @@ class _NewsListState extends State<NewsList>
                 );
               }).toList()),
           title: Text(
-            'Economía',
+            'Digital de Albacete',
             style: Theme
                 .of(context)
                 .textTheme
