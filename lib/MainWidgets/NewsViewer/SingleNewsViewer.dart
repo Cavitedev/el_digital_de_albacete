@@ -3,6 +3,7 @@ import 'package:el_digital_de_albacete/ExtraWidgets/DataTableBuilder.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
@@ -147,42 +148,22 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
             else if (_extraNewsData.newsContent[i] is MeaningfulString) {
               MeaningfulString _data =
                   _extraNewsData.newsContent[i];
+              return meaningulStringUI(_data, context);
 
-              switch (_data.textTag) {
+            } else if(_extraNewsData.newsContent[i] is UnorderedList){
+              List<MeaningfulString> elements =
+              (_extraNewsData.newsContent[i] as UnorderedList).elements;
+              return Column(
+                children: elements.map((meaningfulString){
 
-                case TextTag.img:
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10),
-                    child: CachedNetworkImage(
-                      placeholder: (context, url) => FadingCircle(),
-                      errorWidget: (context, url, error) =>
-                          Icon(Icons.error),
-                      imageUrl: _data.string,
-                    ),
-                  );
-                  break;
-                case TextTag.h2:
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      _data.string,
-                      style: Theme.of(context).textTheme.subhead)
-                  );
-                  break;
-                case TextTag.h3:
-                  return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                          _data.string,
-                          style: Theme.of(context).textTheme.subtitle)
-                  );
-                  break;
-                default:
-                  return null;
-                  break;
-              }
-            } else if (_extraNewsData.newsContent[i]
+                  MeaningfulString showString = MeaningfulString(string: "•   " + meaningfulString.string,
+                  textTag: meaningfulString.textTag);
+                  return meaningulStringUI(showString, context);
+                }).toList()
+              ) ;
+
+            }
+            else if (_extraNewsData.newsContent[i]
                 is DataOfTable) {
               DataOfTable dataOfTable =
                   _extraNewsData.newsContent[i];
@@ -194,5 +175,49 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
           childCount: _extraNewsData.newsContent.length,
         ),
       );
+  }
+
+  Padding meaningulStringUI(MeaningfulString _data, BuildContext context) {
+    switch (_data.textTag) {
+
+      case TextTag.img:
+        return Padding(
+          padding:
+              const EdgeInsets.symmetric(vertical: 10),
+          child: CachedNetworkImage(
+            placeholder: (context, url) => FadingCircle(),
+            errorWidget: (context, url, error) =>
+                Icon(Icons.error),
+            imageUrl: _data.string,
+          ),
+        );
+        break;
+      case TextTag.h2:
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            _data.string,
+            style: Theme.of(context).textTheme.subhead)
+        );
+        break;
+      case TextTag.h3:
+        return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                _data.string,
+                style: Theme.of(context).textTheme.title)
+        );
+      case TextTag.h4:
+        return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                _data.string,
+                style: Theme.of(context).textTheme.subtitle)
+        );
+        break;
+      default:
+        return null;
+        break;
+    }
   }
 }

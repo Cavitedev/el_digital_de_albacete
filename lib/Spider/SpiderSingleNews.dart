@@ -1,4 +1,5 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
@@ -63,12 +64,25 @@ class SpiderSingleNews extends Spider {
 //                .add(MeaningfulString(string: _text, textTag: TextTag.p));
 
         }
-      } else if (_data.localName == "h2") {
-        newsInformation
-            .add(MeaningfulString(string: _data.text, textTag: TextTag.h2));
-      } else if (_data.localName == "h3") {
-        newsInformation
-            .add(MeaningfulString(string: _data.text, textTag: TextTag.h3));
+      } else if (["h2", "h3", "h4"].contains(_data.localName)) {
+        newsInformation.add(MeaningfulString(
+            string: _data.text,
+            textTag:
+                MeaningfulString.textTagFromString(_data.localName)));
+      } else if (_data.localName == "ul") {
+        List<dom.Element> ul = _data.children;
+        List<MeaningfulString> liElements = List<MeaningfulString>();
+        for(dom.Element li in ul){
+          if (["h2", "h3", "h4"].contains(li.children[0].localName)) {
+            liElements.add(MeaningfulString(
+                string: li.children[0].text,
+                textTag:
+                MeaningfulString.textTagFromString(li.children[0].localName)));
+          }
+        }
+        newsInformation.add(UnorderedList(elements: liElements));
+
+
       } else if (_data.localName == "table") {
         List<String> headers = List<String>();
         for (dom.Element td in _data.children[0].children[0].children) {

@@ -87,7 +87,7 @@ class _ArticleDescription extends StatelessWidget {
                 '$title',
                 maxLines: (4.5 / MediaQuery.of(context).textScaleFactor).floor(),
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.subtitle,
 
               ),
             ],
