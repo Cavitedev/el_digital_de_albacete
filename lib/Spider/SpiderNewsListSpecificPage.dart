@@ -3,7 +3,7 @@ import 'package:el_digital_de_albacete/features/list_news//domain/entities/list_
 import 'package:html/dom.dart' as dom;
 
 
-class SpiderNewsListSpecificPage extends httpGetterImpl {
+class SpiderNewsListSpecificPage extends HttpGetterImpl {
   
   String url;
   String _nextURL;
