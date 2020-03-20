@@ -1,6 +1,6 @@
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/NoMoreNewsFoundErrorPlaceholder.dart';
-import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
+import 'package:el_digital_de_albacete/features/list_news//domain/entities/list_single_new.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderNewsListSpecificPage.dart';
 import 'package:flutter/material.dart';
 import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsCard.dart';
@@ -16,7 +16,7 @@ class NewsCards extends StatefulWidget {
 
 class _NewsCardsState extends State<NewsCards> {
 
-  List<SimpleNewsData> _news;
+  List<ListSingleNew> _news;
   SpiderNewsListSpecificPage spiderPage;
   _NewsCardsState({this.spiderPage});
   bool _loadedNews = false;
@@ -46,20 +46,20 @@ class _NewsCardsState extends State<NewsCards> {
   void loadMore() async {
     if(_moreNewsAvailable && _loadedNews) {
       _loadedNews = false;
-      List<SimpleNewsData> _moreNews= await spiderPage.scrapNextPage();
+      List<ListSingleNew> _moreNews= await spiderPage.scrapNextPage();
       if(_moreNews==null) return;
-      if(_moreNews[0].title == SpiderNewsListSpecificPage.failedLoadingNews) {
-        setState(() {
-          _loadedNews=true;
-          _moreNewsAvailable = false;
-        });
-      }else {
+//      if(_moreNews[0].title == SpiderNewsListSpecificPage.failedLoadingNews) {
+//        setState(() {
+//          _loadedNews=true;
+//          _moreNewsAvailable = false;
+//        });
+//      }else {
         setState(() {
           _news.addAll(_moreNews);
           _loadedNews = true;
           _pages++;
         });
-      }
+//      }
     }
   }
   

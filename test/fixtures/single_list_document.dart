@@ -1,17 +1,8 @@
-import 'package:el_digital_de_albacete/core/error/exceptions.dart';
-import 'package:el_digital_de_albacete/features/news/spider/http_getter.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
-import 'package:http/http.dart' as http;
-import 'package:mockito/mockito.dart';
-class MockHttpClient extends Mock implements http.Client{}
 
-void main(){
-  httpGetterImpl httpGetter;
-  MockHttpClient mockHttpClient;
-  String url = "https://www.eldigitaldealbacete.com/2020/03/20/coronavirus-el-ayuntamiento-garantiza-la-atencion-integral-a-las-mujeres-victimas-de-la-violencia-de-genero-en-albacete-durante-la-crisis-del-covid-19/";
-  String html = '''<!DOCTYPE html>
+final dom.Document expected = parser.parse(_html);
+const String _html = '''<!DOCTYPE html>
 <html lang="es" prefix="og: http://ogp.me/ns#">
 <head><script>window.w3tc_lazyload=1,window.lazyLoadOptions={elements_selector:".lazy",callback_loaded:function(t){var e;try{e=new CustomEvent("w3tc_lazyload_loaded",{detail:{e:t}})}catch(a){(e=document.createEvent("CustomEvent")).initCustomEvent("w3tc_lazyload_loaded",!1,!1,{e:t})}window.dispatchEvent(e)}}</script><style>img.lazy{min-height:1px}</style><script async src="https://www.eldigitaldealbacete.com/wp-content/plugins/w3-total-cache/pub/js/lazyload.min.js"></script>
 <meta charset="UTF-8" />
@@ -1188,38 +1179,3 @@ Lazy Loading
 
 Served from: www.eldigitaldealbacete.com @ 2020-03-20 12:30:22 by W3 Total Cache
 -->''';
-  http.Response response;
-  setUp(() async{
-    mockHttpClient = MockHttpClient();
-    httpGetter = httpGetterImpl(client: mockHttpClient);
-
-  });
-
-  group('access url',(){
-    test('should return document on url', () async{
-      response = await http.get(url);
-      when(mockHttpClient.get(any)).thenAnswer((_) async => response);
-
-
-      final dom.Document document = await httpGetter.accessURL(url);
-
-
-      verify(mockHttpClient.get(url));
-      final dom.Document expected = parser.parse(html);
-      //Problem with https parsing somewhere
-      expect(document.body.innerHtml.substring(0,100000), expected.body.innerHtml.substring(0,100000));
-    });
-    test('should throuw http error with right message when page does not return 200', () async{
-      response = http.Response("body",404);
-
-      when(mockHttpClient.get(any)).thenAnswer((_) async => response);
-
-      final call = httpGetter.accessURL;
-
-
-      expect(() => call(url), throwsA(predicate((e)=> e is HttpException && e.message=='Page $url is not available')));
-//      verify(mockHttpClient.get(url));
-    });
-
-  });
-}

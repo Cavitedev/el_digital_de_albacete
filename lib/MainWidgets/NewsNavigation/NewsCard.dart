@@ -1,14 +1,14 @@
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/SingleNewsViewer.dart';
-import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
+import 'package:el_digital_de_albacete/features/list_news//domain/entities/list_single_new.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
 class NewsCard extends StatelessWidget {
 
-  final SimpleNewsData simpleNewsData;
+  final ListSingleNew simpleNewsData;
 
   NewsCard({this.simpleNewsData});
 
