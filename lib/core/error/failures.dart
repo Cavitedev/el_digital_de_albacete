@@ -9,6 +9,12 @@ abstract class Failure extends Equatable{
   List<Object> get props => [message];
 }
 
-class HttpFailure extends Failure {}
+class HttpFailure extends Failure {
 
-class InternetFailure extends Failure{}
+  HttpFailure({String message}): super(message: message);
+}
+
+class InternetFailure extends Failure{
+
+  InternetFailure({String message}): super(message:message);
+}
