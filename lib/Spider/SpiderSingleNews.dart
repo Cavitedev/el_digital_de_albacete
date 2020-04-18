@@ -1,5 +1,6 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/Video.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
@@ -40,32 +41,37 @@ class SpiderSingleNews {
 
     for (dom.Element _data in _entryDatas) {
       if (_data.localName == "p") {
-        String _imageUrl;
-        for (dom.Element child in _data.children) {
-          if (child.attributes.isNotEmpty) {
-            _imageUrl = child.attributes['src'];
-            _addImage(_imageUrl, newsInformation);
-          }
-          if (child.localName == "a") {
-            for (dom.Element linkChild in child.children) {
-              if (linkChild.attributes.isNotEmpty) {
-                _imageUrl = linkChild.attributes['data-src'];
-                _addImage(_imageUrl, newsInformation);
+        if(_data.children.isNotEmpty && _data.children[0].localName == "iframe"){
+          newsInformation.add(Video(link: _data.children[0].attributes['src']));
+        }else{
+          String _imageUrl;
+          for (dom.Element child in _data.children) {
+            if (child.attributes.isNotEmpty) {
+              _imageUrl = child.attributes['src'];
+              _addImage(_imageUrl, newsInformation);
+            }
+            if (child.localName == "a") {
+              for (dom.Element linkChild in child.children) {
+                if (linkChild.attributes.isNotEmpty) {
+                  _imageUrl = linkChild.attributes['data-src'];
+                  _addImage(_imageUrl, newsInformation);
+                }
               }
             }
           }
-        }
 
-        if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
+          if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
 //            print("paragraph"+ _text);
-          if (_data.getElementsByClassName("s1").length == 1) {
-            _data = _data.children[0];
-          }
-          newsInformation.add(ParagraphStyledData(_data.innerHtml));
+            if (_data.getElementsByClassName("s1").length == 1) {
+              _data = _data.children[0];
+            }
+            newsInformation.add(ParagraphStyledData(_data.innerHtml));
 //            newsInformation
 //                .add(MeaningfulString(string: _text, textTag: TextTag.p));
 
+          }
         }
+
       } else if (["h2", "h3", "h4"].contains(_data.localName)) {
         newsInformation.add(MeaningfulString(
             string: _data.text,

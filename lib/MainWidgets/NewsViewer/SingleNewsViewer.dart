@@ -4,6 +4,7 @@ import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/Video.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
@@ -124,23 +125,6 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                 ),
               );
 
-
-//            return SliverList(
-//                delegate: SliverChildBuilderDelegate((context2,i2)
-//              {
-//                return Padding(
-//                  padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
-//                  child: Text(
-//                      "hola",
-//                      style: Theme
-//                          .of(context)
-//                          .textTheme
-//                          .body1
-//                  ),
-//                );
-//              },
-//            childCount: _data.styledData.length,
-//            ));
             }
 
 
@@ -162,6 +146,9 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                 }).toList()
               ) ;
 
+            }
+            else if(_extraNewsData.newsContent[i] is Video){
+              return Text("video");
             }
             else if (_extraNewsData.newsContent[i]
                 is DataOfTable) {
