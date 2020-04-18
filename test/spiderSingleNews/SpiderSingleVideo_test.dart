@@ -14,10 +14,10 @@ main(){
     outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
   });
 
-  test('text page gets unordered list', (){
+  test('text page gets video list', (){
 
 
-    expect(outputData.newsContent[6], Video(link: "https://www.youtube.com/embed/f1CsMeybqsc?feature=oembed"));
+    expect(outputData.newsContent[6], Video("f1CsMeybqsc"));
     expect(outputData.newsContent.length, 7);
   });
 

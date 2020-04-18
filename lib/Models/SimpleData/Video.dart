@@ -1,23 +1,33 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
-import 'package:meta/meta.dart';
-class Video implements NewsData{
-  String link;
 
-  Video({@required this.link});
+class Video implements NewsData{
+  String source;
+
+  Video(String link)
+  {
+      int start = link.indexOf("embed/");
+      start = start==-1? 0:start + 6;
+      int end = link.indexOf("?feature");
+      end = end==-1? link.length: end;
+      print(start);
+
+    source = link.substring(start,end);
+  }
+
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
           other is Video &&
               runtimeType == other.runtimeType &&
-              link == other.link;
+              source == other.source;
 
   @override
-  int get hashCode => link.hashCode;
+  int get hashCode => source.hashCode;
 
   @override
   String toString() {
-    return 'Video{link: $link}';
+    return 'Video{source: $source}';
   }
 
 

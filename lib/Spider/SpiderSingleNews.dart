@@ -42,7 +42,7 @@ class SpiderSingleNews {
     for (dom.Element _data in _entryDatas) {
       if (_data.localName == "p") {
         if(_data.children.isNotEmpty && _data.children[0].localName == "iframe"){
-          newsInformation.add(Video(link: _data.children[0].attributes['src']));
+          newsInformation.add(Video(_data.children[0].attributes['src']));
         }else{
           String _imageUrl;
           for (dom.Element child in _data.children) {

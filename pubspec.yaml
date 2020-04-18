@@ -30,6 +30,7 @@ dependencies:
   equatable: ^1.1.1
   mockito: ^4.1.1
   dartz: ^0.8.9
+  youtube_player_flutter: ^6.1.0+7
 
 dev_dependencies:
   flutter_test:
