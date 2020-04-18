@@ -11,6 +11,8 @@ import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 
 class SingleNewsViewer extends StatefulWidget {
   SimpleNewsData simpleNewsData;
@@ -23,6 +25,9 @@ class SingleNewsViewer extends StatefulWidget {
 }
 
 class _SingleNewsViewerState extends State<SingleNewsViewer> {
+
+
+
   SimpleNewsData _simpleNewsData;
   SpiderSingleNews _spider;
 
@@ -97,13 +102,12 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
 }
 
 class SingleNewsDataBodyWidget extends StatelessWidget {
-  const SingleNewsDataBodyWidget({
+   SingleNewsDataBodyWidget({
     Key key,
     @required ExtraNewsData extraNewsData,
   }) : _extraNewsData = extraNewsData, super(key: key);
 
   final ExtraNewsData _extraNewsData;
-
   @override
   Widget build(BuildContext context) {
     return SliverList(
@@ -148,7 +152,16 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
 
             }
             else if(_extraNewsData.newsContent[i] is Video){
-              return Text("video");
+
+              return YoutubePlayer(
+                controller: YoutubePlayerController(
+                  initialVideoId: (_extraNewsData.newsContent[i] as Video).source,
+                  flags: YoutubePlayerFlags(
+                    autoPlay: true,
+                  ),
+                ),
+
+              );
             }
             else if (_extraNewsData.newsContent[i]
                 is DataOfTable) {
