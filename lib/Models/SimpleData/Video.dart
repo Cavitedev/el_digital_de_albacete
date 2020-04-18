@@ -1,15 +1,14 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 
-class Video implements NewsData{
+class YoutubeVideo implements NewsData{
   String source;
 
-  Video(String link)
+  YoutubeVideo(String link)
   {
       int start = link.indexOf("embed/");
       start = start==-1? 0:start + 6;
       int end = link.indexOf("?feature");
       end = end==-1? link.length: end;
-      print(start);
 
     source = link.substring(start,end);
   }
@@ -18,7 +17,7 @@ class Video implements NewsData{
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Video &&
+          other is YoutubeVideo &&
               runtimeType == other.runtimeType &&
               source == other.source;
 

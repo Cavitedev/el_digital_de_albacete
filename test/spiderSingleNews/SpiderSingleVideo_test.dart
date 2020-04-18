@@ -17,7 +17,7 @@ main(){
   test('text page gets video list', (){
 
 
-    expect(outputData.newsContent[6], Video("f1CsMeybqsc"));
+    expect(outputData.newsContent[6], YoutubeVideo("f1CsMeybqsc"));
     expect(outputData.newsContent.length, 7);
   });
 

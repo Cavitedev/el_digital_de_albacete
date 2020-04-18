@@ -42,7 +42,7 @@ class SpiderSingleNews {
     for (dom.Element _data in _entryDatas) {
       if (_data.localName == "p") {
         if(_data.children.isNotEmpty && _data.children[0].localName == "iframe"){
-          newsInformation.add(Video(_data.children[0].attributes['src']));
+          newsInformation.add(YoutubeVideo(_data.children[0].attributes['src']));
         }else{
           String _imageUrl;
           for (dom.Element child in _data.children) {
@@ -79,14 +79,19 @@ class SpiderSingleNews {
                 MeaningfulString.textTagFromString(_data.localName)));
       } else if (_data.localName == "ul") {
         List<dom.Element> ul = _data.children;
-        List<MeaningfulString> liElements = List<MeaningfulString>();
+        List<NewsData> liElements = List<NewsData>();
         for(dom.Element li in ul){
-          if (["h2", "h3", "h4"].contains(li.children[0].localName)) {
-            liElements.add(MeaningfulString(
-                string: li.children[0].text,
-                textTag:
-                MeaningfulString.textTagFromString(li.children[0].localName)));
-          }
+
+            if (li.children.isNotEmpty && ["h2", "h3", "h4"].contains(li.children[0].localName)) {
+              liElements.add(MeaningfulString(
+                  string: li.children[0].text,
+                  textTag:
+                  MeaningfulString.textTagFromString(li.children[0].localName)));
+            }else{
+              liElements.add(ParagraphStyledData(li.text));
+            }
+
+
         }
         newsInformation.add(UnorderedList(elements: liElements));
 
