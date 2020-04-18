@@ -56,7 +56,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
             SliverAppBar(
               floating: true,
               title: Text(
-                "Economía",
+                "Digital de Albacete",
                 style: Theme.of(context).textTheme.display1
               ),
               backgroundColor: Theme.of(context).accentColor,
