@@ -101,20 +101,15 @@ class ParagraphStyledData implements NewsData{
     return html;
   }
 
-  String _removeHTMLTags(String html){
-    List<String> output = List<String>();
-//    print("before");
-//    print(html);
-      for(String htmlTag in _htmlTagsToRemove){
-        int index = html.indexOf(htmlTag,0);
-        if(index >= 0){
-          String regExp = "<$htmlTag.*</$htmlTag>";
-          output.addAll(html.split(RegExp(regExp)));
-        }
-      }
-      html = output.isNotEmpty?output.join():html;
-//    print("after");
-//    print(html);
+  static String _removeHTMLTags(String html){
+
+    for(String htmlTag in _htmlTagsToRemove){
+      String regExp = "<$htmlTag[^>]*>";
+      html= html.replaceAll(RegExp(regExp), '');
+      regExp = "</$htmlTag>";
+      html = html.replaceAll(RegExp(regExp), '');
+    }
+
     return html;
   }
 
