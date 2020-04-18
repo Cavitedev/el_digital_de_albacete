@@ -3,6 +3,7 @@ import 'package:el_digital_de_albacete/ExtraWidgets/DataTableBuilder.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/Video.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
@@ -139,23 +140,43 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
               return meaningulStringUI(_data, context);
 
             } else if(_extraNewsData.newsContent[i] is UnorderedList){
-              List<MeaningfulString> elements =
+              List<NewsData> elements =
               (_extraNewsData.newsContent[i] as UnorderedList).elements;
               return Column(
-                children: elements.map((meaningfulString){
+                children: elements.map((listItem){
+                  if(listItem is MeaningfulString){
+                    MeaningfulString showString = MeaningfulString(string: "•   " + listItem.string,
+                        textTag: listItem.textTag);
+                    return meaningulStringUI(showString, context);
+                  }else if(listItem is ParagraphStyledData){
 
-                  MeaningfulString showString = MeaningfulString(string: "•   " + meaningfulString.string,
-                  textTag: meaningfulString.textTag);
-                  return meaningulStringUI(showString, context);
+                    List<TextSpan> itemText = [TextSpan(text: "•   ")];
+                        itemText.addAll(listItem.styledData.map((textStyled) {
+                      return TextSpan(text: textStyled.text, style: textStyled.extraStyle);
+                    }).toList());
+
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
+                      child: RichText(
+                        text: TextSpan(
+                            style: Theme.of(context).textTheme.body1,
+                            children: itemText
+                        ),
+                      ),
+                    );
+                  }else{
+                    return null;
+                  }
+
                 }).toList()
               ) ;
 
             }
-            else if(_extraNewsData.newsContent[i] is Video){
+            else if(_extraNewsData.newsContent[i] is YoutubeVideo){
 
               return YoutubePlayer(
                 controller: YoutubePlayerController(
-                  initialVideoId: (_extraNewsData.newsContent[i] as Video).source,
+                  initialVideoId: (_extraNewsData.newsContent[i] as YoutubeVideo).source,
                   flags: YoutubePlayerFlags(
                     autoPlay: true,
                   ),
