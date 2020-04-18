@@ -26,6 +26,17 @@ void main(){
     });
 
 
+  test('text page to valid good text inside spans', () async {
+    spiderSingleNews = SpiderSingleNews
+      (url: "https://www.eldigitaldealbacete.com/2020/04/18/ultima-hora-fallece-el-jefe-de-digestivo-del-hospital-de-albacete-por-coronavirus/");
+    outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
+
+    expect((outputData.newsContent[0] as ParagraphStyledData).styledData[0],StyledString(text: "El Jefe de Digestivo del Complejo Hospitalario de Albacete, Ricardo Pérez Flores, ha fallecido en las últimas horas a consecuencia del coronavirus COVID-19 Este prestigioso doctor tenía 62 años de edad y padecía patologías previas, aunque en la última semana permanecía ingresado en el Hospital de Albacete. El Dr. Pérez Flores ejercía también la docencia en la Facultad de Medicina de la UCLM en Albacete."));
+    expect(outputData.newsContent.length, 21);
+
+//      expect((outputData.newsContent.length),4);
+  });
+
 
 
 }

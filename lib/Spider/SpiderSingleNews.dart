@@ -4,14 +4,16 @@ import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyl
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
-import 'package:el_digital_de_albacete/Spider/Spider.dart';
+import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
-class SpiderSingleNews extends Spider {
+class SpiderSingleNews {
   String url;
 
-  SpiderSingleNews({this.url});
-
+  HttpGetterImpl httpGetterImpl;
+  SpiderSingleNews({this.url}){
+    httpGetterImpl = HttpGetterImpl();
+  }
   static const List<String> _contentClasses = <String>[
     "NormalTextoNoticia",
     "entry",
@@ -20,7 +22,7 @@ class SpiderSingleNews extends Spider {
   static const String _unworthText = "/Redacción/";
 
   Future<ExtraNewsData> scrapSingleNewsPage() async {
-    dom.Document _document = await accessURL(url);
+    dom.Document _document = await httpGetterImpl.accessURL(url);
     List<dom.Element> _entryDatas = new List<dom.Element>();
     for (String _contentClass in _contentClasses) {
       List<dom.Element> _someEntryDatas =
