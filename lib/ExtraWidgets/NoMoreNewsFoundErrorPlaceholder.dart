@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 class NoMoreNewsFoundErrorPlaceholder extends StatelessWidget {
+  String msg = "no error message";
+
+
+  NoMoreNewsFoundErrorPlaceholder({@required this.msg});
+
   @override
   Widget build(BuildContext context) {
     double scale = MediaQuery.of(context).textScaleFactor;
@@ -10,13 +16,10 @@ class NoMoreNewsFoundErrorPlaceholder extends StatelessWidget {
         child: ListTile(
           leading: Icon(Icons.error, size: 32 * scale),
           title: Text(
-            ' No more news found',
-            maxLines: 2,
+            msg,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.title
           ),
         ));
   }

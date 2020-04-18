@@ -27,6 +27,9 @@ dependencies:
   html: ^0.14.0+3
   flutter_spinkit: "^4.1.1"
   cached_network_image: ^2.0.0
+  equatable: ^1.1.1
+  mockito: ^4.1.1
+  dartz: ^0.8.9
 
 dev_dependencies:
   flutter_test:

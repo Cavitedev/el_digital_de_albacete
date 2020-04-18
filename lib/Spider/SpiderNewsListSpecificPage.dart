@@ -1,9 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
-import 'package:el_digital_de_albacete/Spider/Spider.dart';
+import 'package:el_digital_de_albacete/core/error/exceptions.dart';
+import 'package:el_digital_de_albacete/core/error/failures.dart';
+import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
 
-class SpiderNewsListSpecificPage extends Spider {
+class SpiderNewsListSpecificPage {
   
   String url;
   String _nextURL;
@@ -13,26 +16,34 @@ class SpiderNewsListSpecificPage extends Spider {
   static const String _currentPageClass = "current";
   static const String _pageClass = "page";
   static const String failedLoadingNews = 'failedLoadingNews';
-  static final List<SimpleNewsData> noMoreNewsFound = [SimpleNewsData(title: failedLoadingNews)]; 
-  
-  
-  SpiderNewsListSpecificPage({this.url});
+  static final List<SimpleNewsData> noMoreNewsFound = [SimpleNewsData(title: failedLoadingNews)];
 
-  Future<List<SimpleNewsData>> scrapCurrentPage() async {
+  HttpGetterImpl httpGetterImpl;
+
+  SpiderNewsListSpecificPage({this.url}){
+    httpGetterImpl = HttpGetterImpl();
+  }
+
+  Future<Either<Failure, List<SimpleNewsData>>> scrapCurrentPage() async {
     return await _scrapPage(url);
   }
-  Future<List<SimpleNewsData>> scrapNextPage() async {
+  Future<Either<Failure, List<SimpleNewsData>>> scrapNextPage() async {
     if(_nextURL==null) return null;
     if(_nextURL== failedLoadingNews) {
-      return noMoreNewsFound;
+      return Left(NoMoreNewsFailure(message: "No hay más noticias"));
     }
     return await _scrapPage(_nextURL);
   }
   
-  Future<List<SimpleNewsData>> _scrapPage(String _url) async {
-    dom.Document _document = await accessURL(_url);
-    _nextURL = _getNextUrl(_document);
-    return _getNews(_document);
+  Future<Either<Failure, List<SimpleNewsData>>> _scrapPage(String _url) async {
+    try{
+      dom.Document _document = await httpGetterImpl.accessURL(_url);
+      _nextURL = _getNextUrl(_document);
+      return Right(_getNews(_document));
+    }on HttpException catch(e){
+      return Left(HttpFailure(message: e.message));
+    }
+
   }
   
 
@@ -47,7 +58,7 @@ class SpiderNewsListSpecificPage extends Spider {
       news.add(SimpleNewsData(
         link: anchor.attributes['href'],
         title: article.children[1].children[0].text,
-        imageSrc: anchor.children[0].attributes['data-src'],
+        imageSrc: anchor.children.length>0 ? anchor.children[0].attributes['data-src'] : "error",
         publishDate: article.children[2].children[0].text,
       ));
       //  debugPrint(news.last.title);
