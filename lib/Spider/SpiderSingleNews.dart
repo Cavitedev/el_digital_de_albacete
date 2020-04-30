@@ -1,12 +1,15 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/MP4Video.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/Video.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/YoutubeVideo.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
+
+const String mp4Video = "wp-video";
 
 class SpiderSingleNews {
   String url;
@@ -96,7 +99,17 @@ class SpiderSingleNews {
         newsInformation.add(UnorderedList(elements: liElements));
 
 
-      } else if (_data.localName == "table") {
+      }else if(_data.localName == "div" && _data.attributes['class'] == mp4Video){
+        String link =_data.getElementsByTagName("video")[0].
+        getElementsByTagName("source")[0].attributes['src'];
+        if(link != null){
+          newsInformation.add(MP4Video(
+              link: link
+          ));
+        }
+
+      }
+      else if (_data.localName == "table") {
         List<String> headers = List<String>();
         for (dom.Element td in _data.children[0].children[0].children) {
           headers.add(td.text);

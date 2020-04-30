@@ -9,20 +9,18 @@ import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsCard.dart'
 
 class NewsCards extends StatefulWidget {
   final SpiderNewsListSpecificPage spiderPage;
-
-  NewsCards({this.spiderPage});
+  NewsCards({this.spiderPage, Key key}) : super(key : key);
 
   @override
-  _NewsCardsState createState() => _NewsCardsState(spiderPage: this.spiderPage);
+  NewsCardsState createState() => NewsCardsState(spiderPage: this.spiderPage);
 }
 
-class _NewsCardsState extends State<NewsCards> {
+class NewsCardsState extends State<NewsCards> {
 
   List<SimpleNewsData> _news;
 
   SpiderNewsListSpecificPage spiderPage;
-
-  _NewsCardsState({this.spiderPage});
+  NewsCardsState({this.spiderPage});
 
   bool _loadedNews = false;
   Failure error;
@@ -30,7 +28,10 @@ class _NewsCardsState extends State<NewsCards> {
 
 
 
-  Future<void> _getNews() async {
+  Future<void> getNews() async {
+    _loadedNews = false;
+    _news = null;
+//    print("cards init state ${_loadedNews? "news laoded" : "not loaded"}");
     dartz.Either<Failure,
         List<SimpleNewsData>> _newsRetrieval = await spiderPage
         .scrapCurrentPage();
@@ -54,10 +55,9 @@ class _NewsCardsState extends State<NewsCards> {
 
   @override
   void initState() {
-    _loadedNews = false;
-    // TODO: implement initState
     super.initState();
-    _getNews();
+
+    getNews();
   }
 
   void loadMore() async {
@@ -85,14 +85,15 @@ class _NewsCardsState extends State<NewsCards> {
 
     @override
     Widget build(BuildContext context) {
+//      print("cards build ${spiderPage.url} last URL $_lastURL");
+
       int count = _news?.length?? 0 + (_loadedNews ? 0 : 1) +
           (error == null ? 0 : 1);
       return RefreshIndicator(
         onRefresh: () async {
-          _loadedNews = false;
           error = null;
           _news.clear();
-          await _getNews();
+          await getNews();
           setState(() {
 
           });

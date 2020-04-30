@@ -10,7 +10,7 @@ class ParagraphStyledData implements NewsData{
     'strong' : TextStyle(fontWeight: FontWeight.bold),
     'i' : TextStyle(fontStyle: FontStyle.italic),
   };
-  static const List<String> _htmlEntities = <String>['&nbsp;'];
+  static const List<String> _htmlEntities = <String>['&nbsp;', '<br>'];
   static const List<String> _htmlTagsToRemove = <String>['span'];
   static const int _endSymbolSpacePlusNextStart = 2;
   static const int closeTagSymbolSpace = 1;
@@ -95,7 +95,7 @@ class ParagraphStyledData implements NewsData{
   String _removeEntitiesTags(String html){
 
       for(String htmlTag in _htmlEntities){
-        html = html.replaceAll(htmlTag, "");
+        html = html.replaceAll(htmlTag, " ");
       }
 
     return html;

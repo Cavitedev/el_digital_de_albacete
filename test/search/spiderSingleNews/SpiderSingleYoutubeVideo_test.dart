@@ -1,5 +1,5 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/Video.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/YoutubeVideo.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -14,7 +14,7 @@ main(){
     outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
   });
 
-  test('text page gets video list', (){
+  test('text page gets youtube video list', (){
 
 
     expect(outputData.newsContent[6], YoutubeVideo("f1CsMeybqsc"));
