@@ -37,8 +37,10 @@ class SpiderNewsListSpecificPage {
   
   Future<Either<Failure, List<SimpleNewsData>>> _scrapPage(String _url) async {
     try{
+      print(_nextURL);
       dom.Document _document = await httpGetterImpl.accessURL(_url);
       _nextURL = _getNextUrl(_document);
+      print(_nextURL);
       return Right(_getNews(_document));
     }on HttpException catch(e){
       return Left(HttpFailure(message: e.message));

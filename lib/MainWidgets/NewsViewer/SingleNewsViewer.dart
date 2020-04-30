@@ -2,18 +2,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/DataTableBuilder.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
+import 'package:el_digital_de_albacete/ExtraWidgets/VideoWidget.dart';
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/MP4Video.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/Video.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/YoutubeVideo.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import 'package:video_player/video_player.dart';
 
 class SingleNewsViewer extends StatefulWidget {
   SimpleNewsData simpleNewsData;
@@ -109,6 +112,9 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
   }) : _extraNewsData = extraNewsData, super(key: key);
 
   final ExtraNewsData _extraNewsData;
+
+
+
   @override
   Widget build(BuildContext context) {
     return SliverList(
@@ -142,7 +148,10 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
             } else if(_extraNewsData.newsContent[i] is UnorderedList){
               List<NewsData> elements =
               (_extraNewsData.newsContent[i] as UnorderedList).elements;
+              print(elements);
+
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: elements.map((listItem){
                   if(listItem is MeaningfulString){
                     MeaningfulString showString = MeaningfulString(string: "•   " + listItem.string,
@@ -173,7 +182,6 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
 
             }
             else if(_extraNewsData.newsContent[i] is YoutubeVideo){
-
               return YoutubePlayer(
                 controller: YoutubePlayerController(
                   initialVideoId: (_extraNewsData.newsContent[i] as YoutubeVideo).source,
@@ -181,7 +189,10 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                     autoPlay: true,
                   ),
                 ),
-
+              );
+            }else if(_extraNewsData.newsContent[i] is MP4Video){
+              return VideoWidget(videoPlayerController: VideoPlayerController.network(
+                  (_extraNewsData.newsContent[i] as MP4Video).link)
               );
             }
             else if (_extraNewsData.newsContent[i]
