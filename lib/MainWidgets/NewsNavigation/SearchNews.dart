@@ -42,8 +42,10 @@ class _SearchNewsState extends State<SearchNews>
         hintText: "Buscar noticias",
         border: InputBorder.none,
         hintStyle: TextStyle(color: Colors.white70),
+
       ),
-      style: TextStyle(color: Colors.white, fontSize: 26.0, fontFamily: "NotoSans"),
+      style: Theme.of(context).textTheme.display1.copyWith(fontSize:
+    Theme.of(context).textTheme.display1.fontSize / MediaQuery.of(context).textScaleFactor),
       onTap: (){
         setState(() {
           searching = true;
@@ -162,7 +164,11 @@ class _SearchNewsState extends State<SearchNews>
 //  },
 //)
 body:searchQuery.isNotEmpty? NewsCards(spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()),key: _cardsState):
-Text("Empiece a buscar noticias con el texto de arriba")
+Padding(
+  padding: const EdgeInsets.all(8.0),
+  child:   Text("Empiece a buscar noticias con el texto de arriba",
+  style: Theme.of(context).textTheme.headline,),
+)
 
 //    body: searching? newsCards:
 //      Text("a buscar"),

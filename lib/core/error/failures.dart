@@ -14,6 +14,11 @@ class HttpFailure extends Failure {
   HttpFailure({String message}): super(message: message);
 }
 
+class NoInternetFailure extends Failure {
+
+  NoInternetFailure({String message}): super(message: message);
+}
+
 class NoMoreNewsFailure extends Failure {
 
   NoMoreNewsFailure({String message}): super(message: message);

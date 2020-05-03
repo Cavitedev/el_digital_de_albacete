@@ -85,17 +85,18 @@ class NewsCardsState extends State<NewsCards> {
 
     @override
     Widget build(BuildContext context) {
+    print("building");
 //      print("cards build ${spiderPage.url} last URL $_lastURL");
 
       int count = _news?.length?? 0 + (_loadedNews ? 0 : 1) +
           (error == null ? 0 : 1);
       return RefreshIndicator(
         onRefresh: () async {
+          print("refreshing");
           error = null;
-          _news.clear();
+          _news?.clear();
           await getNews();
           setState(() {
-
           });
           return null;
         },
