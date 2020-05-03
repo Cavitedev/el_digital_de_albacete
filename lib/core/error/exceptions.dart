@@ -4,3 +4,10 @@ class HttpException implements Exception {
   HttpException(this.message);
 
 }
+
+class NoInternetException implements Exception {
+  final String message;
+
+  NoInternetException(this.message);
+
+}

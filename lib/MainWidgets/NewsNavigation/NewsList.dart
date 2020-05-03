@@ -57,7 +57,8 @@ class _NewsListState extends State<NewsList>
               }).toList()),
           title:  Text(
                   'Digital de Albacete',
-                  style: Theme.of(context).textTheme.display1,
+                  style: Theme.of(context).textTheme.display1.copyWith(fontSize:
+                  Theme.of(context).textTheme.display1.fontSize / MediaQuery.of(context).textScaleFactor),
                 ),
           leading: Image.asset('assets/logo.png'),
           actions: <Widget>[

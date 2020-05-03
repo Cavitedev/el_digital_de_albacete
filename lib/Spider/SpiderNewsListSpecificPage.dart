@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/core/error/exceptions.dart';
@@ -44,6 +46,8 @@ class SpiderNewsListSpecificPage {
       return Right(_getNews(_document));
     }on HttpException catch(e){
       return Left(HttpFailure(message: e.message));
+    } on NoInternetException catch(e){
+      return Left(NoInternetFailure(message: e.message));
     }
 
   }

@@ -67,7 +67,8 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               floating: true,
               title: Text(
                 "Digital de Albacete",
-                style: Theme.of(context).textTheme.display1
+                style: Theme.of(context).textTheme.display1.copyWith(fontSize:
+                Theme.of(context).textTheme.display1.fontSize / MediaQuery.of(context).textScaleFactor),
               ),
               backgroundColor: Theme.of(context).accentColor,
             ),

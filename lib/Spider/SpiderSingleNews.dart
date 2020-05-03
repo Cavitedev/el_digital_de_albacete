@@ -26,6 +26,7 @@ class SpiderSingleNews {
   static const String _unworthText = "/Redacción/";
 
   Future<ExtraNewsData> scrapSingleNewsPage() async {
+
     dom.Document _document = await httpGetterImpl.accessURL(url);
     List<dom.Element> _entryDatas = new List<dom.Element>();
     for (String _contentClass in _contentClasses) {
@@ -35,9 +36,6 @@ class SpiderSingleNews {
       for (dom.Element _entryDara in _someEntryDatas) {
         _entryDatas.addAll(_entryDara?.children);
       }
-//      _entryDatas.forEach((e){
-//        print(e.text);
-//      });
 
     }
     List<NewsData> newsInformation = List<NewsData>();
