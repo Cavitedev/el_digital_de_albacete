@@ -13,13 +13,13 @@ class NewsList extends StatefulWidget {
 class _NewsListState extends State<NewsList>
     with SingleTickerProviderStateMixin {
   final Map<String, String> _tabs = {
-    "Albacete": "https://www.eldigitaldealbacete.com/noticias-albacete/",
+    "Albacete": "https://www.eldigitaldealbacete.com/category/noticias-albacete/",
     "Castilla-La Mancha":
-        "https://www.eldigitaldealbacete.com/castilla-la-mancha/",
-    "Economía": "https://www.eldigitaldealbacete.com/economia-2/",
+        "https://www.eldigitaldealbacete.com/category/castilla-la-mancha/",
+    "Economía": "https://www.eldigitaldealbacete.com/category/economia-2/",
     "Deportes":
-        "https://www.eldigitaldealbacete.com/noticias-deporte-albacete/",
-    "Sanidad": "https://www.eldigitaldealbacete.com/noticias-sanidad-albacete/",
+        "https://www.eldigitaldealbacete.com/category/noticias-deporte-albacete/",
+    "Sanidad": "https://www.eldigitaldealbacete.com/category/noticias-sanidad-albacete/",
   };
   TabController _tabController;
 

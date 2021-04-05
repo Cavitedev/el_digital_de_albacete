@@ -46,20 +46,19 @@ class SpiderSingleNews {
           newsInformation.add(YoutubeVideo(_data.children[0].attributes['src']));
         }else{
           String _imageUrl;
-          for (dom.Element child in _data.children) {
-            if (child.attributes.isNotEmpty) {
-              _imageUrl = child.attributes['src'];
-              _addImage(_imageUrl, newsInformation);
-            }
-            if (child.localName == "a") {
-              for (dom.Element linkChild in child.children) {
-                if (linkChild.attributes.isNotEmpty) {
-                  _imageUrl = linkChild.attributes['data-src'];
-                  _addImage(_imageUrl, newsInformation);
+
+            for (dom.Element child in _data.children) {
+
+              if (child.localName == "a") {
+                for (dom.Element linkChild in child.children) {
+                  if (linkChild.attributes.isNotEmpty) {
+                    _imageUrl = linkChild.attributes['src'];
+                    _addImage(_imageUrl, newsInformation);
+                  }
                 }
               }
-            }
           }
+
 
           if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
 //            print("paragraph"+ _text);

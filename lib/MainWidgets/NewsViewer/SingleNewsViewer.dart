@@ -84,7 +84,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                 child: SizedBox(
                   child: Text(
                     _simpleNewsData.title,
-                    style: Theme.of(context).textTheme.headline,
+                    style: Theme.of(context).textTheme.headline ,
                   ),
                 ),
               ),
@@ -149,7 +149,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
             } else if(_extraNewsData.newsContent[i] is UnorderedList){
               List<NewsData> elements =
               (_extraNewsData.newsContent[i] as UnorderedList).elements;
-              print(elements);
+   //           print(elements);
 
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

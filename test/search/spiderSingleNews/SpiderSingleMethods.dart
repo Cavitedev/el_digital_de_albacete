@@ -18,10 +18,10 @@ class SpiderSingleMethods{
   static void printParagraphs(ExtraNewsData outputData) {
     for(NewsData data in outputData.newsContent){
       if(data is ParagraphStyledData){
-        print(data);
+    //    print(data);
         for(StyledString styledString in data.styledData){
-          print(styledString.text);
-          print(styledString.extraStyle);
+ //         print(styledString.text);
+  //        print(styledString.extraStyle);
         }
       }
     }
@@ -29,8 +29,8 @@ class SpiderSingleMethods{
   static void printImages(ExtraNewsData outputData){
     for(NewsData data in outputData.newsContent){
     if (data is MeaningfulString){
-        print(data.string);
-        print(data.textTag);
+  //      print(data.string);
+  //      print(data.textTag);
       }
     }
   }

@@ -26,10 +26,10 @@ class HttpGetterImpl implements HttpGetter{
     return _instance;
   }
 
-  Future<dom.Document> accessURL(String _url) async {
+  Future<dom.Document> accessURL(String url) async {
     http.Response response;
     try{
-      response = await client.get(_url);
+      response = await client.get(Uri.parse(url));
     } on SocketException{
       throw new NoInternetException("No hay Internet");
     }
@@ -38,7 +38,7 @@ class HttpGetterImpl implements HttpGetter{
       dom.Document document = parser.parse(body);
       return document;
     }else{
-      throw new HttpException("Página $_url no está disponible");
+      throw new HttpException("Página $url no está disponible");
     }
   }
 }

@@ -29,14 +29,15 @@ void main(){
   });
   group('access url',(){
     test('should return document on url', () async{
-      response = await http.get(url);
+      Uri uri = Uri.parse(url);
+      response = await http.get(uri);
       when(mockHttpClient.get(any)).thenAnswer((_) async => response);
 
 
       final dom.Document document = await httpGetter.accessURL(url);
 
 
-      verify(mockHttpClient.get(url));
+      verify(mockHttpClient.get(uri));
 
       //Problem with https parsing somewhere, page may change
       expect(document.body.innerHtml.substring(0,1000), expected.body.innerHtml.substring(0,1000));
