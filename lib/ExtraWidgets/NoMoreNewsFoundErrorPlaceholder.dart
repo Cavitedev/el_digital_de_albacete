@@ -17,7 +17,7 @@ class NoMoreNewsFoundErrorPlaceholder extends StatelessWidget {
           leading: Icon(Icons.error, size: 32 * scale),
           title: Text(
             msg,
-            maxLines: 1,
+            maxLines: 5,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.title
           ),
