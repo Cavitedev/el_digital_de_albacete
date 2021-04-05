@@ -5,6 +5,8 @@ class HttpException implements Exception {
 
 }
 
+
+
 class NoInternetException implements Exception {
   final String message;
 

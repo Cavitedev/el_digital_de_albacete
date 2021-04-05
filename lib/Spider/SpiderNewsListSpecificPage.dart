@@ -7,83 +7,81 @@ import 'package:el_digital_de_albacete/core/error/failures.dart';
 import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
-
 class SpiderNewsListSpecificPage {
-  
   String url;
-  String _nextURL;
+  int page = 1;
 
-  static const String _newsClassListing = "post-listing";
-  static const String _paginationClass = "pagination";
-  static const String _currentPageClass = "current";
-  static const String _pageClass = "page";
+  static const String _newsClassListing = "posts-container";
   static const String failedLoadingNews = 'failedLoadingNews';
-  static final List<SimpleNewsData> noMoreNewsFound = [SimpleNewsData(title: failedLoadingNews)];
+  static final List<SimpleNewsData> noMoreNewsFound = [
+    SimpleNewsData(title: failedLoadingNews)
+  ];
 
   HttpGetterImpl httpGetterImpl;
 
-  SpiderNewsListSpecificPage({this.url}){
+  SpiderNewsListSpecificPage({this.url}) {
     httpGetterImpl = HttpGetterImpl();
   }
 
   Future<Either<Failure, List<SimpleNewsData>>> scrapCurrentPage() async {
     return await _scrapPage(url);
   }
+
   Future<Either<Failure, List<SimpleNewsData>>> scrapNextPage() async {
-    if(_nextURL==null) return null;
-    if(_nextURL== failedLoadingNews) {
+    if (page == -1) {
       return Left(NoMoreNewsFailure(message: "No hay más noticias"));
     }
-    return await _scrapPage(_nextURL);
+    page++;
+    return await _scrapPage(_getNextUrl());
   }
-  
-  Future<Either<Failure, List<SimpleNewsData>>> _scrapPage(String _url) async {
-    try{
-      print(_nextURL);
-      dom.Document _document = await httpGetterImpl.accessURL(_url);
-      _nextURL = _getNextUrl(_document);
-      print(_nextURL);
+
+  Future<Either<Failure, List<SimpleNewsData>>> _scrapPage(String url) async {
+    try {
+      //    print(_nextURL);
+      dom.Document _document = await httpGetterImpl.accessURL(url);
+//      print(_nextURL);
       return Right(_getNews(_document));
-    }on HttpException catch(e){
+    } on HttpException catch (e) {
       return Left(HttpFailure(message: e.message));
-    } on NoInternetException catch(e){
+    } on NoInternetException catch (e) {
       return Left(NoInternetFailure(message: e.message));
     }
-
+    // catch(e){
+    //   return Left(HttpParseFailure(message: "No se pudo parsear la página web"));
+    // }
   }
-  
-
-
 
   List<SimpleNewsData> _getNews(dom.Document _document) {
+
     List<dom.Element> articles =
-        _document.body.getElementsByClassName(_newsClassListing)[0].children;
-    List<SimpleNewsData> news = List<SimpleNewsData>();
+         _document.getElementById(_newsClassListing).children;
+    List<SimpleNewsData> news = [];
     for (dom.Element article in articles) {
-      dom.Element anchor = article.children[0].children[0];
+      dom.Element anchor = article.children[0];
+      dom.Element image = anchor.children.firstWhere((element) => element.localName == "img");;
+
+      String imageLink = anchor.children.length > 0
+          ? RegExp(
+          r"(https://www\.eldigitaldealbacete\.com.*?\.(jpg|png|jpeg))")
+          .firstMatch(image?.attributes['srcset'])?.group(0)
+          : null;
+
       news.add(SimpleNewsData(
-        link: anchor.attributes['href'],
-        title: article.children[1].children[0].text,
-        imageSrc: anchor.children.length>0 ? anchor.children[0].attributes['data-src'] : "error",
-        publishDate: article.children[2].children[0].text,
+        link: article.children[0].attributes['href'],
+        title: article.children[1].children[1].text,
+        imageSrc: imageLink ?? 'error',
+        publishDate: article.children[1].children[0].children[1].text,
       ));
       //  debugPrint(news.last.title);
     }
     return news;
   }
 
-  String _getNextUrl(dom.Document _document) {
-    dom.Element _pagesDiv =
-        _document.body.getElementsByClassName(_paginationClass)[0];
-    int _currentPage =
-        int.parse(_pagesDiv.getElementsByClassName(_currentPageClass)[0].text);
-    String _nextPage = (_currentPage+1).toString();
-    String _nextUrl = failedLoadingNews;
-    for(dom.Element element in _pagesDiv.getElementsByClassName(_pageClass)) {
-      if(element.attributes['title']==_nextPage) {
-        _nextUrl = element.attributes['href']; 
-      }
+  String _getNextUrl() {
+    if (page == 1) {
+      return url;
+    }  else{
+      return url + "/page/" + page.toString();
     }
-    return _nextUrl;
   }
 }
