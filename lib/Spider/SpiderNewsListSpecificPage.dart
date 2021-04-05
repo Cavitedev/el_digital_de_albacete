@@ -63,7 +63,7 @@ class SpiderNewsListSpecificPage {
       String imageLink = anchor.children.length > 0
           ? RegExp(
           r"(https://www\.eldigitaldealbacete\.com.*?\.(jpg|png|jpeg))")
-          .firstMatch(image?.attributes['srcset'])?.group(0)
+          .firstMatch(image?.attributes['srcset'] ?? image?.attributes['src'])?.group(0)
           : null;
 
       news.add(SimpleNewsData(
