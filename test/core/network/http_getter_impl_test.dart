@@ -40,7 +40,7 @@ void main(){
       verify(mockHttpClient.get(uri));
 
       //Problem with https parsing somewhere, page may change
-      expect(document.body.innerHtml.substring(0,1000), expected.body.innerHtml.substring(0,1000));
+      expect(document.body.innerHtml.substring(0,100), expected.body.innerHtml.substring(0,100));
     });
     test('should throw http error with right message when page does not return 200', () async{
       response = http.Response("body",404);
