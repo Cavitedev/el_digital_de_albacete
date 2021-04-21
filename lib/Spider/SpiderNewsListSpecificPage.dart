@@ -5,13 +5,15 @@ import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/core/error/exceptions.dart';
 import 'package:el_digital_de_albacete/core/error/failures.dart';
 import 'package:el_digital_de_albacete/core/network/http_getter.dart';
+import 'package:el_digital_de_albacete/tools/web_regex.dart';
 import 'package:html/dom.dart' as dom;
 
 class SpiderNewsListSpecificPage {
   String url;
   int page = 1;
 
-  static const String _newsClassListing = "posts-container";
+  static const String _newsClassListing = "masonry-grid";
+  static const String _newsClassSearch = "posts-container";
   static const String failedLoadingNews = 'failedLoadingNews';
   static final List<SimpleNewsData> noMoreNewsFound = [
     SimpleNewsData(title: failedLoadingNews)
@@ -52,18 +54,51 @@ class SpiderNewsListSpecificPage {
   }
 
   List<SimpleNewsData> _getNews(dom.Document _document) {
+    dom.Element articlesParent = _document.getElementById(_newsClassListing);
 
+    if (articlesParent == null) {
+      return _getNewsSearch(_document);
+    }
+
+    List<dom.Element> articles = articlesParent.children;
+
+    List<SimpleNewsData> news = [];
+    for (dom.Element article in articles) {
+      if (!article.classes.contains("post-element")) {
+        break;
+      }
+      dom.Element mainDiv = article.children[0];
+
+      String styleStr = mainDiv.attributes["style"];
+      String imageLink = WebRegex.getUrlFromStyleRegex(styleStr);
+
+      news.add(SimpleNewsData(
+        link: mainDiv.children[0].attributes['href'],
+        title: mainDiv.children[0].children[0].text,
+        imageSrc: imageLink ?? 'error',
+        publishDate: mainDiv.getElementsByClassName("date")[0].text,
+      ));
+      //  debugPrint(news.last.title);
+    }
+    return news;
+  }
+
+  List<SimpleNewsData> _getNewsSearch(dom.Document _document) {
     List<dom.Element> articles =
-         _document.getElementById(_newsClassListing).children;
+        _document.getElementById(_newsClassSearch).children;
     List<SimpleNewsData> news = [];
     for (dom.Element article in articles) {
       dom.Element anchor = article.children[0];
-      dom.Element image = anchor.children.firstWhere((element) => element.localName == "img");;
+      dom.Element image =
+          anchor.children.firstWhere((element) => element.localName == "img");
+      ;
 
       String imageLink = anchor.children.length > 0
           ? RegExp(
-          r"(https://www\.eldigitaldealbacete\.com.*?\.(jpg|png|jpeg))")
-          .firstMatch(image?.attributes['srcset'] ?? image?.attributes['src'])?.group(0)
+                  r"(https://www\.eldigitaldealbacete\.com.*?\.(jpg|png|jpeg))")
+              .firstMatch(
+                  image?.attributes['srcset'] ?? image?.attributes['src'])
+              ?.group(0)
           : null;
 
       news.add(SimpleNewsData(
@@ -80,7 +115,7 @@ class SpiderNewsListSpecificPage {
   String _getNextUrl() {
     if (page == 1) {
       return url;
-    }  else{
+    } else {
       return url + "/page/" + page.toString();
     }
   }
