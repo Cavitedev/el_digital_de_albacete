@@ -68,7 +68,7 @@ class SpiderNewsListSpecificPage {
         break;
       }
       dom.Element mainDiv = article.children[0];
-
+article.outerHtml;
       String styleStr = mainDiv.attributes["style"];
       String imageLink = WebRegex.getUrlFromStyleRegex(styleStr);
 
