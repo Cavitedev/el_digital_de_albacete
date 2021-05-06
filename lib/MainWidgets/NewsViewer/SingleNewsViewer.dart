@@ -67,8 +67,8 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               floating: true,
               title: Text(
                 "Digital de Albacete",
-                style: Theme.of(context).textTheme.display1.copyWith(fontSize:
-                Theme.of(context).textTheme.display1.fontSize / MediaQuery.of(context).textScaleFactor),
+                style: Theme.of(context).textTheme.headline4.copyWith(fontSize:
+                Theme.of(context).textTheme.headline4.fontSize / MediaQuery.of(context).textScaleFactor),
               ),
               backgroundColor: Theme.of(context).accentColor,
             ),
@@ -84,7 +84,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                 child: SizedBox(
                   child: Text(
                     _simpleNewsData.title,
-                    style: Theme.of(context).textTheme.headline ,
+                    style: Theme.of(context).textTheme.headline5 ,
                   ),
                 ),
               ),
@@ -129,7 +129,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
                 child: RichText(
                   text: TextSpan(
-                    style: Theme.of(context).textTheme.body1,
+                    style: Theme.of(context).textTheme.bodyText2,
                     children: _data.styledData.map((textStyled) {
                       return TextSpan(text: textStyled.text, style: textStyled.extraStyle);
                     }).toList()
@@ -169,7 +169,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
                       child: RichText(
                         text: TextSpan(
-                            style: Theme.of(context).textTheme.body1,
+                            style: Theme.of(context).textTheme.bodyText2,
                             children: itemText
                         ),
                       ),
@@ -230,7 +230,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             _data.string,
-            style: Theme.of(context).textTheme.subhead)
+            style: Theme.of(context).textTheme.subtitle1)
         );
         break;
       case TextTag.h3:
@@ -238,14 +238,14 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 _data.string,
-                style: Theme.of(context).textTheme.title)
+                style: Theme.of(context).textTheme.headline6)
         );
       case TextTag.h4:
         return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 _data.string,
-                style: Theme.of(context).textTheme.subtitle)
+                style: Theme.of(context).textTheme.subtitle2)
         );
         break;
       default:

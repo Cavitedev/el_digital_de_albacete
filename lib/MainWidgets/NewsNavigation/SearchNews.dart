@@ -43,8 +43,8 @@ class _SearchNewsState extends State<SearchNews>
         border: InputBorder.none,
         hintStyle: TextStyle(color: Colors.white70),
       ),
-      style: Theme.of(context).textTheme.display1.copyWith(
-          fontSize: Theme.of(context).textTheme.display1.fontSize /
+      style: Theme.of(context).textTheme.headline4.copyWith(
+          fontSize: Theme.of(context).textTheme.headline4.fontSize /
               MediaQuery.of(context).textScaleFactor),
       onTap: () {
         setState(() {
@@ -146,7 +146,7 @@ class _SearchNewsState extends State<SearchNews>
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "Empiece a buscar noticias con el texto de arriba",
-                  style: Theme.of(context).textTheme.headline,
+                  style: Theme.of(context).textTheme.headline5
                 ),
               )
 
