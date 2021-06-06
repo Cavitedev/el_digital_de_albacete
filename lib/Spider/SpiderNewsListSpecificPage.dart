@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/core/error/exceptions.dart';
@@ -48,9 +46,9 @@ class SpiderNewsListSpecificPage {
     } on NoInternetException catch (e) {
       return Left(NoInternetFailure(message: e.message));
     }
-    // catch(e){
-    //   return Left(HttpParseFailure(message: "No se pudo parsear la página web"));
-    // }
+    catch(e){
+      return Left(HttpParseFailure(message: "No se pudo parsear la página web"));
+    }
   }
 
   List<SimpleNewsData> _getNews(dom.Document _document) {
@@ -90,15 +88,12 @@ article.outerHtml;
     for (dom.Element article in articles) {
       dom.Element anchor = article.children[0];
       dom.Element image =
-          anchor.children.firstWhere((element) => element.localName == "img");
+          anchor.children.firstWhere((element) => element.localName == "img", orElse: ()=>anchor);
       ;
 
-      String imageLink = anchor.children.length > 0
-          ? RegExp(
-                  r"(https://www\.eldigitaldealbacete\.com.*?\.(jpg|png|jpeg))")
-              .firstMatch(
-                  image?.attributes['srcset'] ?? image?.attributes['src'])
-              ?.group(0)
+      String imageLink = image.localName == "img"
+          ? WebRegex.getUrlFromStyleRegex(
+                  image?.attributes['data-src'] ?? image?.attributes['data-srcset'])
           : null;
 
       news.add(SimpleNewsData(
