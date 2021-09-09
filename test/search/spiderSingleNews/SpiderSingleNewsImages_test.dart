@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'SpiderSingleMethods.dart';
 
 void main(){
-
+//Web page doesn't work, wait to them to fix it
   SpiderSingleNews spiderSingleNews = SpiderSingleNews
     (url: "https://www.eldigitaldealbacete.com/2020/03/06/castilla-la-mancha-intensificara-las-practicas-internacionales-en-las-ensenanzas-de-cerca-de-una-decena-de-familias-de-la-fp-para-el-empleo/");
   ExtraNewsData outputData;

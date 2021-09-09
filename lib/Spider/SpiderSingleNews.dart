@@ -52,7 +52,7 @@ class SpiderSingleNews {
               if (child.localName == "a") {
                 for (dom.Element linkChild in child.children) {
                   if (linkChild.attributes.isNotEmpty) {
-                    _imageUrl = linkChild.attributes['src'];
+                    _imageUrl = linkChild.attributes['data-src'];
                     _addImage(_imageUrl, newsInformation);
                   }
                 }
