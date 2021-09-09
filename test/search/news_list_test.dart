@@ -11,7 +11,7 @@ main(){
 
 
   test('Should return news on list page', () async{
-    spiderPage = SpiderNewsListSpecificPage(url: "https://www.eldigitaldealbacete.com/noticias-albacete/");
+    spiderPage = SpiderNewsListSpecificPage(url: "https://www.eldigitaldealbacete.com/category/noticias-albacete/");
     dartz.Either<Failure,
     List<SimpleNewsData>> _newsRetrieval = await spiderPage
         .scrapCurrentPage();
