@@ -61,6 +61,9 @@ class SpiderSingleNews {
 
 
           if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
+            if (_data.children.isNotEmpty && _data.children[0].localName == "a") {
+              continue;
+            }
 //            print("paragraph"+ _text);
             if (_data.getElementsByClassName("s1").length == 1) {
               _data = _data.children[0];
