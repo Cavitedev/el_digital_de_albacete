@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
         focusColor: Colors.teal[700],
         backgroundColor: Colors.lightGreen[50],
         scaffoldBackgroundColor: Color.fromRGBO(250, 255, 250, 1),
-        accentColor: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         errorColor: Colors.red[100],
         textTheme: TextTheme(
           headline5: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, ),
@@ -27,7 +26,7 @@ class MyApp extends StatelessWidget {
           subtitle1: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, ),
           subtitle2: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, ),
           button: TextStyle(fontSize: 20, color: Colors.white, fontFamily: "NotoSans")
-        ),
+        ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Color.fromARGB(0xff, 0x6e, 0xba, 0x30)),
       ),
       home: NewsList(),
     );
