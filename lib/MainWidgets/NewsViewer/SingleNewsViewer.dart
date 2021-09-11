@@ -70,7 +70,6 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                 style: Theme.of(context).textTheme.headline4.copyWith(fontSize:
                 Theme.of(context).textTheme.headline4.fontSize / MediaQuery.of(context).textScaleFactor),
               ),
-              backgroundColor: Theme.of(context).accentColor,
             ),
             SliverList(
                 delegate: SliverChildListDelegate([

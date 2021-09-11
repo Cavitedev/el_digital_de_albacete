@@ -72,7 +72,6 @@ class _NewsListState extends State<NewsList>
                   size: 26.0,
                 ))
           ],
-          backgroundColor: Theme.of(context).accentColor,
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         body: TabBarView(
