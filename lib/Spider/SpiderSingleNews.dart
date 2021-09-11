@@ -1,11 +1,11 @@
 import 'package:el_digital_de_albacete/Models/ExtraNewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MP4Video.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/YoutubeVideo.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
@@ -28,7 +28,7 @@ class SpiderSingleNews {
   Future<ExtraNewsData> scrapSingleNewsPage() async {
 
     dom.Document _document = await httpGetterImpl.accessURL(url);
-    List<dom.Element> _entryDatas = new List<dom.Element>();
+    List<dom.Element> _entryDatas = <dom.Element>[];
     for (String _contentClass in _contentClasses) {
       List<dom.Element> _someEntryDatas =
           _document.getElementsByClassName(_contentClass);
@@ -38,26 +38,15 @@ class SpiderSingleNews {
       }
 
     }
-    List<NewsData> newsInformation = List<NewsData>();
+    List<NewsData> newsInformation = <NewsData>[];
 
     for (dom.Element _data in _entryDatas) {
       if (_data.localName == "p") {
         if(_data.children.isNotEmpty && _data.children[0].localName == "iframe"){
           newsInformation.add(YoutubeVideo(_data.children[0].attributes['src']));
         }else{
-          String _imageUrl;
 
-            for (dom.Element child in _data.children) {
-
-              if (child.localName == "a") {
-                for (dom.Element linkChild in child.children) {
-                  if (linkChild.attributes.isNotEmpty) {
-                    _imageUrl = linkChild.attributes['data-src'];
-                    _addImage(_imageUrl, newsInformation);
-                  }
-                }
-              }
-          }
+            _getImageAroundAnchor(_data, newsInformation);
 
 
           if (_data.text.trim().isNotEmpty && _data.text != _unworthText) {
@@ -75,14 +64,18 @@ class SpiderSingleNews {
           }
         }
 
-      } else if (["h2", "h3", "h4"].contains(_data.localName)) {
+      } else if (_data.localName == "figure") {
+        _getImage(_data, newsInformation);
+      }
+
+      else if (["h2", "h3", "h4"].contains(_data.localName)) {
         newsInformation.add(MeaningfulString(
             string: _data.text,
             textTag:
                 MeaningfulString.textTagFromString(_data.localName)));
       } else if (_data.localName == "ul") {
         List<dom.Element> ul = _data.children;
-        List<NewsData> liElements = List<NewsData>();
+        List<NewsData> liElements = <NewsData>[];
         for(dom.Element li in ul){
 
             if (li.children.isNotEmpty && ["h2", "h3", "h4"].contains(li.children[0].localName)) {
@@ -110,14 +103,14 @@ class SpiderSingleNews {
 
       }
       else if (_data.localName == "table") {
-        List<String> headers = List<String>();
+        List<String> headers = <String>[];
         for (dom.Element td in _data.children[0].children[0].children) {
           headers.add(td.text);
         }
-        List<List<dynamic>> table = List<List<dynamic>>();
+        List<List<dynamic>> table = <List<dynamic>>[];
         for (int i = 1; i < _data.children[0].children.length; i++) {
           dom.Element tr = _data.children[0].children[i];
-          List<dynamic> row = List<dynamic>();
+          List<dynamic> row = [];
           for (dom.Element td in tr.children) {
             row.add(td.text);
           }
@@ -130,6 +123,24 @@ class SpiderSingleNews {
     }
 
     return ExtraNewsData(newsContent: newsInformation);
+  }
+
+  void _getImageAroundAnchor(dom.Element _data, List<NewsData> newsInformation) {
+    for (dom.Element child in _data.children) {
+
+      if (child.localName == "a") {
+        _getImage(child, newsInformation);
+      }
+              }
+  }
+
+  void _getImage(dom.Element child, List<NewsData> newsInformation) {
+    for (dom.Element linkChild in child.children) {
+      if (linkChild.attributes.isNotEmpty) {
+        String _imageUrl = linkChild.attributes['data-src'];
+        _addImage(_imageUrl, newsInformation);
+      }
+    }
   }
 
   void _addImage(String _imageUrl, List<NewsData> newsInformation) {
