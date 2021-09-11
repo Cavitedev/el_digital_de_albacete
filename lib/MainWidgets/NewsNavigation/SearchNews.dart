@@ -128,7 +128,6 @@ class _SearchNewsState extends State<SearchNews>
                 size: 26.0,
               )),
           actions: <Widget>[searching ? _closeButton() : _searchButton()],
-          backgroundColor: Theme.of(context).accentColor,
         ),
         backgroundColor: Theme.of(context).backgroundColor,
 //body:  StreamBuilder(
