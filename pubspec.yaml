@@ -24,14 +24,14 @@ dependencies:
 
   http: ^0.13.3
   html: ^0.15.0
-  flutter_spinkit: ^5.0.0
-  cached_network_image: ^3.0.0
-  equatable: ^2.0.0
-  mockito: ^5.0.7
-  dartz: ^0.9.2
+  flutter_spinkit: ^5.1.0
+  cached_network_image: ^3.1.0
+  equatable: ^2.0.3
+  mockito: ^5.0.15
+  dartz: ^0.10.0
   youtube_player_flutter: ^8.0.0
-  video_player: ^2.1.1
-  chewie: ^1.0.0
+  video_player: ^2.2.0
+  chewie: ^1.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
