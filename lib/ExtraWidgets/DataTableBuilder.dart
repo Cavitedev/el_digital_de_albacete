@@ -1,10 +1,8 @@
-
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:flutter/material.dart';
 
 class DataTableBuilder extends StatefulWidget {
-  DataOfTable dataOfTable;
-
+  final DataOfTable dataOfTable;
 
   DataTableBuilder({this.dataOfTable});
 
@@ -21,8 +19,6 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
 
   _DataTableBuilderState({this.dataOfTable});
 
-
-
   @override
   void initState() {
     super.initState();
@@ -30,15 +26,8 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
 
   @override
   Widget build(BuildContext context) {
-
-
-        dataOfTable.table.sort((a, b) =>
-        asc
-        ? a[index].compareTo(b[index])
-            : b[index].compareTo(a[index]));
-
-
-
+    dataOfTable.table.sort((a, b) =>
+        asc ? a[index].compareTo(b[index]) : b[index].compareTo(a[index]));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -47,8 +36,7 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
           sortAscending: asc,
           columns: dataOfTable.headerRow
               .map(
-                (row) =>
-                DataColumn(
+                (row) => DataColumn(
                   onSort: (index, asc) {
                     setState(() {
                       this.index = index;
@@ -62,15 +50,13 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
                     ),
                   ),
                 ),
-          )
+              )
               .toList(),
           rows: dataOfTable.table
-              .map((row) =>
-              DataRow(
+              .map((row) => DataRow(
                   cells: row
                       .map(
-                        (cell) =>
-                        DataCell(
+                        (cell) => DataCell(
                           Text(
                             cell.toString(),
                             style: TextStyle(
@@ -78,11 +64,9 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
                             ),
                           ),
                         ),
-                  )
+                      )
                       .toList()))
               .toList()),
     );
   }
 }
-
-
