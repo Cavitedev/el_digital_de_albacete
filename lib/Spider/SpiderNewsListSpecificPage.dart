@@ -45,9 +45,9 @@ class SpiderNewsListSpecificPage {
       return Left(HttpFailure(message: e.message));
     } on NoInternetException catch (e) {
       return Left(NoInternetFailure(message: e.message));
-    }
-    catch(e){
-      return Left(HttpParseFailure(message: "No se pudo parsear la página web"));
+    } catch (e) {
+      return Left(
+          HttpParseFailure(message: "No se pudo parsear la página web"));
     }
   }
 
@@ -66,7 +66,7 @@ class SpiderNewsListSpecificPage {
         break;
       }
       dom.Element mainDiv = article.children[0];
-article.outerHtml;
+      article.outerHtml;
       String styleStr = mainDiv.attributes["style"];
       String imageLink = WebRegex.getUrlFromStyleRegex(styleStr);
 
@@ -87,13 +87,14 @@ article.outerHtml;
     List<SimpleNewsData> news = [];
     for (dom.Element article in articles) {
       dom.Element anchor = article.children[0];
-      dom.Element image =
-          anchor.children.firstWhere((element) => element.localName == "img", orElse: ()=>anchor);
-      ;
+      dom.Element image = anchor.children.firstWhere(
+          (element) => element.localName == "img",
+          orElse: () => anchor);
 
       String imageLink = image.localName == "img"
-          ? WebRegex.getUrlFromStyleRegex(
-                  image?.attributes['data-src'] ?? image?.attributes['data-srcset'])
+          ? WebRegex.getUrlFromStyleRegex(image?.attributes['data-src'] ??
+              image?.attributes['src'] ??
+              image?.attributes['data-srcset'])
           : null;
 
       news.add(SimpleNewsData(
@@ -111,7 +112,7 @@ article.outerHtml;
     if (page == 1) {
       return url;
     } else {
-      return url + "/page/" + page.toString();
+      return url + "page/" + page.toString();
     }
   }
 }
