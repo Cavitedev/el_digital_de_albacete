@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
         colorScheme:
             ColorScheme.fromSwatch(primarySwatch: Colors.green).copyWith(
           primary: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
-
         ),
       ),
       home: NewsList(),
