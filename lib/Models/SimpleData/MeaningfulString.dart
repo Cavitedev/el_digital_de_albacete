@@ -1,10 +1,9 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 
-class MeaningfulString implements NewsData{
+class MeaningfulString implements NewsData {
   String string;
   TextTag textTag;
-  MeaningfulString({this.string,this.textTag});
-
+  MeaningfulString({this.string, this.textTag});
 
   @override
   String toString() {
@@ -14,18 +13,16 @@ class MeaningfulString implements NewsData{
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is MeaningfulString &&
-              runtimeType == other.runtimeType &&
-              string == other.string &&
-              textTag == other.textTag;
+      other is MeaningfulString &&
+          runtimeType == other.runtimeType &&
+          string == other.string &&
+          textTag == other.textTag;
 
   @override
-  int get hashCode =>
-      string.hashCode ^
-      textTag.hashCode;
+  int get hashCode => string.hashCode ^ textTag.hashCode;
 
-  static TextTag textTagFromString(String string){
-    switch(string){
+  static TextTag textTagFromString(String string) {
+    switch (string) {
       case "img":
         return TextTag.img;
         break;
@@ -39,7 +36,8 @@ class MeaningfulString implements NewsData{
         return TextTag.h4;
         break;
     }
+    return null;
   }
 }
 
-enum TextTag{img,h2,h3,h4}
+enum TextTag { img, h2, h3, h4 }
