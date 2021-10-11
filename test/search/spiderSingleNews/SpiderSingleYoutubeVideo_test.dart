@@ -9,7 +9,7 @@ main(){
 
   SpiderSingleNews spiderSingleNews = SpiderSingleNews
     (url: "https://www.eldigitaldealbacete.com/2020/04/18/video-el-abrazo-digital-que-mandan-los-alumnos-del-ma-llanos-martinez/");
-  ExtraNewsData outputData;
+  late ExtraNewsData outputData;
   setUp(() async{
     outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
   });
@@ -17,8 +17,8 @@ main(){
   test('text page gets youtube video list', (){
 
 
-    expect(outputData.newsContent[6], YoutubeVideo("f1CsMeybqsc"));
-    expect(outputData.newsContent.length, 7);
+    expect(outputData.newsContent![6], YoutubeVideo("f1CsMeybqsc"));
+    expect(outputData.newsContent!.length, 7);
   });
 
 }

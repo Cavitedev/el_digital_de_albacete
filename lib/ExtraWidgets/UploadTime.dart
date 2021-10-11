@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UploadTime extends StatelessWidget {
-  final String publishDate;
+  final String? publishDate;
   final double size;
   UploadTime({this.publishDate, this.size = 10});
 
@@ -15,7 +15,7 @@ class UploadTime extends StatelessWidget {
         ),
         Text(
           ' $publishDate',
-          style: Theme.of(context).textTheme.caption.copyWith(fontSize: size),
+          style: Theme.of(context).textTheme.caption!.copyWith(fontSize: size),
         ),
       ],
     );

@@ -9,7 +9,7 @@ void main(){
 
   SpiderSingleNews spiderSingleNews = SpiderSingleNews
     (url: "https://www.eldigitaldealbacete.com/2020/03/04/el-senado-aprueba-definitivamente-la-nueva-senda-de-estabilidad-y-el-gobierno-encauza-los-presupuestos/");
-  ExtraNewsData outputData;
+  late ExtraNewsData outputData;
   setUp(() async{
     outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
   });
@@ -18,9 +18,9 @@ void main(){
 
 
 
-      expect((outputData.newsContent[8] as MeaningfulString),MeaningfulString(string: "LA NUEVA SENDA",textTag: TextTag.h2));
-      expect((outputData.newsContent[14] as MeaningfulString),MeaningfulString(string: "OPOSICIÓN.",textTag: TextTag.h2));
-      expect((outputData.newsContent[20] as MeaningfulString),MeaningfulString(string: "VETO DEL SENADO",textTag: TextTag.h2));
+      expect((outputData.newsContent![8] as MeaningfulString),MeaningfulString(string: "LA NUEVA SENDA",textTag: TextTag.h2));
+      expect((outputData.newsContent![14] as MeaningfulString),MeaningfulString(string: "OPOSICIÓN.",textTag: TextTag.h2));
+      expect((outputData.newsContent![20] as MeaningfulString),MeaningfulString(string: "VETO DEL SENADO",textTag: TextTag.h2));
     });
 
 

@@ -1,8 +1,8 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 
 class MeaningfulString implements NewsData {
-  String string;
-  TextTag textTag;
+  String? string;
+  TextTag? textTag;
   MeaningfulString({this.string, this.textTag});
 
   @override
@@ -21,20 +21,16 @@ class MeaningfulString implements NewsData {
   @override
   int get hashCode => string.hashCode ^ textTag.hashCode;
 
-  static TextTag textTagFromString(String string) {
+  static TextTag? textTagFromString(String? string) {
     switch (string) {
       case "img":
         return TextTag.img;
-        break;
       case "h2":
         return TextTag.h2;
-        break;
       case "h3":
         return TextTag.h3;
-        break;
       case "h4":
         return TextTag.h4;
-        break;
     }
     return null;
   }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class DataTableBuilder extends StatefulWidget {
   final DataOfTable dataOfTable;
 
-  DataTableBuilder({this.dataOfTable});
+  DataTableBuilder({required this.dataOfTable});
 
   @override
   _DataTableBuilderState createState() =>
@@ -17,7 +17,7 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
   int index = 0;
   bool asc = true;
 
-  _DataTableBuilderState({this.dataOfTable});
+  _DataTableBuilderState({required this.dataOfTable});
 
   @override
   void initState() {

@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart' as dartz;
 
 main(){
 
-  List<SimpleNewsData> _news;
+  late List<SimpleNewsData> _news;
   SpiderNewsListSpecificPage spiderPage;
 
 
@@ -17,7 +17,7 @@ main(){
         .scrapCurrentPage();
 
     _newsRetrieval.fold((failure){
-      throw Exception("News could not load " + failure.message);
+      throw Exception("News could not load " + failure.message!);
     }, (news){
       _news = news;
     });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NoMoreNewsFoundErrorPlaceholder extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
 
   NoMoreNewsFoundErrorPlaceholder({this.msg = "no error message"});
@@ -15,7 +15,7 @@ class NoMoreNewsFoundErrorPlaceholder extends StatelessWidget {
         child: ListTile(
           leading: Icon(Icons.error, size: 32 * scale),
           title: Text(
-            msg,
+            msg!,
             maxLines: 5,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headline3

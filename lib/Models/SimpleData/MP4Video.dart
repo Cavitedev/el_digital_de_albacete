@@ -1,9 +1,9 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 
-class MP4Video implements NewsData{
+class MP4Video implements NewsData {
   String link;
 
-  MP4Video({this.link});
+  MP4Video({required this.link});
 
   @override
   String toString() {
@@ -12,15 +12,8 @@ class MP4Video implements NewsData{
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is MP4Video &&
-              runtimeType == other.runtimeType &&
-              link == other.link;
+      identical(this, other) || other is MP4Video && runtimeType == other.runtimeType && link == other.link;
 
   @override
   int get hashCode => link.hashCode;
-
-
-
-
 }

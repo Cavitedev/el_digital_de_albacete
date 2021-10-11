@@ -5,7 +5,6 @@ import 'package:el_digital_de_albacete/core/error/exceptions.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 abstract class HttpGetter {
   ///
@@ -17,12 +16,12 @@ abstract class HttpGetter {
 class HttpGetterImpl implements HttpGetter {
   final http.Client client;
 
-  HttpGetterImpl.constructor({@required this.client});
+  HttpGetterImpl.constructor({required this.client});
 
   static final HttpGetter _instance = HttpGetterImpl.constructor(client: http.Client());
 
   factory HttpGetterImpl() {
-    return _instance;
+    return _instance as HttpGetterImpl;
   }
 
   Future<dom.Document> accessURL(String url) async {

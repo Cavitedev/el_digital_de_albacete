@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 class NumberTools{
-  static double toSpanishNumber(String string) {
+  static double? toSpanishNumber(String string) {
     List<String> _numberChars = [
       '0',
       '1',

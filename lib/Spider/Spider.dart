@@ -7,7 +7,7 @@ abstract class Spider{
 
   
   
-  Future<dom.Document> accessURL(String url) async {
+  Future<dom.Document?> accessURL(String url) async {
     try {
       http.Response response = await http.get(Uri.parse(url));
       String body = utf8.decode(response.bodyBytes);

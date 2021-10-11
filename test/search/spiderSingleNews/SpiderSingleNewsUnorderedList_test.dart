@@ -16,8 +16,8 @@ void main(){
 
   outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
 
-    expect((outputData.newsContent[0] as UnorderedList).elements[0],MeaningfulString(textTag: TextTag.h4, string: "En Atención Primaria, los centros permanecerán abiertos para atender la demanda urgente, quedando suspendida toda la actividad previamente programada."));
-    expect(outputData.newsContent.length, 12);
+    expect((outputData.newsContent![0] as UnorderedList).elements[0],MeaningfulString(textTag: TextTag.h4, string: "En Atención Primaria, los centros permanecerán abiertos para atender la demanda urgente, quedando suspendida toda la actividad previamente programada."));
+    expect(outputData.newsContent!.length, 12);
   });
 
   test('Page gets unordered text when there are not tags', () async{
@@ -25,8 +25,8 @@ void main(){
   (url: "https://www.eldigitaldealbacete.com/2020/04/18/mas-de-3-000-personas-atendidas-por-cruz-roja-durante-la-pandemia/");
   outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
 
-  expect(((outputData.newsContent[7] as UnorderedList).elements[0] as ParagraphStyledData).styledData[0],StyledString(text: "16 instalaciones hospitalarias temporales en colaboración con las administraciones públicas para ayudar a descongestionar el sistema sanitario."));
-  expect(outputData.newsContent.length, 12);
+  expect(((outputData.newsContent![7] as UnorderedList).elements[0] as ParagraphStyledData).styledData[0],StyledString(text: "16 instalaciones hospitalarias temporales en colaboración con las administraciones públicas para ayudar a descongestionar el sistema sanitario."));
+  expect(outputData.newsContent!.length, 12);
 
   });
 

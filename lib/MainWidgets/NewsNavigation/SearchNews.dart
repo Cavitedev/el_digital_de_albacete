@@ -8,8 +8,7 @@ class SearchNews extends StatefulWidget {
   _SearchNewsState createState() => _SearchNewsState();
 }
 
-class _SearchNewsState extends State<SearchNews>
-    with SingleTickerProviderStateMixin {
+class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateMixin {
   bool searching = true;
 
   TextEditingController _searchQueryController = TextEditingController();
@@ -17,7 +16,7 @@ class _SearchNewsState extends State<SearchNews>
 
 //  NewsCards newsCards;
   final GlobalKey<NewsCardsState> _cardsState = GlobalKey<NewsCardsState>();
-  FocusNode searchFocus;
+  FocusNode? searchFocus;
 
   void initState() {
     super.initState();
@@ -28,7 +27,7 @@ class _SearchNewsState extends State<SearchNews>
   @override
   void dispose() {
     // Clean up the focus node when the Form is disposed.
-    searchFocus.dispose();
+    searchFocus!.dispose();
 
     super.dispose();
   }
@@ -43,9 +42,8 @@ class _SearchNewsState extends State<SearchNews>
         border: InputBorder.none,
         hintStyle: TextStyle(color: Colors.white70),
       ),
-      style: Theme.of(context).textTheme.headline4.copyWith(
-          fontSize: Theme.of(context).textTheme.headline4.fontSize /
-              MediaQuery.of(context).textScaleFactor),
+      style: Theme.of(context).textTheme.headline4!.copyWith(
+          fontSize: Theme.of(context).textTheme.headline4!.fontSize! / MediaQuery.of(context).textScaleFactor),
       onTap: () {
         setState(() {
           searching = true;
@@ -74,8 +72,8 @@ class _SearchNewsState extends State<SearchNews>
     searchQuery = _searchQueryController.text;
     setState(() {
       searching = false;
-      _cardsState?.currentState?.spiderPage?.url = _buildQuery();
-      _cardsState?.currentState?.getNews();
+      _cardsState.currentState?.spiderPage?.url = _buildQuery();
+      _cardsState.currentState?.getNews();
     });
   }
 
@@ -138,15 +136,11 @@ class _SearchNewsState extends State<SearchNews>
 //  },
 //)
         body: searchQuery.isNotEmpty
-            ? NewsCards(
-                spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()),
-                key: _cardsState)
+            ? NewsCards(spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()), key: _cardsState)
             : Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Empiece a buscar noticias con el texto de arriba",
-                  style: Theme.of(context).textTheme.headline5
-                ),
+                child: Text("Empiece a buscar noticias con el texto de arriba",
+                    style: Theme.of(context).textTheme.headline5),
               )
 
 //    body: searching? newsCards:

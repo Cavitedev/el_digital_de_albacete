@@ -21,7 +21,7 @@ class _NewsListState extends State<NewsList>
         "https://www.eldigitaldealbacete.com/category/noticias-deporte-albacete/",
     "Sanidad": "https://www.eldigitaldealbacete.com/category/noticias-sanidad-albacete/",
   };
-  TabController _tabController;
+  TabController? _tabController;
 
 
 
@@ -47,7 +47,7 @@ class _NewsListState extends State<NewsList>
               labelColor: Colors.white,
               labelStyle: Theme.of(context)
                   .textTheme
-                  .button
+                  .button!
                   .merge(TextStyle(fontWeight: FontWeight.bold)),
               unselectedLabelStyle: Theme.of(context).textTheme.button,
               tabs: _tabs.keys.map((key) {
@@ -57,8 +57,8 @@ class _NewsListState extends State<NewsList>
               }).toList()),
           title:  Text(
                   'Digital de Albacete',
-                  style: Theme.of(context).textTheme.headline4.copyWith(fontSize:
-                  Theme.of(context).textTheme.headline4.fontSize / MediaQuery.of(context).textScaleFactor),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize:
+                  Theme.of(context).textTheme.headline4!.fontSize! / MediaQuery.of(context).textScaleFactor),
                 ),
           leading: Image.asset('assets/logo.png'),
           actions: <Widget>[
