@@ -10,7 +10,7 @@ class NewsCard extends StatelessWidget {
 
   final SimpleNewsData simpleNewsData;
 
-  NewsCard({this.simpleNewsData});
+  NewsCard({required this.simpleNewsData});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class NewsCard extends StatelessWidget {
                   child: CachedNetworkImage(
                     placeholder: (context,url) => FadingCircle(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
-                    imageUrl: simpleNewsData.imageSrc,
+                    imageUrl: simpleNewsData.imageSrc!,
                   ),
                 ),
 
@@ -62,13 +62,13 @@ class NewsCard extends StatelessWidget {
 
 class _ArticleDescription extends StatelessWidget {
   _ArticleDescription({
-    Key key,
+    Key? key,
     this.title,
     this.publishDate,
   }) : super(key: key);
 
-  final String title;
-  final String publishDate;
+  final String? title;
+  final String? publishDate;
 
   @override
   Widget build(BuildContext context) {

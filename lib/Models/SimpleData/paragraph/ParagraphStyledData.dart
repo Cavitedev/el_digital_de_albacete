@@ -3,7 +3,7 @@ import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/StyledString.
 import 'package:flutter/cupertino.dart';
 
 class ParagraphStyledData implements NewsData {
-  List<StyledString> styledData;
+  late List<StyledString> styledData;
   static const Map<String, TextStyle> attributesStyles = {
     'b': TextStyle(fontWeight: FontWeight.bold),
     'u': TextStyle(decoration: TextDecoration.underline),
@@ -20,22 +20,22 @@ class ParagraphStyledData implements NewsData {
     styledData = _checkTags(TagAndText(text: html, tag: ""), null);
   }
 
-  List<StyledString> _checkTags(TagAndText dataText, TextStyle styleBefore) {
+  List<StyledString> _checkTags(TagAndText dataText, TextStyle? styleBefore) {
     List<StyledString> output = <StyledString>[];
-    List<TagAndText> recursiveTextsWithTags = _splitHtml(dataText.text);
+    List<TagAndText> recursiveTextsWithTags = _splitHtml(dataText.text!);
     if (recursiveTextsWithTags.length == 0) {
       output.add(StyledString(
           text: dataText.text,
           extraStyle: styleBefore == null
-              ? attributesStyles[dataText.tag]
-              : attributesStyles[dataText.tag]?.merge(styleBefore)));
+              ? attributesStyles[dataText.tag!]
+              : attributesStyles[dataText.tag!]?.merge(styleBefore)));
     } else {
       for (int i = 0; i < recursiveTextsWithTags.length; i++) {
         output.addAll(_checkTags(
             recursiveTextsWithTags[i],
             styleBefore == null
-                ? attributesStyles[dataText.tag]
-                : attributesStyles[dataText.tag]?.merge(styleBefore)));
+                ? attributesStyles[dataText.tag!]
+                : attributesStyles[dataText.tag!]?.merge(styleBefore)));
       }
     }
 
@@ -108,8 +108,8 @@ class ParagraphStyledData implements NewsData {
 }
 
 class TagAndText {
-  String tag;
-  String text;
+  String? tag;
+  String? text;
 
   TagAndText({this.tag, this.text});
 }

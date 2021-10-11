@@ -12,7 +12,7 @@ class DataOfTable implements NewsData {
   }
 
   void _convertNumericColumnsToDouble() {
-    List<List<double>> columns = <List<double>>[];
+    List<List<double>?> columns = <List<double>?>[];
     for (int i = 0; i < table[0].length; i++) {
       columns.add(_checkIfColumnIsDouble(i));
     }
@@ -36,13 +36,13 @@ class DataOfTable implements NewsData {
     }
   }
 
-  List<double> _checkIfColumnIsDouble(int i) {
-    double num = NumberTools.toSpanishNumber(table[0][i]);
+  List<double>? _checkIfColumnIsDouble(int i) {
+    double? num = NumberTools.toSpanishNumber(table[0][i]);
     if (num == null) return null;
     List<double> values = <double>[];
     values.add(num);
     for (int rowIndex = 1; rowIndex < table.length; rowIndex++) {
-      double num2 = NumberTools.toSpanishNumber(table[rowIndex][i]);
+      double? num2 = NumberTools.toSpanishNumber(table[rowIndex][i]);
       if (num2 == null) return null;
       values.add(num2);
     }

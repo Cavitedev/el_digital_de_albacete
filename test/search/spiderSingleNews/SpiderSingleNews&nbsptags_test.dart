@@ -10,7 +10,7 @@ void main(){
 
   SpiderSingleNews spiderSingleNews = SpiderSingleNews
     (url: "https://www.eldigitaldealbacete.com/2020/03/06/globalcaja-protagonista-en-comercia-2020/");
-  ExtraNewsData outputData;
+  late ExtraNewsData outputData;
   setUp(() async{
     outputData = await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
   });
@@ -19,7 +19,7 @@ void main(){
 
 
 
-      expect((outputData.newsContent[0] as ParagraphStyledData).styledData[0],StyledString(extraStyle: ParagraphStyledData.attributesStyles['strong'], text: "El vicepresidente de Globalcaja, Herminio Molina, junto con varios directivos de la entidad, han asistido a la inauguración de Comercia, acto que ha contado con la presencia del alcalde de Albacete, Vicente Casañ, entre otros representantes del Ayuntamiento, Diputación y la Federación de Comercio, quienes han pasado por el stand que tiene la Caja y la Federación de Comercio en el recinto ferial albaceteño, gracias  a la colaboración entre ambas instituciones. "));
+      expect((outputData.newsContent![0] as ParagraphStyledData).styledData[0],StyledString(extraStyle: ParagraphStyledData.attributesStyles['strong'], text: "El vicepresidente de Globalcaja, Herminio Molina, junto con varios directivos de la entidad, han asistido a la inauguración de Comercia, acto que ha contado con la presencia del alcalde de Albacete, Vicente Casañ, entre otros representantes del Ayuntamiento, Diputación y la Federación de Comercio, quienes han pasado por el stand que tiene la Caja y la Federación de Comercio en el recinto ferial albaceteño, gracias  a la colaboración entre ambas instituciones. "));
     });
 
 

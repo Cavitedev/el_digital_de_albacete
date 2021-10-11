@@ -6,7 +6,7 @@ void main(){
     String text = "background-image: url(https://www.eldigitaldealbacete.com/wp-content/uploads/2020/11/gente_calle_rosario_251020_archivo_albacete-30.jpg)";
     String expected = "https://www.eldigitaldealbacete.com/wp-content/uploads/2020/11/gente_calle_rosario_251020_archivo_albacete-30.jpg";
 
-    String output = WebRegex.getUrlFromStyleRegex(text);
+    String? output = WebRegex.getUrlFromStyleRegex(text);
 
     expect(output, expected);
 
@@ -17,7 +17,7 @@ void main(){
     String text = "background-image: url(https://www.eldigitaldealbacete.com/wp-content/uploads/2020/11/gente_calle_rosario_251020_archivo_albacete-30.gif)";
     String expected = "https://www.eldigitaldealbacete.com/wp-content/uploads/2020/11/gente_calle_rosario_251020_archivo_albacete-30.gif";
 
-    String output = WebRegex.getUrlFromStyleRegex(text);
+    String? output = WebRegex.getUrlFromStyleRegex(text);
 
     expect(output, expected);
 
@@ -28,7 +28,7 @@ void main(){
     String text = "background-image: url(https://www.eldigitaldealbacete.com/wp-content/uploads/2020/11/gente_calle_rosario_251020_archivo_albacete-30.png)";
     String expected = "https://www.eldigitaldealbacete.com/wp-content/uploads/2020/11/gente_calle_rosario_251020_archivo_albacete-30.png";
 
-    String output = WebRegex.getUrlFromStyleRegex(text);
+    String? output = WebRegex.getUrlFromStyleRegex(text);
 
     expect(output, expected);
 

@@ -17,25 +17,25 @@ void main() {
         await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
 
     expect(
-        (outputData.newsContent[2] as MeaningfulString),
+        (outputData.newsContent![2] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldeciudadreal.com/wp-content/uploads/2020/03/clausura-la-ii-convencin-nacional-de-delegados-de-la-academia-getbrit_49627050347_o.jpg"));
     expect(
-        (outputData.newsContent[5] as MeaningfulString),
+        (outputData.newsContent![5] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldeciudadreal.com/wp-content/uploads/2020/03/clausura-la-ii-convencin-nacional-de-delegados-de-la-academia-getbrit_49626318323_o.jpg"));
     expect(
-        (outputData.newsContent[8] as MeaningfulString),
+        (outputData.newsContent![8] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldeciudadreal.com/wp-content/uploads/2020/03/clausura-la-ii-convencin-nacional-de-delegados-de-la-academia-getbrit_49626305593_o.jpg"));
     expect(
-        (outputData.newsContent[12] as MeaningfulString),
+        (outputData.newsContent![12] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
@@ -49,34 +49,34 @@ void main() {
 
     ExtraNewsData outputData =
         await SpiderSingleMethods.setUpScrapping(spiderSingleNews);
-    expect(outputData.newsContent.length, 79);
+    expect(outputData.newsContent!.length, 79);
 
     expect(
-        (outputData.newsContent[1] as MeaningfulString),
+        (outputData.newsContent![1] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldealbacete.com/wp-content/uploads/2021/09/ANTONIO_FERRERA_MANZANARES_EMILIO_DE_JUSTO_TOROS_10_SEPTIEMBRE_2021_NOTICIAS_ALBACETE-8.jpg"));
     expect(
-        (outputData.newsContent[3] as MeaningfulString),
+        (outputData.newsContent![3] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldealbacete.com/wp-content/uploads/2021/09/PUBLICO_ANTONIO_FERRERA_MANZANARES_EMILIO_DE_JUSTO_TOROS_10_SEPTIEMBRE_2021_NOTICIAS_ALBACETE-18.jpg"));
     expect(
-        (outputData.newsContent[5] as MeaningfulString),
+        (outputData.newsContent![5] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldealbacete.com/wp-content/uploads/2021/09/1_ANTONIO_FERRERA_MANZANARES_EMILIO_DE_JUSTO_TOROS_10_SEPTIEMBRE_2021_NOTICIAS_ALBACETE-1.jpg"));
     expect(
-        (outputData.newsContent[7] as MeaningfulString),
+        (outputData.newsContent![7] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:
                 "https://www.eldigitaldealbacete.com/wp-content/uploads/2021/09/1_ANTONIO_FERRERA_MANZANARES_EMILIO_DE_JUSTO_TOROS_10_SEPTIEMBRE_2021_NOTICIAS_ALBACETE-2.jpg"));
     expect(
-        (outputData.newsContent[77] as MeaningfulString),
+        (outputData.newsContent![77] as MeaningfulString),
         MeaningfulString(
             textTag: TextTag.img,
             string:

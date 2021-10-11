@@ -7,24 +7,22 @@ import 'package:el_digital_de_albacete/tools/web_regex.dart';
 import 'package:html/dom.dart' as dom;
 
 class SpiderNewsListSpecificPage {
-  String url;
+  String? url;
   int page = 1;
 
   static const String _newsClassListing = "masonry-grid";
   static const String _newsClassSearch = "posts-container";
   static const String failedLoadingNews = 'failedLoadingNews';
-  static final List<SimpleNewsData> noMoreNewsFound = [
-    SimpleNewsData(title: failedLoadingNews)
-  ];
+  static final List<SimpleNewsData> noMoreNewsFound = [SimpleNewsData(title: failedLoadingNews)];
 
-  HttpGetterImpl httpGetterImpl;
+  late HttpGetterImpl httpGetterImpl;
 
   SpiderNewsListSpecificPage({this.url}) {
     httpGetterImpl = HttpGetterImpl();
   }
 
   Future<Either<Failure, List<SimpleNewsData>>> scrapCurrentPage() async {
-    return await _scrapPage(url);
+    return await _scrapPage(url!);
   }
 
   Future<Either<Failure, List<SimpleNewsData>>> scrapNextPage() async {
@@ -32,7 +30,7 @@ class SpiderNewsListSpecificPage {
       return Left(NoMoreNewsFailure(message: "No hay más noticias"));
     }
     page++;
-    return await _scrapPage(_getNextUrl());
+    return await _scrapPage(_getNextUrl()!);
   }
 
   Future<Either<Failure, List<SimpleNewsData>>> _scrapPage(String url) async {
@@ -46,13 +44,12 @@ class SpiderNewsListSpecificPage {
     } on NoInternetException catch (e) {
       return Left(NoInternetFailure(message: e.message));
     } catch (e) {
-      return Left(
-          HttpParseFailure(message: "No se pudo parsear la página web"));
+      return Left(HttpParseFailure(message: "No se pudo parsear la página web"));
     }
   }
 
   List<SimpleNewsData> _getNews(dom.Document _document) {
-    dom.Element articlesParent = _document.getElementById(_newsClassListing);
+    dom.Element? articlesParent = _document.getElementById(_newsClassListing);
 
     if (articlesParent == null) {
       return _getNewsSearch(_document);
@@ -67,8 +64,8 @@ class SpiderNewsListSpecificPage {
       }
       dom.Element mainDiv = article.children[0];
       article.outerHtml;
-      String styleStr = mainDiv.attributes["style"];
-      String imageLink = WebRegex.getUrlFromStyleRegex(styleStr);
+      String? styleStr = mainDiv.attributes["style"];
+      String? imageLink = WebRegex.getUrlFromStyleRegex(styleStr);
 
       news.add(SimpleNewsData(
         link: mainDiv.children[0].attributes['href'],
@@ -82,19 +79,15 @@ class SpiderNewsListSpecificPage {
   }
 
   List<SimpleNewsData> _getNewsSearch(dom.Document _document) {
-    List<dom.Element> articles =
-        _document.getElementById(_newsClassSearch).children;
+    List<dom.Element> articles = _document.getElementById(_newsClassSearch)!.children;
     List<SimpleNewsData> news = [];
     for (dom.Element article in articles) {
       dom.Element anchor = article.children[0];
-      dom.Element image = anchor.children.firstWhere(
-          (element) => element.localName == "img",
-          orElse: () => anchor);
+      dom.Element image = anchor.children.firstWhere((element) => element.localName == "img", orElse: () => anchor);
 
-      String imageLink = image.localName == "img"
-          ? WebRegex.getUrlFromStyleRegex(image?.attributes['data-src'] ??
-              image?.attributes['src'] ??
-              image?.attributes['data-srcset'])
+      String? imageLink = image.localName == "img"
+          ? WebRegex.getUrlFromStyleRegex(
+              image.attributes['data-src'] ?? image.attributes['src'] ?? image.attributes['data-srcset'])
           : null;
 
       news.add(SimpleNewsData(
@@ -108,11 +101,11 @@ class SpiderNewsListSpecificPage {
     return news;
   }
 
-  String _getNextUrl() {
+  String? _getNextUrl() {
     if (page == 1) {
       return url;
     } else {
-      return url + "page/" + page.toString();
+      return url! + "page/" + page.toString();
     }
   }
 }
