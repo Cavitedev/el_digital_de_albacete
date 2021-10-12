@@ -1,6 +1,12 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 
-class ExtraNewsData{
+class ExtraNewsData {
+  SimpleNewsData? simpleNewsData;
   List<NewsData>? newsContent;
-  ExtraNewsData({this.newsContent});
+
+  ExtraNewsData({
+    this.newsContent,
+    this.simpleNewsData,
+  });
 }

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart' as dartz;
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
-import 'package:el_digital_de_albacete/ExtraWidgets/NoMoreNewsFoundErrorPlaceholder.dart';
+import 'package:el_digital_de_albacete/ExtraWidgets/ErrorPlaceholder.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderNewsListSpecificPage.dart';
 import 'package:el_digital_de_albacete/core/error/failures.dart';
@@ -100,7 +100,7 @@ class NewsCardsState extends State<NewsCards> {
             //     print("index= $index count = $index moreNewsAvailable = $_moreNewsAvailable");
             if (!_loadedNews && index == count - 1) return FadingCircle();
             if (error != null && index >= count - 1) {
-              return NoMoreNewsFoundErrorPlaceholder(msg: error!.message);
+              return ErrorPlaceholder(msg: error!.message);
             }
             return NewsCard(simpleNewsData: _news![index]);
           },
