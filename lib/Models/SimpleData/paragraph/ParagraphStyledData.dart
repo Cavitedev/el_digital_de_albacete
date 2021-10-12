@@ -27,15 +27,15 @@ class ParagraphStyledData implements NewsData {
       output.add(StyledString(
           text: dataText.text,
           extraStyle: styleBefore == null
-              ? attributesStyles[dataText.tag!]
-              : attributesStyles[dataText.tag!]?.merge(styleBefore)));
+              ? attributesStyles[dataText.tag ?? ""]
+              : attributesStyles[dataText.tag ?? ""]?.merge(styleBefore)));
     } else {
       for (int i = 0; i < recursiveTextsWithTags.length; i++) {
         output.addAll(_checkTags(
             recursiveTextsWithTags[i],
             styleBefore == null
-                ? attributesStyles[dataText.tag!]
-                : attributesStyles[dataText.tag!]?.merge(styleBefore)));
+                ? attributesStyles[dataText.tag ?? ""]
+                : attributesStyles[dataText.tag ?? ""]?.merge(styleBefore)));
       }
     }
 
