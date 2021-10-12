@@ -42,7 +42,7 @@ void main() {
                 "https://www.eldigitaldeciudadreal.com/wp-content/uploads/2020/03/clausura-la-ii-convencin-nacional-de-delegados-de-la-academia-getbrit_49626296728_o.jpg"));
   });
 
-  test('imagesAppearing', () async {
+  test('imagesAppearing2', () async {
     SpiderSingleNews spiderSingleNews = SpiderSingleNews(
         url:
             "https://www.eldigitaldealbacete.com/2021/09/10/manzanares-primera-puerta-grande-de-la-feria-taurina-de-albacete-2021/");
