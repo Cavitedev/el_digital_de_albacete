@@ -28,7 +28,7 @@ class NewspaperRouterDelegate
           MaterialPage(
               key: ValueKey("DetailNews"),
               child: SingleNewsViewer(SimpleNewsData(
-                  link: "eldigitaldealbacete.com" + _currentConf.pathName))),
+                  link: "https://www.eldigitaldealbacete.com" + _currentConf.pathName))),
       ],
       onPopPage: (route, result) {
         notifyListeners();

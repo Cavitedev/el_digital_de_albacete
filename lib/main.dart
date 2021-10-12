@@ -4,8 +4,18 @@ import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  final _routerDelegate = NewspaperRouterDelegate();
+  final _routeParser = NewspaperRouteInformationParser();
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -47,8 +57,8 @@ class MyApp extends StatelessWidget {
           primary: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         ),
       ),
-      routerDelegate: NewspaperRouterDelegate(),
-      routeInformationParser: NewspaperRouteInformationParser(),
+      routerDelegate: _routerDelegate,
+      routeInformationParser: _routeParser,
     );
   }
 }
