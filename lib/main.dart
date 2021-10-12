@@ -11,10 +11,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   final _routerDelegate = NewspaperRouterDelegate();
   final _routeParser = NewspaperRouteInformationParser();
-
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +25,9 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.lightGreen[50],
         scaffoldBackgroundColor: Color.fromRGBO(250, 255, 250, 1),
         errorColor: Colors.red[100],
+        textSelectionTheme:
+            TextSelectionThemeData(cursorColor: Colors.lightGreenAccent[400],
+            selectionHandleColor: Colors.lightGreenAccent[700]),
         textTheme: TextTheme(
             headline5: TextStyle(
               fontSize: 30,
@@ -43,7 +44,8 @@ class _MyAppState extends State<MyApp> {
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
-            headline4: TextStyle(fontSize: 28, color: Colors.white, fontFamily: "NotoSans"),
+            headline4: TextStyle(
+                fontSize: 28, color: Colors.white, fontFamily: "NotoSans"),
             subtitle1: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -52,8 +54,10 @@ class _MyAppState extends State<MyApp> {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            button: TextStyle(fontSize: 20, color: Colors.white, fontFamily: "NotoSans")),
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green).copyWith(
+            button: TextStyle(
+                fontSize: 20, color: Colors.white, fontFamily: "NotoSans")),
+        colorScheme:
+            ColorScheme.fromSwatch(primarySwatch: Colors.green).copyWith(
           primary: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         ),
       ),
