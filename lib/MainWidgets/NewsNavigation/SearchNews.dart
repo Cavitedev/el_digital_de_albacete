@@ -4,23 +4,32 @@ import 'package:flutter/material.dart';
 import '../../Spider/SpiderNewsListSpecificPage.dart';
 
 class SearchNews extends StatefulWidget {
+
+  final String? query;
+
+
+  SearchNews({this.query});
+
   @override
-  _SearchNewsState createState() => _SearchNewsState();
+  _SearchNewsState createState() => _SearchNewsState(query: query);
 }
 
 class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateMixin {
   bool searching = true;
 
   TextEditingController _searchQueryController = TextEditingController();
-  String searchQuery = "";
+  String searchQuery;
 
 //  NewsCards newsCards;
   final GlobalKey<NewsCardsState> _cardsState = GlobalKey<NewsCardsState>();
   FocusNode? searchFocus;
 
+
+  _SearchNewsState({String? query}) : searchQuery = query ?? "";
+
   void initState() {
     super.initState();
-
+    _searchQueryController.text = searchQuery;
     searchFocus = FocusNode();
   }
 
@@ -30,6 +39,32 @@ class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateM
     searchFocus!.dispose();
 
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: _buildSearchField(),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(
+                Icons.arrow_back,
+                size: 26.0,
+              )),
+          actions: <Widget>[searching ? _closeButton() : _searchButton()],
+        ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        body: searchQuery.isNotEmpty
+            ? NewsCards(spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()), key: _cardsState)
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Empiece a buscar noticias con el texto de arriba",
+                    style: Theme.of(context).textTheme.headline5),
+              )
+        );
   }
 
   Widget _buildSearchField() {
@@ -110,49 +145,6 @@ class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateM
     String query = "https://www.eldigitaldealbacete.com/?s=" + searchQuery;
 //    print("query = " +query);
     return query;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: _buildSearchField(),
-          leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                size: 26.0,
-              )),
-          actions: <Widget>[searching ? _closeButton() : _searchButton()],
-        ),
-        backgroundColor: Theme.of(context).backgroundColor,
-//body:  StreamBuilder(
-//  stream: urlStreamController.stream,
-//  builder: (context,snapshot){
-//    print("building news " + snapshot.data + "  url = " +_buildQuery());
-//    return NewsCards(spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()));
-//  },
-//)
-        body: searchQuery.isNotEmpty
-            ? NewsCards(spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()), key: _cardsState)
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Empiece a buscar noticias con el texto de arriba",
-                    style: Theme.of(context).textTheme.headline5),
-              )
-
-//    body: searching? newsCards:
-//      Text("a buscar"),
-//
-//    body: newsCards
-//        body: searchQuery.isNotEmpty? newsCards
-//
-//
-//         : Text("Empiece a buscar " +searchQuery + " state = "+ (searching ? "buscando" : "no buscando"))
-
-        );
   }
 }
 

@@ -10,9 +10,14 @@ class NewspaperRoutingConfiguration {
 
   NewspaperRoutingConfiguration.search(this.pathName)
       : newsOpened = false,
-        isSearching = false;
+        isSearching = true;
 
   NewspaperRoutingConfiguration.detailView(this.pathName)
       : newsOpened = true,
         isSearching = false;
+
+  String? searchQuery() {
+    Uri uri = Uri.parse(pathName);
+    return uri.queryParameters['s'];
+  }
 }

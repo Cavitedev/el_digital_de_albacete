@@ -23,10 +23,12 @@ class NewspaperRouterDelegate
       pages: [
         MaterialPage(key: ValueKey("listNews"), child: NewsList()),
         if (_currentConf.isSearching)
-          MaterialPage(key: ValueKey("searchNews"), child: SearchNews()),
+          MaterialPage(key: ValueKey("searchNews"), child: SearchNews(
+            query: _currentConf.searchQuery(),
+          )),
         if (_currentConf.newsOpened)
           MaterialPage(
-              key: ValueKey("DetailNews"),
+              key: ValueKey(_currentConf.pathName),
               child: SingleNewsViewer(SimpleNewsData(
                   link: "https://www.eldigitaldealbacete.com" + _currentConf.pathName))),
       ],
