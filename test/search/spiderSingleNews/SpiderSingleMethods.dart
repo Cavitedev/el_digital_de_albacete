@@ -4,7 +4,7 @@ import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
 class SpiderSingleMethods {
   static Future<ExtraNewsData> setUpScrapping(
       SpiderSingleNews spiderSingleNews) async {
-    Future<ExtraNewsData> newsData = spiderSingleNews.scrapSingleNewsPage();
+    Future<ExtraNewsData> newsData = spiderSingleNews.scrapSingleNewsPage(null);
     ExtraNewsData outputData = await newsData;
     return outputData;
   }
