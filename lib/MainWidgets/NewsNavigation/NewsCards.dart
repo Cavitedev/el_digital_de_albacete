@@ -9,17 +9,19 @@ import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsCard.dart'
 
 class NewsCards extends StatefulWidget {
   final SpiderNewsListSpecificPage spiderPage;
-  NewsCards({required this.spiderPage, Key? key}) : super(key: key);
+  final Function(String) onDetails;
+  NewsCards({required this.spiderPage, Key? key, required this.onDetails}) : super(key: key);
 
   @override
-  NewsCardsState createState() => NewsCardsState(spiderPage: this.spiderPage);
+  NewsCardsState createState() => NewsCardsState(spiderPage, onDetails);
 }
 
 class NewsCardsState extends State<NewsCards> {
   List<SimpleNewsData>? _news;
 
-  SpiderNewsListSpecificPage? spiderPage;
-  NewsCardsState({this.spiderPage});
+  SpiderNewsListSpecificPage spiderPage;
+    final Function(String) onDetails;
+  NewsCardsState(this.spiderPage, this.onDetails);
 
   bool _loadedNews = false;
   Failure? error;
@@ -28,7 +30,7 @@ class NewsCardsState extends State<NewsCards> {
     _loadedNews = false;
     _news = null;
 //    print("cards init state ${_loadedNews? "news laoded" : "not loaded"}");
-    dartz.Either<Failure, List<SimpleNewsData>> _newsRetrieval = await spiderPage!.scrapCurrentPage();
+    dartz.Either<Failure, List<SimpleNewsData>> _newsRetrieval = await spiderPage.scrapCurrentPage();
     _newsRetrieval.fold((failure) {
       setState(() {
         error = failure;
@@ -55,7 +57,7 @@ class NewsCardsState extends State<NewsCards> {
   void loadMore() async {
     if (error == null && _loadedNews) {
       _loadedNews = false;
-      dartz.Either<Failure, List<SimpleNewsData>> _moreNews = await spiderPage!.scrapNextPage();
+      dartz.Either<Failure, List<SimpleNewsData>> _moreNews = await spiderPage.scrapNextPage();
       _moreNews.fold((failure) {
         setState(() {
           error = failure;
@@ -102,20 +104,11 @@ class NewsCardsState extends State<NewsCards> {
             if (error != null && index >= count - 1) {
               return ErrorPlaceholder(msg: error!.message);
             }
-            return NewsCard(simpleNewsData: _news![index]);
+            return NewsCard(simpleNewsData: _news![index], onDetails: onDetails);
           },
         ),
       ),
     );
 
-//    return SingleChildScrollView(
-//      child: Column(
-//        children: loadingNews?<Widget> [
-//        FadingCircle(),
-//        ]:news.map((newData)=> new NewsCard(newData: newData)).toList()
-//
-//      ),
-
-//    );
   }
 }

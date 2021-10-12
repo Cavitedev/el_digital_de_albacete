@@ -1,22 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/FadingCircle.dart';
 import 'package:el_digital_de_albacete/ExtraWidgets/UploadTime.dart';
-import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/SingleNewsViewer.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
 
 class NewsCard extends StatelessWidget {
-
   final SimpleNewsData simpleNewsData;
+  final Function(String) onDetails;
 
-  NewsCard({required this.simpleNewsData});
+  NewsCard({required this.simpleNewsData, required this.onDetails});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SingleNewsViewer(simpleNewsData)));
+        if (simpleNewsData.link != null) {
+          onDetails(simpleNewsData.link!);
+        }
       },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(2, 2, 2, 0),
@@ -32,7 +32,7 @@ class NewsCard extends StatelessWidget {
                   height: 100,
                   width: 190,
                   child: CachedNetworkImage(
-                    placeholder: (context,url) => FadingCircle(),
+                    placeholder: (context, url) => FadingCircle(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                     imageUrl: simpleNewsData.imageSrc ?? 'error',
                   ),
@@ -57,8 +57,6 @@ class NewsCard extends StatelessWidget {
     );
   }
 }
-
-
 
 class _ArticleDescription extends StatelessWidget {
   _ArticleDescription({
@@ -85,19 +83,20 @@ class _ArticleDescription extends StatelessWidget {
             children: <Widget>[
               Text(
                 '$title',
-                maxLines: (4.5 / MediaQuery.of(context).textScaleFactor).floor(),
+                maxLines:
+                    (4.5 / MediaQuery.of(context).textScaleFactor).floor(),
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.subtitle2,
-
               ),
             ],
           ),
         ),
         Expanded(
-          flex: 1,
-          child:UploadTime(publishDate: publishDate,size: 11,)
-
-        ),
+            flex: 1,
+            child: UploadTime(
+              publishDate: publishDate,
+              size: 11,
+            )),
       ],
     );
   }

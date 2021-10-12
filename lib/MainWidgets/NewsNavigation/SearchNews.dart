@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import '../../Spider/SpiderNewsListSpecificPage.dart';
 
 class SearchNews extends StatefulWidget {
-
   final String? query;
+  final Function(String) onDetails;
 
-
-  SearchNews({this.query});
+  SearchNews({this.query, required this.onDetails});
 
   @override
-  _SearchNewsState createState() => _SearchNewsState(query: query);
+  _SearchNewsState createState() =>
+      _SearchNewsState(query: query, onDetails: onDetails);
 }
 
-class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateMixin {
+class _SearchNewsState extends State<SearchNews>
+    with SingleTickerProviderStateMixin {
   bool searching = true;
 
   TextEditingController _searchQueryController = TextEditingController();
@@ -24,8 +25,10 @@ class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateM
   final GlobalKey<NewsCardsState> _cardsState = GlobalKey<NewsCardsState>();
   FocusNode? searchFocus;
 
+  final Function(String) onDetails;
 
-  _SearchNewsState({String? query}) : searchQuery = query ?? "";
+  _SearchNewsState({String? query, required this.onDetails})
+      : searchQuery = query ?? "";
 
   void initState() {
     super.initState();
@@ -58,13 +61,15 @@ class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateM
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         body: searchQuery.isNotEmpty
-            ? NewsCards(spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()), key: _cardsState)
+            ? NewsCards(
+                spiderPage: SpiderNewsListSpecificPage(url: _buildQuery()),
+                onDetails: onDetails,
+                key: _cardsState)
             : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Empiece a buscar noticias con el texto de arriba",
                     style: Theme.of(context).textTheme.headline5),
-              )
-        );
+              ));
   }
 
   Widget _buildSearchField() {
@@ -78,7 +83,8 @@ class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateM
         hintStyle: TextStyle(color: Colors.white70),
       ),
       style: Theme.of(context).textTheme.headline4!.copyWith(
-          fontSize: Theme.of(context).textTheme.headline4!.fontSize! / MediaQuery.of(context).textScaleFactor),
+          fontSize: Theme.of(context).textTheme.headline4!.fontSize! /
+              MediaQuery.of(context).textScaleFactor),
       onTap: () {
         setState(() {
           searching = true;
@@ -107,7 +113,7 @@ class _SearchNewsState extends State<SearchNews> with SingleTickerProviderStateM
     searchQuery = _searchQueryController.text;
     setState(() {
       searching = false;
-      _cardsState.currentState?.spiderPage?.url = _buildQuery();
+      _cardsState.currentState?.spiderPage.url = _buildQuery();
       _cardsState.currentState?.getNews();
     });
   }

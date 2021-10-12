@@ -21,22 +21,54 @@ class NewspaperRouterDelegate
   Widget build(BuildContext context) {
     return Navigator(
       pages: [
-        MaterialPage(key: ValueKey("listNews"), child: NewsList()),
+        MaterialPage(
+            key: ValueKey("listNews"),
+            child: NewsList(
+                onSearch: () {
+                  _currentConf.isSearching = true;
+                  notifyListeners();
+                },
+                onDetails: _onDetails)),
         if (_currentConf.isSearching)
-          MaterialPage(key: ValueKey("searchNews"), child: SearchNews(
-            query: _currentConf.searchQuery(),
-          )),
+          MaterialPage(
+              key: ValueKey("searchNews"),
+              child: SearchNews(
+                query: _currentConf.searchQuery(),
+                onDetails: _onDetails,
+              )),
         if (_currentConf.newsOpened)
           MaterialPage(
               key: ValueKey(_currentConf.pathName),
               child: SingleNewsViewer(SimpleNewsData(
-                  link: "https://www.eldigitaldealbacete.com" + _currentConf.pathName))),
+                  link: "https://www.eldigitaldealbacete.com" +
+                      _currentConf.pathName))),
       ],
       onPopPage: (route, result) {
-        notifyListeners();
-        return route.didPop(result);
+        if (!route.didPop(result)) {
+          return false;
+        }
+
+        popRoute();
+
+        return true;
       },
     );
+  }
+
+  _onDetails(String detailsUrl) {
+    _currentConf.pathName = detailsUrl.replaceFirst("https://www.eldigitaldealbacete.com", "");
+    _currentConf.newsOpened = true;
+    notifyListeners();
+  }
+
+  @override
+  Future<bool> popRoute() {
+    if (_currentConf.isSearching || _currentConf.newsOpened) {
+      _currentConf = NewspaperRoutingConfiguration.home("");
+      notifyListeners();
+      return Future.value(true);
+    }
+    return Future.value(false);
   }
 
   @override
