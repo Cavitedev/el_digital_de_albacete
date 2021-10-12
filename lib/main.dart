@@ -1,4 +1,5 @@
-import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsList.dart';
+import 'package:el_digital_de_albacete/Routing/newspaper_route_information_parser.dart';
+import 'package:el_digital_de_albacete/Routing/newspaper_router_delegate.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -7,7 +8,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'El digital de albacete',
       theme: ThemeData(
         primaryColorLight: Colors.white,
@@ -32,8 +33,7 @@ class MyApp extends StatelessWidget {
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
-            headline4: TextStyle(
-                fontSize: 28, color: Colors.white, fontFamily: "NotoSans"),
+            headline4: TextStyle(fontSize: 28, color: Colors.white, fontFamily: "NotoSans"),
             subtitle1: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -42,14 +42,13 @@ class MyApp extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            button: TextStyle(
-                fontSize: 20, color: Colors.white, fontFamily: "NotoSans")),
-        colorScheme:
-            ColorScheme.fromSwatch(primarySwatch: Colors.green).copyWith(
+            button: TextStyle(fontSize: 20, color: Colors.white, fontFamily: "NotoSans")),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green).copyWith(
           primary: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         ),
       ),
-      home: NewsList(),
+      routerDelegate: NewspaperRouterDelegate(),
+      routeInformationParser: NewspaperRouteInformationParser(),
     );
   }
 }
