@@ -10,13 +10,13 @@ class NewspaperRouteInformationParser extends RouteInformationParser<NewspaperRo
     final Uri uri = Uri.parse(routeInformation.location ?? '');
 
     if (uri.queryParameters['s'] != null) {
-      return NewspaperRoutingConfiguration.search(uri.query);
+      return NewspaperRoutingConfiguration.search(uri.toString());
     }
-    if (uri.pathSegments.length == 4) {
-      return NewspaperRoutingConfiguration.detailView(uri.query);
+    if (uri.pathSegments.length == 5) {
+      return NewspaperRoutingConfiguration.detailView(uri.toString());
     }
 
-    return NewspaperRoutingConfiguration.home(uri.query);
+    return NewspaperRoutingConfiguration.home(uri.toString());
 
 
   }
