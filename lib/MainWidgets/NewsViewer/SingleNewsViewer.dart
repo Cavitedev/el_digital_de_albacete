@@ -73,13 +73,13 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               CachedNetworkImage(
                 placeholder: (context, url) => FadingCircle(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
-                imageUrl: _simpleNewsData.imageSrc!,
+                imageUrl: _simpleNewsData.imageSrc ?? 'error',
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   child: Text(
-                    _simpleNewsData.title!,
+                    _simpleNewsData.title ?? 'No title found',
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
