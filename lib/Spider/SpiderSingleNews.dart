@@ -6,16 +6,17 @@ import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/YoutubeVideo.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
+import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
 const String mp4Video = "wp-video";
 
 class SpiderSingleNews {
-  String? url;
+  String url;
 
   late HttpGetterImpl httpGetterImpl;
-  SpiderSingleNews({this.url}) {
+  SpiderSingleNews({required this.url}) {
     httpGetterImpl = HttpGetterImpl();
   }
   static const List<String> _contentClasses = <String>[
@@ -25,9 +26,12 @@ class SpiderSingleNews {
   ];
   static const String _unworthText = "/Redacción/";
 
-  Future<ExtraNewsData> scrapSingleNewsPage() async {
-    dom.Document _document = await httpGetterImpl.accessURL(url!);
+  Future<ExtraNewsData> scrapSingleNewsPage(SimpleNewsData? simpleNewsData) async {
+    dom.Document _document = await httpGetterImpl.accessURL(url);
     List<dom.Element> _entryDatas = <dom.Element>[];
+
+
+
     for (String _contentClass in _contentClasses) {
       List<dom.Element> _someEntryDatas = _document.getElementsByClassName(_contentClass);
 
@@ -114,7 +118,7 @@ class SpiderSingleNews {
   void _getImage(dom.Element child, List<NewsData> newsInformation) {
     for (dom.Element linkChild in child.children) {
       if (linkChild.attributes.isNotEmpty) {
-        String? _imageUrl = linkChild.attributes['data-src'];
+        String? _imageUrl = linkChild.attributes['data-src'] ?? linkChild.attributes['src'];
         _addImage(_imageUrl, newsInformation);
       }
     }
