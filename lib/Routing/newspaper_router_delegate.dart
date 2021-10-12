@@ -11,11 +11,9 @@ class NewspaperRouterDelegate
     with
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<NewspaperRoutingConfiguration> {
-
-
   GlobalKey<NavigatorState> navigatorKey;
-  NewspaperRoutingConfiguration _currentConf = NewspaperRoutingConfiguration
-      .home("");
+  NewspaperRoutingConfiguration _currentConf =
+      NewspaperRoutingConfiguration.home("");
 
   NewspaperRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
@@ -24,14 +22,16 @@ class NewspaperRouterDelegate
     return Navigator(
       pages: [
         MaterialPage(key: ValueKey("listNews"), child: NewsList()),
-        if(_currentConf.isSearching)
+        if (_currentConf.isSearching)
           MaterialPage(key: ValueKey("searchNews"), child: SearchNews()),
-        if(_currentConf.newsOpened)
-          MaterialPage(key: ValueKey("DetailNews"),
+        if (_currentConf.newsOpened)
+          MaterialPage(
+              key: ValueKey("DetailNews"),
               child: SingleNewsViewer(SimpleNewsData(
                   link: "eldigitaldealbacete.com" + _currentConf.pathName))),
       ],
-      onPopPage: (route, result){
+      onPopPage: (route, result) {
+        notifyListeners();
         return route.didPop(result);
       },
     );
@@ -41,6 +41,7 @@ class NewspaperRouterDelegate
   Future<void> setNewRoutePath(
       NewspaperRoutingConfiguration configuration) async {
     _currentConf = configuration;
+    notifyListeners();
     return Future.value(null);
   }
 }

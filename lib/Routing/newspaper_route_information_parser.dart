@@ -21,8 +21,8 @@ class NewspaperRouteInformationParser extends RouteInformationParser<NewspaperRo
 
   }
 
-  // @override
-  // RouteInformation restoreRouteInformation(NewspaperRoutingConfiguration configuration) {
-  //
-  // }
+  @override
+  RouteInformation restoreRouteInformation(NewspaperRoutingConfiguration configuration) {
+    return RouteInformation(location: configuration.pathName);
+  }
 }
