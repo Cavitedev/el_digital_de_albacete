@@ -16,8 +16,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp.router(
       title: 'El digital de albacete',
+      routerDelegate: _routerDelegate,
+      backButtonDispatcher: RootBackButtonDispatcher(),
+      routeInformationParser: _routeParser,
       theme: ThemeData(
         primaryColorLight: Colors.white,
         splashColor: Colors.green[300],
@@ -61,8 +65,6 @@ class _MyAppState extends State<MyApp> {
           primary: Color.fromARGB(0xff, 0x6e, 0xba, 0x30),
         ),
       ),
-      routerDelegate: _routerDelegate,
-      routeInformationParser: _routeParser,
     );
   }
 }

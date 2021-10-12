@@ -1,32 +1,43 @@
 import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsCards.dart';
-import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/SearchNews.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../Spider/SpiderNewsListSpecificPage.dart';
 
 class NewsList extends StatefulWidget {
+  final Function onSearch;
+  final Function(String) onDetails;
+
+  const NewsList({
+    Key? key,
+    required this.onSearch,
+    required this.onDetails,
+  }) : super(key: key);
+
   @override
-  _NewsListState createState() => _NewsListState();
+  _NewsListState createState() => _NewsListState(onSearch, onDetails);
 }
 
 class _NewsListState extends State<NewsList>
     with SingleTickerProviderStateMixin {
   final Map<String, String> _tabs = {
-    "Albacete": "https://www.eldigitaldealbacete.com/category/noticias-albacete/",
+    "Albacete":
+        "https://www.eldigitaldealbacete.com/category/noticias-albacete/",
     "Castilla-La Mancha":
         "https://www.eldigitaldealbacete.com/category/castilla-la-mancha/",
     "Economía": "https://www.eldigitaldealbacete.com/category/economia-2/",
     "Deportes":
         "https://www.eldigitaldealbacete.com/category/noticias-deporte-albacete/",
-    "Sanidad": "https://www.eldigitaldealbacete.com/category/noticias-sanidad-albacete/",
+    "Sanidad":
+        "https://www.eldigitaldealbacete.com/category/noticias-sanidad-albacete/",
   };
+
+  final Function onSearch;
+    final Function(String) onDetails;
+
   TabController? _tabController;
 
-
-
-
-
+  _NewsListState(this.onSearch, this.onDetails);
 
   @override
   void initState() {
@@ -55,17 +66,19 @@ class _NewsListState extends State<NewsList>
                   text: key,
                 );
               }).toList()),
-          title:  Text(
-                  'Digital de Albacete',
-                  style: Theme.of(context).textTheme.headline4!.copyWith(fontSize:
-                  Theme.of(context).textTheme.headline4!.fontSize! / MediaQuery.of(context).textScaleFactor),
-                ),
+          title: Text(
+            'Digital de Albacete',
+            style: Theme.of(context).textTheme.headline4!.copyWith(
+                fontSize: Theme.of(context).textTheme.headline4!.fontSize! /
+                    MediaQuery.of(context).textScaleFactor),
+          ),
           leading: Image.asset('assets/logo.png'),
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SearchNews()));
+                  onSearch();
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => SearchNews()));
                 },
                 icon: Icon(
                   Icons.search,
@@ -77,7 +90,10 @@ class _NewsListState extends State<NewsList>
         body: TabBarView(
           controller: _tabController,
           children: _tabs.values.map((String url) {
-            return NewsCards(spiderPage: SpiderNewsListSpecificPage(url: url), key: GlobalKey());
+            return NewsCards(
+                spiderPage: SpiderNewsListSpecificPage(url: url),
+                onDetails: onDetails,
+                key: GlobalKey());
           }).toList(),
         ));
   }
