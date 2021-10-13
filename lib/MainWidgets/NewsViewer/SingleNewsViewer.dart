@@ -21,19 +21,21 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class SingleNewsViewer extends StatefulWidget {
   final SimpleNewsData simpleNewsData;
+  final Function goQr;
 
-  SingleNewsViewer(this.simpleNewsData);
+  SingleNewsViewer({required this.simpleNewsData, required this.goQr});
 
   @override
   _SingleNewsViewerState createState() =>
-      _SingleNewsViewerState(simpleNewsData);
+      _SingleNewsViewerState(simpleNewsData, goQr);
 }
 
 class _SingleNewsViewerState extends State<SingleNewsViewer> {
   SimpleNewsData _simpleNewsData;
   late SpiderSingleNews _spider;
+  final Function goQr;
 
-  _SingleNewsViewerState(this._simpleNewsData);
+  _SingleNewsViewerState(this._simpleNewsData, this.goQr);
 
   ExtraNewsData? _extraNewsData;
   bool _loadedNews = false;
@@ -89,6 +91,9 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                     fontSize: Theme.of(context).textTheme.headline4!.fontSize! /
                         MediaQuery.of(context).textScaleFactor),
               ),
+              actions: [
+                SingleNewsMenu(goQr: goQr)
+              ],
             ),
             SliverList(
                 delegate: SliverChildListDelegate(_errorloading
@@ -136,6 +141,42 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
         ),
       ),
     );
+  }
+}
+
+class SingleNewsMenu extends StatelessWidget {
+  const SingleNewsMenu({
+    Key? key,
+    required this.goQr,
+  }) : super(key: key);
+
+  final Function goQr;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                child: InkWell(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.qr_code,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        "QR",
+                        style:
+                            Theme.of(context).textTheme.headline6,
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    goQr();
+                  },
+                ),
+              )
+            ]);
   }
 }
 
