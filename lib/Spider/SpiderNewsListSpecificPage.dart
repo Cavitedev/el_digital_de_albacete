@@ -1,9 +1,9 @@
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
-import 'package:el_digital_de_albacete/features/news/spider/http_getter.dart';
+import 'package:el_digital_de_albacete/Spider/Spider.dart';
 import 'package:html/dom.dart' as dom;
 
 
-class SpiderNewsListSpecificPage extends httpGetterImpl {
+class SpiderNewsListSpecificPage extends Spider {
   
   String url;
   String _nextURL;
