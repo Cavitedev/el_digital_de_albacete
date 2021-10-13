@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
 
 class QrScreen extends StatelessWidget {
   final String link;
@@ -19,6 +21,8 @@ class QrScreen extends StatelessWidget {
                     MediaQuery.of(context).textScaleFactor),
           ),
         ),
-        body: Center(child: Text("QR")));
+        body: Center(child: QrImage(data: link, backgroundColor: Colors.white, size: 200,)));
   }
+
+
 }
