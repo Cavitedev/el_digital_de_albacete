@@ -29,6 +29,7 @@ dependencies:
   video_player: ^2.2.5
   youtube_player_flutter: ^8.0.0
   mocktail: ^0.2.0
+  qr: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

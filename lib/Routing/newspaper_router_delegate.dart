@@ -1,6 +1,7 @@
 import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsList.dart';
 import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/SearchNews.dart';
 import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/SingleNewsViewer.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/qr_screen.dart';
 import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Routing/newspaper_routing_configuration.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,9 +40,22 @@ class NewspaperRouterDelegate
         if (_currentConf.newsOpened)
           MaterialPage(
               key: ValueKey(_currentConf.pathName),
-              child: SingleNewsViewer(SimpleNewsData(
-                  link: "https://www.eldigitaldealbacete.com" +
-                      _currentConf.pathName))),
+              child: SingleNewsViewer(
+                simpleNewsData: SimpleNewsData(
+                  link: _currentConf.url(),
+                ),
+                goQr: () {
+                  _currentConf =
+                      NewspaperRoutingConfiguration.qr(_currentConf.pathName);
+                  notifyListeners();
+                },
+              )),
+        if (_currentConf.isQR)
+          MaterialPage(
+              key: ValueKey("QR/" + _currentConf.pathName),
+              child: QrScreen(
+                link: _currentConf.url(),
+              )),
       ],
       onPopPage: (route, result) {
         if (!route.didPop(result)) {
@@ -56,7 +70,8 @@ class NewspaperRouterDelegate
   }
 
   _onDetails(String detailsUrl) {
-    _currentConf.pathName = detailsUrl.replaceFirst("https://www.eldigitaldealbacete.com", "");
+    _currentConf.pathName =
+        detailsUrl.replaceFirst("https://www.eldigitaldealbacete.com", "");
     _currentConf.newsOpened = true;
     notifyListeners();
   }
