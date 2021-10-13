@@ -78,6 +78,13 @@ class NewspaperRouterDelegate
 
   @override
   Future<bool> popRoute() {
+    if (_currentConf.isQR) {
+      _currentConf =
+          NewspaperRoutingConfiguration.detailView(_currentConf.pathName);
+      notifyListeners();
+      return Future.value(true);
+    }
+
     if (_currentConf.isSearching || _currentConf.newsOpened) {
       _currentConf = NewspaperRoutingConfiguration.home("");
       notifyListeners();
