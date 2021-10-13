@@ -4,7 +4,7 @@ import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyl
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
-import 'package:el_digital_de_albacete/core/network/http_getter.dart';
+import 'package:el_digital_de_albacete/features/news/spider/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
 class SpiderSingleNews extends httpGetterImpl {

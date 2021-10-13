@@ -7,12 +7,12 @@ import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/table/DataOfTable.dart';
 import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
-import 'package:el_digital_de_albacete/features/list_news//domain/entities/list_single_new.dart';
+import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
 import 'package:flutter/material.dart';
 
 class SingleNewsViewer extends StatefulWidget {
-  ListSingleNew simpleNewsData;
+  SimpleNewsData simpleNewsData;
 
   SingleNewsViewer(this.simpleNewsData);
 
@@ -22,7 +22,7 @@ class SingleNewsViewer extends StatefulWidget {
 }
 
 class _SingleNewsViewerState extends State<SingleNewsViewer> {
-  ListSingleNew _simpleNewsData;
+  SimpleNewsData _simpleNewsData;
   SpiderSingleNews _spider;
 
   _SingleNewsViewerState(this._simpleNewsData);
