@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:meta/meta.dart';
 
-abstract class HttpGetter{
+abstract class httpGetter{
 
   ///
   ///   Returns the document od the url
@@ -15,12 +15,12 @@ abstract class HttpGetter{
 }
 
 
-class HttpGetterImpl implements HttpGetter{
+class httpGetterImpl implements httpGetter{
 
   final http.Client client;
 
 
-  HttpGetterImpl({@required this.client});
+  httpGetterImpl({@required this.client});
 
   Future<dom.Document> accessURL(String _url) async {
       http.Response response = await client.get(_url);

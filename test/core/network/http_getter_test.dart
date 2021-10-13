@@ -10,14 +10,14 @@ import '../../fixtures/single_list_document.dart';
 class MockHttpClient extends Mock implements http.Client{}
 
 void main(){
-  HttpGetterImpl httpGetter;
+  httpGetterImpl httpGetter;
   MockHttpClient mockHttpClient;
   String url = "https://www.eldigitaldealbacete.com/2020/03/20/coronavirus-el-ayuntamiento-garantiza-la-atencion-integral-a-las-mujeres-victimas-de-la-violencia-de-genero-en-albacete-durante-la-crisis-del-covid-19/";
 
   http.Response response;
   setUp(() async{
     mockHttpClient = MockHttpClient();
-    httpGetter = HttpGetterImpl(client: mockHttpClient);
+    httpGetter = httpGetterImpl(client: mockHttpClient);
 
   });
 

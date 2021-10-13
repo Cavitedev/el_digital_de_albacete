@@ -7,7 +7,7 @@ import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
 import 'package:el_digital_de_albacete/core/network/http_getter.dart';
 import 'package:html/dom.dart' as dom;
 
-class SpiderSingleNews extends HttpGetterImpl {
+class SpiderSingleNews extends httpGetterImpl {
   String url;
 
   SpiderSingleNews({this.url});
