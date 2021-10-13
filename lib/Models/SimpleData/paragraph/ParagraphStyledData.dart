@@ -105,6 +105,7 @@ class ParagraphStyledData implements NewsData {
 
     return html;
   }
+
 }
 
 class TagAndText {
