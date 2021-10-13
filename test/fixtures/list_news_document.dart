@@ -1,25 +1,8 @@
-import 'package:el_digital_de_albacete/features/list_news/domain/entities/list_single_new.dart';
-import 'package:el_digital_de_albacete/features/list_news/spider/models/list_news_model.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
-const String nextUrl = "https://www.eldigitaldealbacete.com/economia-2/page/2/";
-final ListNewsModel expectedListNewsModel = ListNewsModel(listNews: <ListSingleNew>[
-  ListSingleNew(
-      imageSrc:
-      "https://cdn.oondeo.es/www.eldigitaldealbacete.com/wp-content/uploads/2020/03/consejo-gobierno-castilla-la-mancha-paracetamol-620x330.jpg",
-      link:
-      "https://www.eldigitaldealbacete.com/2020/03/20/entran-en-vigor-las-medidas-extraordinarias-economico-financieras-y-de-refuerzo-de-medios-de-la-junta546825/",
-      publishDate: "20 marzo, 2020",
-      title: "Entran en vigor las medidas extraordinarias económico-financieras y de refuerzo de medios de la Junta"),
-  ListSingleNew(
-      imageSrc: "https://cdn.oondeo.es/www.eldigitaldealbacete.com/wp-content/uploads/2019/12/SUPERALBA_NOTICIA_ALBACETE-23-1-620x330.jpg",
-      link: "https://www.eldigitaldealbacete.com/2020/03/19/el-gasto-en-alimentacion-se-impulsa-un-12-por-el-efecto-bunker-provocado-por-el-coronavirus/",
-      publishDate: "19 marzo, 2020",
-      title: "El gasto en alimentación se impulsa un 12% por el ‘efecto búnker’ provocado por el coronavirus"),
-]);
-final dom.Document sampleListNewsDocument = parser.parse(_html);
-const String _html = '''<!DOCTYPE html>
+final dom.Document sampleDocument = parser.parse(_html);
+String _html = '''<!DOCTYPE html>
 <html lang="es" prefix="og: http://ogp.me/ns#">
 <head><script>window.w3tc_lazyload=1,window.lazyLoadOptions={elements_selector:".lazy",callback_loaded:function(t){var e;try{e=new CustomEvent("w3tc_lazyload_loaded",{detail:{e:t}})}catch(a){(e=document.createEvent("CustomEvent")).initCustomEvent("w3tc_lazyload_loaded",!1,!1,{e:t})}window.dispatchEvent(e)}}</script><style>img.lazy{min-height:1px}</style><script async src="https://www.eldigitaldealbacete.com/wp-content/plugins/w3-total-cache/pub/js/lazyload.min.js"></script>
 <meta charset="UTF-8" />
