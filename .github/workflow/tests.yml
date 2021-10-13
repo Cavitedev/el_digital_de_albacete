@@ -2,7 +2,7 @@ name: Flutter_Tests
 
 on:
   push:
-    branches: [master, development]
+    branches: [master, development, feature_action_test] #Testing in this branch
   pull_request:
     branches: [master, development]
 
