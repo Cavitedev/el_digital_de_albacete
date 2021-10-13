@@ -20,7 +20,6 @@ class Loaded extends NewsListState{
 
   Loaded({@required this.listNews, @required this.nextPage});
 
-
   @override
   List<Object> get props => [listNews,nextPage];
 }

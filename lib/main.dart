@@ -1,13 +1,7 @@
-import 'package:el_digital_de_albacete/features/list_news/presentation/pages/news.list-page.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsList.dart';
 import 'package:flutter/material.dart';
-import 'package:el_digital_de_albacete/injection_container.dart' as di;
 
-void main() {
-  di.init();
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(
-    MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -35,7 +29,7 @@ class MyApp extends StatelessWidget {
           button: TextStyle(fontSize: 20, color: Colors.white, fontFamily: "NotoSans")
         ),
       ),
-      home: NewsListPage(),
+      home: NewsList(),
     );
   }
 }

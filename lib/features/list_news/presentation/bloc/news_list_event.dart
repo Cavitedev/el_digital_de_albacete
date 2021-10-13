@@ -16,12 +16,3 @@ class LoadMoreNews extends NewsListEvent{
   List<Object> get props => [url];
 
 }
-
-class RefreshNews extends NewsListEvent{
-  final String url;
-
-  RefreshNews({@required this.url});
-
-  @override
-  List<Object> get props => super.props;
-}
