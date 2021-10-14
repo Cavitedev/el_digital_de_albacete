@@ -89,6 +89,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               floating: true,
               title: Text(
                 "Digital de Albacete",
+
                 style: Theme
                     .of(context)
                     .textTheme
@@ -102,6 +103,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                         MediaQuery
                             .of(context)
                             .textScaleFactor),
+
               ),
               actions: [
                 SingleNewsMenu(goQr: goQr)
@@ -148,6 +150,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                       ),
                     ),
                 ])),
+
             if (!_errorloading)
               _loadedNews
                   ? SingleNewsDataBodyWidget(extraNewsData: _extraNewsData!)
@@ -170,6 +173,7 @@ class SingleNewsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+
         itemBuilder: (context) =>
         [
           PopupMenuItem(
@@ -196,6 +200,7 @@ class SingleNewsMenu extends StatelessWidget {
             ),
           )
         ]);
+
   }
 }
 
@@ -203,8 +208,10 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
   SingleNewsDataBodyWidget({
     Key? key,
     required ExtraNewsData extraNewsData,
+
   })
       : _extraNewsData = extraNewsData,
+
         super(key: key);
 
   final ExtraNewsData _extraNewsData;
@@ -213,19 +220,23 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
+
             (context, i) {
           if (_extraNewsData.newsContent![i] is ParagraphStyledData) {
             ParagraphStyledData _data =
             _extraNewsData.newsContent![i] as ParagraphStyledData;
 
+
             return Padding(
               padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
               child: RichText(
                 text: TextSpan(
+
                     style: Theme
                         .of(context)
                         .textTheme
                         .bodyText2,
+
                     children: _data.styledData.map((textStyled) {
                       return TextSpan(
                           text: textStyled.text, style: textStyled.extraStyle);
@@ -234,16 +245,19 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
             );
           } else if (_extraNewsData.newsContent![i] is MeaningfulString) {
             MeaningfulString _data =
+
             _extraNewsData.newsContent![i] as MeaningfulString;
             return meaningulStringUI(_data, context);
           } else if (_extraNewsData.newsContent![i] is UnorderedList) {
             return UnorderedListWidget(
                 unorderedList: _extraNewsData.newsContent![i] as UnorderedList);
+
           } else if (_extraNewsData.newsContent![i] is YoutubeVideo) {
             return YoutubePlayer(
               controller: YoutubePlayerController(
                 initialVideoId:
                 (_extraNewsData.newsContent![i] as YoutubeVideo).source!,
+
                 flags: YoutubePlayerFlags(
                   autoPlay: true,
                 ),
@@ -256,6 +270,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
           } else if (_extraNewsData.newsContent![i] is DataOfTable) {
             DataOfTable dataOfTable =
             _extraNewsData.newsContent![i] as DataOfTable;
+
             return DataTableBuilder(dataOfTable: dataOfTable);
           } else {
             return null;
@@ -268,6 +283,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
 
   static Padding? meaningulStringUI(MeaningfulString _data,
       BuildContext context) {
+
     switch (_data.textTag) {
       case TextTag.img:
         return Padding(

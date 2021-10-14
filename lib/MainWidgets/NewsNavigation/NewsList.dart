@@ -94,6 +94,7 @@ class _NewsListState extends State<NewsList>
                 spiderPage: SpiderNewsListSpecificPage(url: url),
                 onDetails: onDetails,
                 );
+
           }).toList(),
         ));
   }
