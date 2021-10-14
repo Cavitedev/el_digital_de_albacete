@@ -93,7 +93,7 @@ class _NewsListState extends State<NewsList>
             return NewsCards(
                 spiderPage: SpiderNewsListSpecificPage(url: url),
                 onDetails: onDetails,
-                key: GlobalKey());
+                );
           }).toList(),
         ));
   }
