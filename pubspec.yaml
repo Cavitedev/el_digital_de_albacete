@@ -30,6 +30,7 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   mocktail: ^0.2.0
   qr_flutter: ^4.0.0
+  share_plus: ^3.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -16,6 +16,7 @@ import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
 import 'package:el_digital_de_albacete/Spider/SpiderSingleNews.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -79,9 +80,7 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme
-          .of(context)
-          .backgroundColor,
+      backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
@@ -89,23 +88,16 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
               floating: true,
               title: Text(
                 "Digital de Albacete",
-
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline4!
-                    .copyWith(
-                    fontSize: Theme
-                        .of(context)
-                        .textTheme
-                        .headline4!
-                        .fontSize! /
-                        MediaQuery
-                            .of(context)
-                            .textScaleFactor),
-
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                    fontSize: Theme.of(context).textTheme.headline4!.fontSize! /
+                        MediaQuery.of(context).textScaleFactor),
               ),
               actions: [
+                IconButton(
+                    onPressed: ()  {
+                      _onShare();
+                    },
+                    icon: Icon(Icons.share)),
                 SingleNewsMenu(goQr: goQr)
               ],
             ),
@@ -113,44 +105,40 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
                 delegate: SliverChildListDelegate(_errorloading
                     ? [ErrorPlaceholder(msg: "Error al cargar esta noticia")]
                     : [
-                  if (_simpleNewsData.imageSrc != null &&
-                      _extraNewsData?.simpleNewsData?.imageSrc != null)
-                    CachedNetworkImage(
-                      placeholder: (context, url) => FadingCircle(),
-                      errorWidget: (context, url, error) =>
-                          Icon(Icons.error),
-                      imageUrl: _simpleNewsData.imageSrc ??
-                          _extraNewsData!.simpleNewsData!.imageSrc!,
-                    ),
-                  if (_simpleNewsData.title != null &&
-                      _extraNewsData?.simpleNewsData?.title != null ||
-                      _errorloading)
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        child: Text(
-                          _simpleNewsData.title ??
-                              _extraNewsData?.simpleNewsData?.title ??
-                              'No se ha encontrado el título 2',
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline5,
-                        ),
-                      ),
-                    ),
-                  if (_simpleNewsData.publishDate != null &&
-                      _extraNewsData?.simpleNewsData?.publishDate != null)
-                    Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: UploadTime(
-                        publishDate: _simpleNewsData.publishDate ??
-                            _extraNewsData?.simpleNewsData?.publishDate,
-                        size: 16,
-                      ),
-                    ),
-                ])),
-
+                        if (_simpleNewsData.imageSrc != null &&
+                            _extraNewsData?.simpleNewsData?.imageSrc != null)
+                          CachedNetworkImage(
+                            placeholder: (context, url) => FadingCircle(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                            imageUrl: _simpleNewsData.imageSrc ??
+                                _extraNewsData!.simpleNewsData!.imageSrc!,
+                          ),
+                        if (_simpleNewsData.title != null &&
+                                _extraNewsData?.simpleNewsData?.title != null ||
+                            _errorloading)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SizedBox(
+                              child: Text(
+                                _simpleNewsData.title ??
+                                    _extraNewsData?.simpleNewsData?.title ??
+                                    'No se ha encontrado el título 2',
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                            ),
+                          ),
+                        if (_simpleNewsData.publishDate != null &&
+                            _extraNewsData?.simpleNewsData?.publishDate != null)
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: UploadTime(
+                              publishDate: _simpleNewsData.publishDate ??
+                                  _extraNewsData?.simpleNewsData?.publishDate,
+                              size: 16,
+                            ),
+                          ),
+                      ])),
             if (!_errorloading)
               _loadedNews
                   ? SingleNewsDataBodyWidget(extraNewsData: _extraNewsData!)
@@ -159,6 +147,11 @@ class _SingleNewsViewerState extends State<SingleNewsViewer> {
         ),
       ),
     );
+  }
+
+  void _onShare() async {
+    return await Share.share(_simpleNewsData.link ??
+                        _extraNewsData?.simpleNewsData?.link ?? "error sharing");
   }
 }
 
@@ -173,34 +166,27 @@ class SingleNewsMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-
-        itemBuilder: (context) =>
-        [
-          PopupMenuItem(
-            child: InkWell(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.qr_code,
-                    color: Colors.black,
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                child: InkWell(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.qr_code,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        "QR",
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ],
                   ),
-                  Text(
-                    "QR",
-                    style:
-                    Theme
-                        .of(context)
-                        .textTheme
-                        .headline6,
-                  ),
-                ],
-              ),
-              onTap: () {
-                goQr();
-              },
-            ),
-          )
-        ]);
-
+                  onTap: () {
+                    goQr();
+                  },
+                ),
+              )
+            ]);
   }
 }
 
@@ -208,10 +194,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
   SingleNewsDataBodyWidget({
     Key? key,
     required ExtraNewsData extraNewsData,
-
-  })
-      : _extraNewsData = extraNewsData,
-
+  })  : _extraNewsData = extraNewsData,
         super(key: key);
 
   final ExtraNewsData _extraNewsData;
@@ -220,23 +203,16 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-
-            (context, i) {
+        (context, i) {
           if (_extraNewsData.newsContent![i] is ParagraphStyledData) {
             ParagraphStyledData _data =
-            _extraNewsData.newsContent![i] as ParagraphStyledData;
-
+                _extraNewsData.newsContent![i] as ParagraphStyledData;
 
             return Padding(
               padding: const EdgeInsets.fromLTRB(10, 8, 8, 8),
               child: RichText(
                 text: TextSpan(
-
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyText2,
-
+                    style: Theme.of(context).textTheme.bodyText2,
                     children: _data.styledData.map((textStyled) {
                       return TextSpan(
                           text: textStyled.text, style: textStyled.extraStyle);
@@ -245,19 +221,16 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
             );
           } else if (_extraNewsData.newsContent![i] is MeaningfulString) {
             MeaningfulString _data =
-
-            _extraNewsData.newsContent![i] as MeaningfulString;
+                _extraNewsData.newsContent![i] as MeaningfulString;
             return meaningulStringUI(_data, context);
           } else if (_extraNewsData.newsContent![i] is UnorderedList) {
             return UnorderedListWidget(
                 unorderedList: _extraNewsData.newsContent![i] as UnorderedList);
-
           } else if (_extraNewsData.newsContent![i] is YoutubeVideo) {
             return YoutubePlayer(
               controller: YoutubePlayerController(
                 initialVideoId:
-                (_extraNewsData.newsContent![i] as YoutubeVideo).source!,
-
+                    (_extraNewsData.newsContent![i] as YoutubeVideo).source!,
                 flags: YoutubePlayerFlags(
                   autoPlay: true,
                 ),
@@ -269,7 +242,7 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
                     (_extraNewsData.newsContent![i] as MP4Video).link));
           } else if (_extraNewsData.newsContent![i] is DataOfTable) {
             DataOfTable dataOfTable =
-            _extraNewsData.newsContent![i] as DataOfTable;
+                _extraNewsData.newsContent![i] as DataOfTable;
 
             return DataTableBuilder(dataOfTable: dataOfTable);
           } else {
@@ -281,9 +254,8 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
     );
   }
 
-  static Padding? meaningulStringUI(MeaningfulString _data,
-      BuildContext context) {
-
+  static Padding? meaningulStringUI(
+      MeaningfulString _data, BuildContext context) {
     switch (_data.textTag) {
       case TextTag.img:
         return Padding(
@@ -298,26 +270,17 @@ class SingleNewsDataBodyWidget extends StatelessWidget {
         return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(_data.string!,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle1));
+                style: Theme.of(context).textTheme.subtitle1));
       case TextTag.h3:
         return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(_data.string!,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .headline6));
+                style: Theme.of(context).textTheme.headline6));
       case TextTag.h4:
         return Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(_data.string!,
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .subtitle2));
+                style: Theme.of(context).textTheme.subtitle2));
       default:
         return null;
     }
