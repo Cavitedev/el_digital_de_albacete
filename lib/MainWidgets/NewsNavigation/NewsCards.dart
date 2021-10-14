@@ -16,7 +16,7 @@ class NewsCards extends StatefulWidget {
   NewsCardsState createState() => NewsCardsState(spiderPage, onDetails);
 }
 
-class NewsCardsState extends State<NewsCards> {
+class NewsCardsState extends State<NewsCards> with AutomaticKeepAliveClientMixin {
   List<SimpleNewsData>? _news;
 
   SpiderNewsListSpecificPage spiderPage;
@@ -111,4 +111,7 @@ class NewsCardsState extends State<NewsCards> {
     );
 
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
