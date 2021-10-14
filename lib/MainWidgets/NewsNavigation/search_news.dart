@@ -7,11 +7,11 @@ class SearchNews extends StatefulWidget {
   final String? query;
   final Function(String) onDetails;
 
-  const SearchNews({Key? key, this.query, required this.onDetails}) : super(key: key);
+  const SearchNews({Key? key, this.query, required this.onDetails})
+      : super(key: key);
 
   @override
-  _SearchNewsState createState() =>
-      _SearchNewsState(query: query, onDetails: onDetails);
+  _SearchNewsState createState() => _SearchNewsState();
 }
 
 class _SearchNewsState extends State<SearchNews>
@@ -19,22 +19,23 @@ class _SearchNewsState extends State<SearchNews>
   bool searching = true;
 
   final TextEditingController _searchQueryController = TextEditingController();
-  String searchQuery;
+  late String searchQuery;
 
 //  NewsCards newsCards;
   final GlobalKey<NewsCardsState> _cardsState = GlobalKey<NewsCardsState>();
   FocusNode? searchFocus;
 
-  final Function(String) onDetails;
+  late Function(String) onDetails;
 
-  _SearchNewsState({String? query, required this.onDetails})
-      : searchQuery = query ?? "";
+  _SearchNewsState();
 
   @override
   void initState() {
     super.initState();
     _searchQueryController.text = searchQuery;
     searchFocus = FocusNode();
+    searchQuery = widget.query ?? "";
+    onDetails = widget.onDetails;
   }
 
   @override

@@ -9,19 +9,20 @@ class DataTableBuilder extends StatefulWidget {
 
   @override
   _DataTableBuilderState createState() =>
-      _DataTableBuilderState(dataOfTable: dataOfTable);
+      _DataTableBuilderState();
 }
 
 class _DataTableBuilderState extends State<DataTableBuilder> {
-  DataOfTable dataOfTable;
+  late DataOfTable dataOfTable;
 
   int index = 0;
   bool asc = true;
 
-  _DataTableBuilderState({required this.dataOfTable});
+  _DataTableBuilderState();
 
   @override
   void initState() {
+    dataOfTable = widget.dataOfTable;
     super.initState();
   }
 

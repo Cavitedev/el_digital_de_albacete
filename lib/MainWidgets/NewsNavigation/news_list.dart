@@ -15,7 +15,7 @@ class NewsList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NewsListState createState() => _NewsListState(onSearch, onDetails);
+  _NewsListState createState() => _NewsListState();
 }
 
 class _NewsListState extends State<NewsList>
@@ -32,15 +32,17 @@ class _NewsListState extends State<NewsList>
         "https://www.eldigitaldealbacete.com/category/noticias-sanidad-albacete/",
   };
 
-  final Function onSearch;
-  final Function(String) onDetails;
+  late Function onSearch;
+  late Function(String) onDetails;
 
   TabController? _tabController;
 
-  _NewsListState(this.onSearch, this.onDetails);
+  _NewsListState();
 
   @override
   void initState() {
+    onSearch = widget.onSearch;
+    onDetails = widget.onDetails;
     _tabController = TabController(length: _tabs.length, vsync: this);
     super.initState();
   }
