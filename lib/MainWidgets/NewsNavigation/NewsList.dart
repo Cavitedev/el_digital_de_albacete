@@ -33,7 +33,7 @@ class _NewsListState extends State<NewsList>
   };
 
   final Function onSearch;
-    final Function(String) onDetails;
+  final Function(String) onDetails;
 
   TabController? _tabController;
 
@@ -91,10 +91,9 @@ class _NewsListState extends State<NewsList>
           controller: _tabController,
           children: _tabs.values.map((String url) {
             return NewsCards(
-                spiderPage: SpiderNewsListSpecificPage(url: url),
-                onDetails: onDetails,
-                );
-
+              spiderPage: SpiderNewsListSpecificPage(url: url),
+              onDetails: onDetails,
+            );
           }).toList(),
         ));
   }
