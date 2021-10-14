@@ -85,7 +85,8 @@ class SpiderSingleNews {
                 textTag: MeaningfulString.textTagFromString(
                     li.children[0].localName)));
           } else {
-            liElements.add(ParagraphStyledData(li.text));
+            liElements.add(ParagraphStyledData(li.innerHtml));
+
           }
         }
         newsInformation.add(UnorderedList(elements: liElements));
