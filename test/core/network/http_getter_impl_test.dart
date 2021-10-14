@@ -58,7 +58,7 @@ void main() {
 //      verify(mockHttpClient.get(url));
     });
     test('should throw no internet error when there is not internet', () async {
-      when(() => mockHttpClient.get(any())).thenThrow(SocketException("Failed host lookup: 'www.eldigitaldealbacete.com'"));
+      when(() => mockHttpClient.get(any())).thenThrow(const SocketException("Failed host lookup: 'www.eldigitaldealbacete.com'"));
 
       final call = httpGetter.accessURL;
       expect(() => call(url),

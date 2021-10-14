@@ -24,19 +24,20 @@ class HttpGetterImpl implements HttpGetter {
     return _instance as HttpGetterImpl;
   }
 
+  @override
   Future<dom.Document> accessURL(String url) async {
     http.Response response;
     try {
       response = await client.get(Uri.parse(url));
     } on SocketException {
-      throw new NoInternetException("No hay Internet");
+      throw NoInternetException("No hay Internet");
     }
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
       dom.Document document = parser.parse(body);
       return document;
     } else {
-      throw new HttpException("Página $url no está disponible");
+      throw HttpException("Página $url no está disponible");
     }
   }
 }

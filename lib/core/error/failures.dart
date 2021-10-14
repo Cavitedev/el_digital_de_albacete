@@ -4,28 +4,28 @@ abstract class Failure extends Equatable{
   final String? message;
 
 
-  Failure({this.message});
+  const Failure({this.message});
   @override
   List<Object?> get props => [message];
 }
 
 class HttpFailure extends Failure {
 
-  HttpFailure({String? message}): super(message: message);
+  const HttpFailure({String? message}): super(message: message);
 }
 
 class NoInternetFailure extends Failure {
 
-  NoInternetFailure({String? message}): super(message: message);
+  const NoInternetFailure({String? message}): super(message: message);
 }
 
 class HttpParseFailure extends Failure {
 
-  HttpParseFailure({String? message}) : super(message: message);
+  const HttpParseFailure({String? message}) : super(message: message);
 
 }
 
 class NoMoreNewsFailure extends Failure {
 
-  NoMoreNewsFailure({String? message}): super(message: message);
+  const NoMoreNewsFailure({String? message}): super(message: message);
 }

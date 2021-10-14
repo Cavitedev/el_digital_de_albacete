@@ -1,8 +1,8 @@
-import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsList.dart';
-import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/SearchNews.dart';
-import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/SingleNewsViewer.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/news_list.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/search_news.dart';
+import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/single_news_viewer.dart';
 import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/qr_screen.dart';
-import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
+import 'package:el_digital_de_albacete/Models/simple_news_data.dart';
 import 'package:el_digital_de_albacete/Routing/newspaper_routing_configuration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ class NewspaperRouterDelegate
     with
         ChangeNotifier,
         PopNavigatorRouterDelegateMixin<NewspaperRoutingConfiguration> {
+  @override
   GlobalKey<NavigatorState> navigatorKey;
   NewspaperRoutingConfiguration _currentConf =
       NewspaperRoutingConfiguration.home("");
@@ -23,7 +24,7 @@ class NewspaperRouterDelegate
     return Navigator(
       pages: [
         MaterialPage(
-            key: ValueKey("listNews"),
+            key: const ValueKey("listNews"),
             child: NewsList(
                 onSearch: () {
                   _currentConf.isSearching = true;
@@ -32,7 +33,7 @@ class NewspaperRouterDelegate
                 onDetails: _onDetails)),
         if (_currentConf.isSearching)
           MaterialPage(
-              key: ValueKey("searchNews"),
+              key: const ValueKey("searchNews"),
               child: SearchNews(
                 query: _currentConf.searchQuery(),
                 onDetails: _onDetails,

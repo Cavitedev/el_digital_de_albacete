@@ -1,6 +1,6 @@
 import 'package:el_digital_de_albacete/MainWidgets/NewsViewer/widgets/unorderdered_list.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/unordered_list.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/paragraph_styled_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,10 +1,10 @@
-import 'package:el_digital_de_albacete/Models/SimpleData/MeaningfulString.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/NewsData.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/UnorderedList.dart';
-import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/ParagraphStyledData.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/meaningful_string.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/news_data.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/unordered_list.dart';
+import 'package:el_digital_de_albacete/Models/SimpleData/paragraph/paragraph_styled_data.dart';
 import 'package:flutter/material.dart';
 
-import '../SingleNewsViewer.dart';
+import '../single_news_viewer.dart';
 
 class UnorderedListWidget extends StatelessWidget {
   final UnorderedList unorderedList;
@@ -24,7 +24,7 @@ class UnorderedListWidget extends StatelessWidget {
             return SingleNewsDataBodyWidget.meaningulStringUI(
                 showString, context)!;
           } else if (listItem is ParagraphStyledData) {
-            List<TextSpan> itemText = [TextSpan(text: "•   ")];
+            List<TextSpan> itemText = [const TextSpan(text: "•   ")];
             itemText.addAll(listItem.styledData.map((textStyled) {
               return TextSpan(
                   text: textStyled.text, style: textStyled.extraStyle);
@@ -39,7 +39,7 @@ class UnorderedListWidget extends StatelessWidget {
               ),
             );
           } else {
-            return Padding(padding: EdgeInsets.zero,);
+            return const Padding(padding: EdgeInsets.zero,);
           }
         }).toList());
   }

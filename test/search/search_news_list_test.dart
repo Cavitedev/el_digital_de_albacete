@@ -1,5 +1,5 @@
-import 'package:el_digital_de_albacete/Models/SimpleNewsData.dart';
-import 'package:el_digital_de_albacete/Spider/SpiderNewsListSpecificPage.dart';
+import 'package:el_digital_de_albacete/Models/simple_news_data.dart';
+import 'package:el_digital_de_albacete/Spider/spider_news_list_specific_page.dart';
 import 'package:el_digital_de_albacete/core/error/failures.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:dartz/dartz.dart' as dartz;
