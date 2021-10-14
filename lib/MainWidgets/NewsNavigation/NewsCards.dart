@@ -10,7 +10,7 @@ import 'package:el_digital_de_albacete/MainWidgets/NewsNavigation/NewsCard.dart'
 class NewsCards extends StatefulWidget {
   final SpiderNewsListSpecificPage spiderPage;
   final Function(String) onDetails;
-  NewsCards({required https://github.com/Cavitedev/el_digital_de_albacete/pull/9/conflict?name=lib%252FMainWidgets%252FNewsNavigation%252FNewsList.dart&ancestor_oid=bd7f8960b512d5da3e88cbeb798f164b6b90fe6b&base_oid=4da35820cbdf41f030d8de28d67993305c4aa446&head_oid=ce11f997721804cb75874a4d0c0a31e6380c766athis.spiderPage, Key? key, required this.onDetails}) : super(key: key);
+  NewsCards({required this.spiderPage, Key? key, required this.onDetails}) : super(key: key);
 
   @override
   NewsCardsState createState() => NewsCardsState(spiderPage, onDetails);
