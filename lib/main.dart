@@ -18,7 +18,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp.router(
       title: 'El digital de albacete',
       routerDelegate: _routerDelegate,
@@ -31,37 +30,45 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.lightGreen[50],
         scaffoldBackgroundColor: const Color.fromRGBO(250, 255, 250, 1),
         errorColor: Colors.red[100],
-        textSelectionTheme:
-            TextSelectionThemeData(cursorColor: Colors.lightGreenAccent[400],
-            selectionHandleColor: Colors.lightGreenAccent[700]),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.lightGreenAccent[400],
+          selectionHandleColor: Colors.lightGreenAccent[700],
+        ),
         textTheme: const TextTheme(
-            headline5: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-            bodyText2: TextStyle(
-              fontSize: 20,
-            ),
-            caption: TextStyle(
-              fontSize: 10,
-              color: Colors.black54,
-            ),
-            headline6: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-            headline4: TextStyle(
-                fontSize: 28, color: Colors.white, fontFamily: "NotoSans"),
-            subtitle1: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-            subtitle2: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-            button: TextStyle(
-                fontSize: 20, color: Colors.white, fontFamily: "NotoSans")),
+          headline5: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyText2: TextStyle(
+            fontSize: 20,
+          ),
+          caption: TextStyle(
+            fontSize: 10,
+            color: Colors.black54,
+          ),
+          headline6: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          headline4: TextStyle(
+            fontSize: 28,
+            color: Colors.white,
+            fontFamily: 'NotoSans',
+          ),
+          subtitle1: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          subtitle2: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          button: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontFamily: 'NotoSans',
+          ),
+        ),
         colorScheme:
             ColorScheme.fromSwatch(primarySwatch: Colors.green).copyWith(
           primary: const Color.fromARGB(0xff, 0x6e, 0xba, 0x30),

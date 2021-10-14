@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
-class NumberTools{
+mixin NumberTools {
   static double? toSpanishNumber(String string) {
-    List<String> _numberChars = [
+    final List<String> _numberChars = [
       '0',
       '1',
       '2',

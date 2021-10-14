@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoWidget extends StatefulWidget {
-  final VideoPlayerController videoPlayerController;
-
   const VideoWidget({required this.videoPlayerController, Key? key}) : super(key: key);
+
+  final VideoPlayerController videoPlayerController;
 
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
@@ -28,7 +28,5 @@ class _VideoWidgetState extends State<VideoWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return video_widget.Chewie(controller: chewieController);
-  }
+  Widget build(BuildContext context) => video_widget.Chewie(controller: chewieController);
 }

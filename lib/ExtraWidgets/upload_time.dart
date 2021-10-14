@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class UploadTime extends StatelessWidget {
+  const UploadTime({Key? key, this.publishDate, this.size = 10}) : super(key: key);
   final String? publishDate;
   final double size;
-  const UploadTime({Key? key, this.publishDate, this.size = 10}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
+  Widget build(BuildContext context) => Row(
       children: <Widget>[
         Icon(
           Icons.access_time,
@@ -19,5 +18,4 @@ class UploadTime extends StatelessWidget {
         ),
       ],
     );
-  }
 }

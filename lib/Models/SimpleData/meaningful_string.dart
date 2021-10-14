@@ -23,13 +23,13 @@ class MeaningfulString implements NewsData {
 
   static TextTag? textTagFromString(String? string) {
     switch (string) {
-      case "img":
+      case 'img':
         return TextTag.img;
-      case "h2":
+      case 'h2':
         return TextTag.h2;
-      case "h3":
+      case 'h3':
         return TextTag.h3;
-      case "h4":
+      case 'h4':
         return TextTag.h4;
     }
     return null;

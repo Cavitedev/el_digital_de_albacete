@@ -1,9 +1,11 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/news_data.dart';
+import 'package:flutter/cupertino.dart';
 
+@immutable
 class MP4Video implements NewsData {
-  String link;
+  const MP4Video({required this.link});
 
-  MP4Video({required this.link});
+  final String link;
 
   @override
   String toString() {

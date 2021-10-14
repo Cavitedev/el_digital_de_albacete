@@ -2,7 +2,8 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 final dom.Document expected = parser.parse(_html);
-const String _html = '''<!DOCTYPE html>
+const String _html = '''
+<!DOCTYPE html>
 <html lang="es" class="" data-skin="light">
 <head>
 <meta charset="UTF-8" />

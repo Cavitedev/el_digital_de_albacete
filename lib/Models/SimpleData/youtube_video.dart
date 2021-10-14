@@ -1,16 +1,16 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/news_data.dart';
 
 class YoutubeVideo implements NewsData {
-  String? source;
-
   YoutubeVideo(String link) {
-    int start = link.indexOf("embed/");
+    int start = link.indexOf('embed/');
     start = start == -1 ? 0 : start + 6;
-    int end = link.indexOf("?feature");
+    int end = link.indexOf('?feature');
     end = end == -1 ? link.length : end;
 
     source = link.substring(start, end);
   }
+
+  String? source;
 
   @override
   bool operator ==(Object other) =>

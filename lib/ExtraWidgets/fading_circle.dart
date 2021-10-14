@@ -5,10 +5,8 @@ class FadingCircle extends StatelessWidget {
   const FadingCircle({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return SpinKitFadingCircle(
+  Widget build(BuildContext context) => SpinKitFadingCircle(
       size: 100,
       color: Theme.of(context).focusColor,
     );
-  }
 }

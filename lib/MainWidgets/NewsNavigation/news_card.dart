@@ -5,57 +5,60 @@ import 'package:el_digital_de_albacete/Models/simple_news_data.dart';
 import 'package:flutter/material.dart';
 
 class NewsCard extends StatelessWidget {
+  const NewsCard({
+    required this.simpleNewsData,
+    required this.onDetails,
+    Key? key,
+  }) : super(key: key);
+
   final SimpleNewsData simpleNewsData;
   final Function(String) onDetails;
 
-  const NewsCard({Key? key, required this.simpleNewsData, required this.onDetails}) : super(key: key);
-
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (simpleNewsData.link != null) {
-          onDetails(simpleNewsData.link!);
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(2, 2, 2, 0),
-        child: Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: SizedBox(
-            height: 105,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 100,
-                  width: 190,
-                  child: CachedNetworkImage(
-                    placeholder: (context, url) => const FadingCircle(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                    imageUrl: simpleNewsData.imageSrc ?? 'error',
+  Widget build(BuildContext context) => InkWell(
+        onTap: () {
+          if (simpleNewsData.link != null) {
+            onDetails(simpleNewsData.link!);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(2, 2, 2, 0),
+          child: Container(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: SizedBox(
+              height: 105,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 100,
+                    width: 190,
+                    child: CachedNetworkImage(
+                      placeholder: (context, url) => const FadingCircle(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      imageUrl: simpleNewsData.imageSrc ?? 'error',
+                    ),
                   ),
-                ),
 
 //            Image.network(newData.imageSrc, height: 100),
 
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(5.0, 0, 0, 0.0),
-                    child: _ArticleDescription(
-                      title: simpleNewsData.title,
-                      publishDate: simpleNewsData.publishDate,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: _ArticleDescription(
+                        title: simpleNewsData.title,
+                        publishDate: simpleNewsData.publishDate,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class _ArticleDescription extends StatelessWidget {
@@ -92,11 +95,12 @@ class _ArticleDescription extends StatelessWidget {
           ),
         ),
         Expanded(
-            flex: 1,
-            child: UploadTime(
-              publishDate: publishDate,
-              size: 11,
-            )),
+          flex: 1,
+          child: UploadTime(
+            publishDate: publishDate,
+            size: 11,
+          ),
+        ),
       ],
     );
   }

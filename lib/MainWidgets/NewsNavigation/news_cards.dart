@@ -8,11 +8,14 @@ import 'package:el_digital_de_albacete/core/error/failures.dart';
 import 'package:flutter/material.dart';
 
 class NewsCards extends StatefulWidget {
+  const NewsCards({
+    required this.spiderPage,
+    required this.onDetails,
+    Key? key,
+  }) : super(key: key);
   final SpiderNewsListSpecificPage spiderPage;
-  final Function(String) onDetails;
 
-  const NewsCards({required this.spiderPage, Key? key, required this.onDetails})
-      : super(key: key);
+  final Function(String) onDetails;
 
   @override
   NewsCardsState createState() => NewsCardsState();
@@ -20,12 +23,12 @@ class NewsCards extends StatefulWidget {
 
 class NewsCardsState extends State<NewsCards>
     with AutomaticKeepAliveClientMixin {
+  NewsCardsState();
+
   List<SimpleNewsData>? _news;
 
   late SpiderNewsListSpecificPage spiderPage;
   late Function(String) onDetails;
-
-  NewsCardsState();
 
   bool _loadedNews = false;
   Failure? error;
@@ -34,7 +37,7 @@ class NewsCardsState extends State<NewsCards>
     _loadedNews = false;
     _news = null;
 
-    dartz.Either<Failure, List<SimpleNewsData>> _newsRetrieval =
+    final dartz.Either<Failure, List<SimpleNewsData>> _newsRetrieval =
         await spiderPage.scrapCurrentPage();
     _newsRetrieval.fold((failure) {
       setState(() {
@@ -60,10 +63,10 @@ class NewsCardsState extends State<NewsCards>
     getNews();
   }
 
-  void loadMore() async {
+  Future<void> _loadMore() async {
     if (error == null && _loadedNews) {
       _loadedNews = false;
-      dartz.Either<Failure, List<SimpleNewsData>> _moreNews =
+      final dartz.Either<Failure, List<SimpleNewsData>> _moreNews =
           await spiderPage.scrapNextPage();
       _moreNews.fold((failure) {
         setState(() {
@@ -84,7 +87,7 @@ class NewsCardsState extends State<NewsCards>
   Widget build(BuildContext context) {
     super.build(context);
 
-    int count =
+    final int count =
         _news?.length ?? 0 + (_loadedNews ? 0 : 1) + (error == null ? 0 : 1);
     return RefreshIndicator(
       onRefresh: () async {
@@ -100,7 +103,7 @@ class NewsCardsState extends State<NewsCards>
           if (_loadedNews &&
               scrollInfo.metrics.pixels >
                   scrollInfo.metrics.maxScrollExtent * 0.8) {
-            loadMore();
+            _loadMore();
             return true;
           }
           return false;
@@ -109,12 +112,16 @@ class NewsCardsState extends State<NewsCards>
           itemCount: count,
           itemBuilder: (context, index) {
             //     print("index= $index count = $index moreNewsAvailable = $_moreNewsAvailable");
-            if (!_loadedNews && index == count - 1) return const FadingCircle();
+            if (!_loadedNews && index == count - 1) {
+              return const FadingCircle();
+            }
             if (error != null && index >= count - 1) {
               return ErrorPlaceholder(msg: error!.message);
             }
             return NewsCard(
-                simpleNewsData: _news![index], onDetails: onDetails);
+              simpleNewsData: _news![index],
+              onDetails: onDetails,
+            );
           },
         ),
       ),

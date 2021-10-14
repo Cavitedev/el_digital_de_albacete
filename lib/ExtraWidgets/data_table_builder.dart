@@ -1,11 +1,13 @@
 import 'package:el_digital_de_albacete/Models/SimpleData/table/data_of_table.dart';
 import 'package:flutter/material.dart';
 
-class DataTableBuilder extends StatefulWidget {
-  final DataOfTable dataOfTable;
 
-  const DataTableBuilder({Key? key, required this.dataOfTable})
+class DataTableBuilder extends StatefulWidget {
+
+  const DataTableBuilder({ required this.dataOfTable, Key? key})
       : super(key: key);
+
+  final DataOfTable dataOfTable;
 
   @override
   _DataTableBuilderState createState() =>
@@ -13,12 +15,12 @@ class DataTableBuilder extends StatefulWidget {
 }
 
 class _DataTableBuilderState extends State<DataTableBuilder> {
-  late DataOfTable dataOfTable;
+  _DataTableBuilderState();
 
+  late DataOfTable dataOfTable;
   int index = 0;
   bool asc = true;
 
-  _DataTableBuilderState();
 
   @override
   void initState() {
@@ -28,7 +30,7 @@ class _DataTableBuilderState extends State<DataTableBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    dataOfTable.table.sort((a, b) =>
+    dataOfTable.table.sort((List<dynamic> a, List<dynamic> b) =>
         asc ? a[index].compareTo(b[index]) : b[index].compareTo(a[index]));
 
     return SingleChildScrollView(
