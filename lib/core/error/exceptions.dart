@@ -1,15 +1,15 @@
 class HttpException implements Exception {
-  final String message;
-
   HttpException(this.message);
+
+  final String message;
 
 }
 
 
 
 class NoInternetException implements Exception {
-  final String message;
-
   NoInternetException(this.message);
+
+  final String message;
 
 }

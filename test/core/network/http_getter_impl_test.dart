@@ -17,8 +17,8 @@ class MockHttpClient extends Mock implements http.Client {}
 void main() {
   late HttpGetterImpl httpGetter;
   late MockHttpClient mockHttpClient;
-  String url =
-      "https://www.eldigitaldealbacete.com/2020/03/20/coronavirus-el-ayuntamiento-garantiza-la-atencion-integral-a-las-mujeres-victimas-de-la-violencia-de-genero-en-albacete-durante-la-crisis-del-covid-19/";
+  const String url =
+      'https://www.eldigitaldealbacete.com/2020/03/20/coronavirus-el-ayuntamiento-garantiza-la-atencion-integral-a-las-mujeres-victimas-de-la-violencia-de-genero-en-albacete-durante-la-crisis-del-covid-19/';
 
   http.Response response;
   setUpAll((){
@@ -29,13 +29,13 @@ void main() {
     httpGetter = HttpGetterImpl.constructor(client: mockHttpClient);
   });
   test('is singleton', () {
-    HttpGetterImpl singleton1 = HttpGetterImpl();
-    HttpGetterImpl singleton2 = HttpGetterImpl();
+    final HttpGetterImpl singleton1 = HttpGetterImpl();
+    final HttpGetterImpl singleton2 = HttpGetterImpl();
     expect(singleton1, singleton2);
   });
   group('access url', () {
     test('should return document on url', () async {
-      Uri uri = Uri.parse(url);
+      final Uri uri = Uri.parse(url);
       response = await http.get(uri);
       when(() => mockHttpClient.get(any())).thenAnswer((_) async => response);
 
@@ -47,22 +47,22 @@ void main() {
       expect(document.body!.innerHtml.substring(0, 100), expected.body!.innerHtml.substring(0, 100));
     });
     test('should throw http error with right message when page does not return 200', () async {
-      response = http.Response("body", 404);
+      response = http.Response('body', 404);
 
       when(() => mockHttpClient.get(any())).thenAnswer((_) async => response);
 
       final call = httpGetter.accessURL;
 
       expect(() => call(url),
-          throwsA(predicate((dynamic e) => e is HttpException && e.message == 'Página $url no está disponible')));
+          throwsA(predicate((e) => e is HttpException && e.message == 'Página $url no está disponible')),);
 //      verify(mockHttpClient.get(url));
     });
     test('should throw no internet error when there is not internet', () async {
-      when(() => mockHttpClient.get(any())).thenThrow(SocketException("Failed host lookup: 'www.eldigitaldealbacete.com'"));
+      when(() => mockHttpClient.get(any())).thenThrow(const SocketException("Failed host lookup: 'www.eldigitaldealbacete.com'"));
 
       final call = httpGetter.accessURL;
       expect(() => call(url),
-          throwsA(predicate((dynamic e) => e is NoInternetException && e.message == "No hay Internet")));
+          throwsA(predicate((e) => e is NoInternetException && e.message == 'No hay Internet')),);
     });
   });
 }

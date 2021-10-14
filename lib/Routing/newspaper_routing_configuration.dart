@@ -25,9 +25,9 @@ class NewspaperRoutingConfiguration {
         isQR = true;
 
   String? searchQuery() {
-    Uri uri = Uri.parse(pathName);
+    final Uri uri = Uri.parse(pathName);
     return uri.queryParameters['s'];
   }
 
-  String url() => "https://www.eldigitaldealbacete.com" + pathName;
+  String url() => 'https://www.eldigitaldealbacete.com$pathName';
 }
