@@ -9,8 +9,6 @@ class NewspaperRouteInformationParser extends RouteInformationParser<NewspaperRo
   Future<NewspaperRoutingConfiguration> parseRouteInformation(RouteInformation routeInformation) async {
     final Uri uri = Uri.parse(routeInformation.location ?? '');
 
-
-
     if (uri.queryParameters['s'] != null) {
       return NewspaperRoutingConfiguration.search(uri.toString());
     }

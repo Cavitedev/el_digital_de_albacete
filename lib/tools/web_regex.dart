@@ -5,7 +5,7 @@ mixin WebRegex {
       return null;
     }
     return RegExp(
-            r'https://www\.eldigitaldealbacete\.com.*?\.(jpg|jpeg|png|gif)')
+            r'https://www\.eldigitaldealbacete\.com.*?\.(jpg|jpeg|png|gif|webp)')
         .firstMatch(style)!
         .group(0);
   }
