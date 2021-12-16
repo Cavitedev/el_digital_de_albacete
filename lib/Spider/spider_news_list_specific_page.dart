@@ -13,7 +13,9 @@ class SpiderNewsListSpecificPage {
   static const String _newsClassListing = 'masonry-grid';
   static const String _newsClassSearch = 'posts-container';
   static const String failedLoadingNews = 'failedLoadingNews';
-  static final List<SimpleNewsData> noMoreNewsFound = [SimpleNewsData(title: failedLoadingNews)];
+  static final List<SimpleNewsData> noMoreNewsFound = [
+    SimpleNewsData(title: failedLoadingNews)
+  ];
 
   late HttpGetterImpl httpGetterImpl;
 
@@ -44,12 +46,14 @@ class SpiderNewsListSpecificPage {
     } on NoInternetException catch (e) {
       return Left(NoInternetFailure(message: e.message));
     } on Exception {
-      return const Left(HttpParseFailure(message: 'No se pudo parsear la página web'));
+      return const Left(
+          HttpParseFailure(message: 'No se pudo parsear la página web'));
     }
   }
 
   List<SimpleNewsData> _getNews(dom.Document _document) {
-    final dom.Element? articlesParent = _document.getElementById(_newsClassListing);
+    final dom.Element? articlesParent =
+        _document.getElementById(_newsClassListing);
 
     if (articlesParent == null) {
       return _getNewsSearch(_document);
@@ -67,35 +71,48 @@ class SpiderNewsListSpecificPage {
       final styleStr = mainDiv.attributes['style'];
       final String? imageLink = WebRegex.getUrlFromStyleRegex(styleStr);
 
-      news.add(SimpleNewsData(
-        link: mainDiv.children[0].attributes['href'],
-        title: mainDiv.children[0].children[0].text,
-        imageSrc: imageLink ?? 'error',
-        publishDate: mainDiv.getElementsByClassName('date')[0].text,
-      ),);
+      news.add(
+        SimpleNewsData(
+          link: mainDiv.children[0].attributes['href'],
+          title: mainDiv.children[0].children[0].text,
+          imageSrc: imageLink ?? 'error',
+          publishDate: mainDiv.getElementsByClassName('date')[0].text,
+        ),
+      );
       //  debugPrint(news.last.title);
     }
     return news;
   }
 
   List<SimpleNewsData> _getNewsSearch(dom.Document _document) {
-    final List<dom.Element> articles = _document.getElementById(_newsClassSearch)!.children;
+    final List<dom.Element> articles =
+        _document.getElementById(_newsClassSearch)!.children;
     final List<SimpleNewsData> news = [];
     for (final dom.Element article in articles) {
       final dom.Element anchor = article.children[0];
-      final image = anchor.children.firstWhere((element) => element.localName == 'img', orElse: () => anchor);
+      final image = anchor.children.firstWhere(
+          (element) => element.localName == 'img',
+          orElse: () => anchor);
 
       final String? imageLink = image.localName == 'img'
           ? WebRegex.getUrlFromStyleRegex(
-              image.attributes['data-src'] ?? image.attributes['src'] ?? image.attributes['data-srcset'],)
+              image.attributes['data-src'] ??
+                  image.attributes['src'] ??
+                  image.attributes['data-srcset'],
+            )
           : null;
 
-      news.add(SimpleNewsData(
-        link: article.children[0].attributes['href'],
-        title: article.children[1].children[1].text,
-        imageSrc: imageLink ?? 'error',
-        publishDate: article.children[1].children[0].children[1].text,
-      ),);
+      final dom.Element postDetails =
+          article.getElementsByClassName('post-details').first;
+
+      news.add(
+        SimpleNewsData(
+          link: article.getElementsByTagName('a').first.attributes['href'],
+          title: postDetails.children[1].text,
+          imageSrc: imageLink ?? 'error',
+          publishDate: postDetails.children[0].children[1].text,
+        ),
+      );
       //  debugPrint(news.last.title);
     }
     return news;
