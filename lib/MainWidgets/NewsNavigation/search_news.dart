@@ -34,9 +34,9 @@ class _SearchNewsState extends State<SearchNews>
   @override
   void initState() {
     super.initState();
+    searchQuery = widget.query ?? '';
     _searchQueryController.text = searchQuery;
     searchFocus = FocusNode();
-    searchQuery = widget.query ?? '';
     onDetails = widget.onDetails;
   }
 

@@ -98,7 +98,7 @@ class _ArticleDescription extends StatelessWidget {
           flex: 1,
           child: UploadTime(
             publishDate: publishDate,
-            size: 11,
+            size: 10,
           ),
         ),
       ],
